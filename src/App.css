@@ -1,11 +1,33 @@
-.App {
-  text-align: center;
-  background-image: url('./assets/img/background.jpeg');
-  background-repeat: repeat-y;
-  background-size: cover;
-  min-height: 1000vh;
-  height: auto;
-  overflow: hidden;
+
+@font-face {
+  font-family: 'GMV DIN Pro';
+  font-weight: 500;
+  src: local('GMV DIN Pro'), url(./assets/font/GMV_DIN_Pro-Medium.ttf) format('opentype');
 }
 
+@font-face {
+  font-family: 'GMV DIN Pro';
+  font-weight: 900;
+  src: local('GMV DIN Pro'), url(./assets/font/GMV_DIN_Pro-Bold.ttf) format('opentype');
+}
 
+.App {
+  min-height: 100vh;
+  height: 100%;
+  font-family: 'GMV DIN Pro';
+}
+
+.buy-button:hover {
+  animation-name: fade;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+}
+
+@keyframes fade {
+  from {
+      color: #000000
+  }
+  to {
+      color: #F2F1F1
+  }
+}

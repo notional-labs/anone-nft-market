@@ -1,27 +1,28 @@
-import { Image } from 'antd'
-import bannerLogo from '../../assets/img/logo1.png'
+import Banner from './banner/Banner'
+import Header from './header/Header'
+import Collection from './collection/Collections'
+import Artist from './artist/Artist'
+import Nft from './nft/Nft'
+import Footer from './footer/Footer'
 
 const style = {
-    headerNavbar: {
-        display: 'flex',
-        justifyContent: 'space-between'
+    container: {
+        position: 'relative',
+        zIndex: 2
     }
 }
 
 const HomePage = ({ }) => {
     return (
-        <div>
-            <div style={style.headerNavbar}>
-                <div style={{
-                    padding: '3em 7em'
-                }}> 
-                    <Image
-                        src={bannerLogo}
-                        preview={false}
-                        width={200}
-                    />
-                </div>
-            </div>
+        <div
+            style={style.container}
+        >
+            <Header/>
+            <Banner />
+            <Collection/>
+            <Artist/>
+            <Nft/>
+            <Footer/>
         </div>
     )
 }

@@ -1,0 +1,9 @@
+.card {
+    padding: 0.5em;
+    border: solid 1px transparent
+}
+
+.card:hover {
+    border: solid 1px #00FFA3;
+    transform: translateY(-5px);
+}
