@@ -31,3 +31,8 @@
       color: #F2F1F1
   }
 }
+
+.ant-modal-content {
+  border-radius: 30px !important;
+  background: #000000 !important;
+}

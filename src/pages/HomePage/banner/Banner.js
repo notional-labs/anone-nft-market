@@ -93,7 +93,8 @@ const Banner = ({ }) => {
                         placeholder="Email"
                         onChange={handleChangeSubscriptionInput}
                         style={{
-                            width: '45%'
+                            width: '45%',
+                            marginLeft: '10px'
                         }}
                     />
                     <Button
@@ -110,7 +111,7 @@ const Banner = ({ }) => {
                     transform: 'rotate(-19.15deg)',
                     position: 'relative',
                     top: '-190px',
-                    left: '60px'
+                    left: '60px',
                 }}
             >
                 <Image

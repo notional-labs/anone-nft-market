@@ -18,28 +18,28 @@ const style = {
 }
 
 const text = (
-        <p style={{
-            margin: 0,
-            zIndex: 1,
-            position: 'relative',
-        }}>
-            <Image
-                src={walletImg}
-                preview={false}
-                width={25}
-            />
-            <span 
-                style={{
-                    marginLeft: '10px',
-                    position: 'relative',
-                    top: '2px'
+    <p style={{
+        margin: 0,
+        zIndex: 1,
+        position: 'relative',
+    }}>
+        <Image
+            src={walletImg}
+            preview={false}
+            width={25}
+        />
+        <span
+            style={{
+                marginLeft: '10px',
+                position: 'relative',
+                top: '2px'
             }}>
-                Connect Wallet
-            </span>
-        </p>
-    )
+            Connect Wallet
+        </span>
+    </p>
+)
 
-const ConnectButton = ({ }) => {
+const ConnectButton = ({ wrapSetAccount }) => {
     const [showModal, setShowModal] = useState(false)
 
     const wrapSetShow = useCallback((value) => {
@@ -54,15 +54,16 @@ const ConnectButton = ({ }) => {
         <div style={{
             padding: '2em 3em'
         }}>
-            <Button 
-                style={style.button} 
-                text={text} 
+            <Button
+                style={style.button}
+                text={text}
                 type={'function'}
                 clickFunction={handleClick}
             />
-            <ConnectButton
+            <ConnectWalletModal
                 show={showModal}
                 wrapSetShow={wrapSetShow}
+                wrapSetAccount={wrapSetAccount}
             />
         </div>
     )

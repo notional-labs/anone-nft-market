@@ -187,6 +187,7 @@ const Nft = ({ }) => {
                     clickFunction={handleClick}
                     text={'View more...'}
                     style={style.viewMoreButton}
+                    type={'function'}
                 />
             </div>
         </div>

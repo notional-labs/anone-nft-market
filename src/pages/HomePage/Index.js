@@ -1,5 +1,5 @@
 import Banner from './banner/Banner'
-import Header from './header/Header'
+import Header from '../header/Header'
 import Collection from './collection/Collections'
 import Artist from './artist/Artist'
 import Nft from './nft/Nft'

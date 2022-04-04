@@ -1,4 +1,6 @@
-const Button = ({ clickFunction, style, text, type, ref, className }) => {
+import { Link } from "react-router-dom"
+
+const Button = ({ clickFunction, style, text, type, url, className }) => {
 
     const handleClick = ({ }) => {
         clickFunction()
@@ -15,9 +17,9 @@ const Button = ({ clickFunction, style, text, type, ref, className }) => {
                     >
                         {text}
                     </button>
-                ) : (
+                ) : type === 'href' ? (
                     <a 
-                        href={ref}
+                        href={url}
                         style={{
                             textDecoration: 'none'
                         }}
@@ -29,6 +31,20 @@ const Button = ({ clickFunction, style, text, type, ref, className }) => {
                             {text}
                         </button>
                     </a>
+                ) : (
+                    <Link 
+                        to={`${url}`}
+                        style={{
+                            textDecoration: 'none'
+                        }}
+                    >
+                        <button 
+                            style={style}
+                            className={`${className || ''}`}
+                        >
+                            {text}
+                        </button>
+                    </Link>
                 )
             }
         </div>

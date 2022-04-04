@@ -20,11 +20,22 @@ export const getKeplr = async () => {
     }
 }
 
-export const dummyConnectWallet = async (addr) => {
+export const dummyConnectWallet = async () => {
     const { accounts } = await getKeplr()
-    const user = dummyLogin()
-    !localStorage.getItem('account') && localStorage.setItem('account', {
-        accounts,
-        user
-    })
+    if(!accounts || accounts.length === 0) return
+    const user = dummyLogin(accounts[0].address)
+
+    if (localStorage.getItem('account') === null) {
+        localStorage.setItem('account', JSON.stringify({
+            account: accounts[0],
+            user: user
+        }))
+    }
+    else {
+        localStorage.removeItem('account')
+        localStorage.setItem('account', JSON.stringify({
+            account: accounts[0],
+            user: user
+        }))
+    }
 }

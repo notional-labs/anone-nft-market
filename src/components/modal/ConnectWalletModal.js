@@ -1,14 +1,17 @@
 import { Modal, Image } from "antd"
-import { wrap } from "lodash"
 import Button from "../buttons/Button"
 import { dummyConnectWallet } from "../../utils/getKeplr"
 import keplrLogo from '../../assets/img/keplr.png'
+import { openNotification } from '../notifications/notification'
 
 const style = {
     button: {
         border: 'solid 1px #00FFA3',
         backgroundColor: 'transparent',
-        color: '#ffffff'
+        color: '#ffffff',
+        width: '100%',
+        padding: '1em',
+        cursor: 'pointer'
     }
 }
 
@@ -17,12 +20,15 @@ const text = (
         <Image
             src={keplrLogo}
             preview={false}
-            width={50}
+            width={'20%'}
         />
         <span
             style={{
                 fontSize: '24px',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                marginLeft: '20px',
+                position: 'relative',
+                top: '5px'
             }}
         >
             Keplr
@@ -30,13 +36,19 @@ const text = (
     </div>
 )
 
-const ConnectWalletModal = ({ show, wrapSetShow }) => {
+const ConnectWalletModal = ({ show, wrapSetShow, wrapSetAccount }) => {
 
 
     const handleClick = () => {
         dummyConnectWallet().then(() => {
+            wrapSetAccount(localStorage.getItem('account'))
             wrapSetShow(false)
-        }).catch(e => console.log(e))
+            openNotification('success', 'Connect successfully')
+        }).catch(e => {
+            console.log(e)
+            openNotification('error', e.message)
+        }
+        )
     }
 
     return (
@@ -45,15 +57,43 @@ const ConnectWalletModal = ({ show, wrapSetShow }) => {
                 visible={show}
                 footer={null}
                 closable={false}
+                style={{
+                    padding: '3em',
+                }}
             >
-                <p>
+                <p
+                    style={{
+                        fontSize: '32px',
+                        fontWeight: 'bold',
+                        color: '#ffffff',
+                        textAlign: 'center',
+                        marginBottom: '40px'
+                    }}
+                >
                     You'll need a wallet on Anther-1 to continue
                 </p>
-                <hr />
-                <p>
+                <hr
+                    style={{
+                        width: '30%'
+                    }}
+                />
+                <p
+                    style={{
+                        fontSize: '16px',
+                        color: '#ffffff',
+                        textAlign: 'center',
+                        marginTop: '40px'
+                    }}
+                >
                     Safely connect to your existing blockchain wallet and directly stake tokens in them.
                 </p>
-                <div>
+                <div
+                    style={{
+                        width: '80%',
+                        margin: 'auto',
+                        marginTop: '40px'
+                    }}
+                >
                     <Button
                         clickFunction={handleClick}
                         type={'function'}

@@ -2,6 +2,14 @@ import './App.css';
 import HomePage from './pages/HomePage/Index';
 import Image from 'rc-image';
 import background from './assets/img/background.png'
+import {
+  Routes,
+  Route,
+  Link,
+  NavLink,
+  useLocation
+} from "react-router-dom";
+import Profile from './pages/Profile/Index';
 
 function App() {
   return (
@@ -18,7 +26,10 @@ function App() {
         }} />
       {/* end of background component */}
 
-      <HomePage />
+      <Routes>
+        <Route exact path="/" element={<HomePage />} />
+        <Route exact path="/profile/:id" element={<Profile />} />
+      </Routes>
     </div>
   );
 }

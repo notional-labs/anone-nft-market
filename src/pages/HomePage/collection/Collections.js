@@ -163,6 +163,7 @@ const Collection = ({ }) => {
                     clickFunction={handleClick}
                     text={'View more...'}
                     style={style.button}
+                    type={'function'}
                 />
             </div>
         </div>
