@@ -1,5 +1,4 @@
 import { Image } from 'antd'
-import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import bannerLogo from '../../assets/img/logo1.png'
 import ConnectButton from './connect_button/ConnectButton'
@@ -9,7 +8,6 @@ const style = {
     headerNavbar: {
         display: 'flex',
         justifyContent: 'space-between',
-        marginBottom: '150px',
         postion: 'relative',
         zIndex: 2
     },
@@ -18,20 +16,7 @@ const style = {
     },
 }
 
-const Header = ({ }) => {
-    const [account, setAccount] = useState(localStorage.getItem('account'))
-
-    useEffect(() => {
-        const storageAccount = localStorage.getItem('account')
-        if (storageAccount !== '') {
-            setAccount(storageAccount)
-        }
-    }, [])
-
-    const wrapSetAccount = useCallback((value) => {
-        setAccount(value)
-    }, [setAccount])
-
+const Header = ({ account, wrapSetAccount }) => {
     return (
         <div
             style={style.headerNavbar}

@@ -34,7 +34,7 @@ const MenuButton = ({account, wrapSetAccount}) => {
                 display: 'flex',
                 justifyContent: 'space-between',
                 margin: '2em 5em',
-                padding: '0.5em 2em',
+                padding: '0.5em 0em 0.5em 2em',
             }}
         >
             <div
@@ -85,7 +85,7 @@ const MenuButton = ({account, wrapSetAccount}) => {
                 <Button
                     type={'link'}
                     style={style.button}
-                    url={`./profile/${JSON.parse(account).account.address}`}
+                    url={`/user/profile`}
                     text={
                         <Image
                             src={profileButton}
@@ -104,7 +104,7 @@ const MenuButton = ({account, wrapSetAccount}) => {
                             src={logoutButton}
                             preview={false}
                             width={'120%'}
-                            style={style.buttonImg}
+                            style={{...style.buttonImg, marginRight: 0}}
                         />}
                 />
             </div>

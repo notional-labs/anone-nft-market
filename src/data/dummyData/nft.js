@@ -4,51 +4,61 @@ export const sneakers = [
     {
         id: 1,
         quantity: 1,
-        img: sneakerImg
+        img: sneakerImg,
+        price: 200
     },
     {
         id: 1,
         quantity: 1,
-        img: sneakerImg
+        img: sneakerImg,
+        price: 200
     },
     {
         id: 1,
         quantity: 1,
-        img: sneakerImg
+        img: sneakerImg,
+        price: 200
     },
     {
         id: 1,
         quantity: 1,
-        img: sneakerImg
+        img: sneakerImg,
+        price: 200
     },
     {
         id: 1,
         quantity: 1,
-        img: sneakerImg
+        img: sneakerImg,
+        price: 200
     },
     {
         id: 1,
         quantity: 1,
-        img: sneakerImg
+        img: sneakerImg,
+        price: 200
     },
     {
         id: 1,
         quantity: 1,
-        img: sneakerImg
+        img: sneakerImg,
+        price: 200
     },
     {
         id: 1,
         quantity: 1,
-        img: sneakerImg
+        img: sneakerImg,
+        price: 200
     },
     {
         id: 1,
         quantity: 1,
-        img: sneakerImg
+        img: sneakerImg,
+        price: 200
     },
     {
         id: 1,
         quantity: 1,
-        img: sneakerImg
+        img: sneakerImg,
+        price: 200
     }
 ]

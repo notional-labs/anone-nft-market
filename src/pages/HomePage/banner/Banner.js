@@ -9,6 +9,7 @@ const style = {
         flexDirection: 'row',
         justifyContent: 'center',
         color: '#ffffff',
+        marginTop: '150px'
     },
     bannerText: {
         texAlign: 'left',
@@ -112,6 +113,7 @@ const Banner = ({ }) => {
                     position: 'relative',
                     top: '-190px',
                     left: '60px',
+                    zIndex: 0
                 }}
             >
                 <Image

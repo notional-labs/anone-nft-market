@@ -36,3 +36,18 @@
   border-radius: 30px !important;
   background: #000000 !important;
 }
+
+.ant-notification-notice {
+  background: #000000 !important;
+}
+
+.ant-notification-notice-message {
+  color: white !important;
+  font-size: 20px !important;
+}
+
+.ant-notification-notice-close {
+  color: #00FFA3 !important;
+  font-size: 16px !important;
+}
+ 

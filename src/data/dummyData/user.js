@@ -5,4 +5,5 @@ export const user = {
     avt: avt,
     banner_img: banner,
     userName: 'dummy',
+    description: 'dummy description'
 }
