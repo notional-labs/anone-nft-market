@@ -14,20 +14,7 @@ const style = {
     }
 }
 
-const HomePage = ({ }) => {
-    const [account, setAccount] = useState(localStorage.getItem('account'))
-
-    useEffect(() => {
-        const storageAccount = localStorage.getItem('account')
-        if (storageAccount !== null) {
-            setAccount(storageAccount)
-        }
-    }, [])
-
-    const wrapSetAccount = useCallback((value) => {
-        setAccount(value)
-    }, [setAccount])
-
+const HomePage = ({ account, wrapSetAccount }) => {
     return (
         <div
             style={style.container}

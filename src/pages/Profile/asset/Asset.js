@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import NftList from "../nft/NftList"
 import Collection from "../collection/Collection"
 import Button from "../../../components/buttons/Button"
@@ -27,8 +27,12 @@ const style = {
     }
 }
 
-const Asset = ({}) => {
+const Asset = ({ account, type }) => {
     const [tabSelect, setTabSelect] = useState(1)
+
+    useEffect(() => {
+        setTabSelect(1)
+    }, [type])
 
     const changeTab = (value) => {
         setTabSelect(value)
@@ -46,34 +50,38 @@ const Asset = ({}) => {
                     style={{
                         ...style.button,
                         backgroundColor: tabSelect === 1 ? '#00FFA3' : 'transparent',
-                        color:  tabSelect === 1 ? '#000000' : '#ffffff'
+                        color: tabSelect === 1 ? '#000000' : '#ffffff'
                     }}
                     clickFunction={() => {
                         changeTab(1)
                     }}
                     text={'NFT'}
-                />  
-                <Button
-                    type={'function'}
-                    style={{
-                        ...style.button,
-                        backgroundColor: tabSelect === 2 ? '#00FFA3' : 'transparent',
-                        color:  tabSelect === 2 ? '#000000' : '#ffffff'
-                    }}
-                    clickFunction={() => {
-                        changeTab(2)
-                    }}
-                    text={'COLLECTIONS'}
-                /> 
+                />
+                {
+                    type !== 'collection' && (
+                        <Button
+                            type={'function'}
+                            style={{
+                                ...style.button,
+                                backgroundColor: tabSelect === 2 ? '#00FFA3' : 'transparent',
+                                color: tabSelect === 2 ? '#000000' : '#ffffff'
+                            }}
+                            clickFunction={() => {
+                                changeTab(2)
+                            }}
+                            text={'COLLECTIONS'}
+                        />
+                    )
+                }
             </div>
             <div
                 style={style.grid}
             >
                 {
                     tabSelect === 1 ? (
-                        <NftList/>
+                        <NftList />
                     ) : (
-                        <Collection/>
+                        <Collection />
                     )
                 }
             </div>

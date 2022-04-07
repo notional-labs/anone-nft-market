@@ -83,9 +83,9 @@ const MenuButton = ({account, wrapSetAccount}) => {
                     }
                 />
                 <Button
-                    type={'link'}
+                    type={'href'}
                     style={style.button}
-                    url={`/user/profile`}
+                    url={`${process.env.REACT_APP_HOST}/user/profile`}
                     text={
                         <Image
                             src={profileButton}

@@ -61,7 +61,7 @@ const Collection = ({ }) => {
     }, [])
 
     const handleClick = () => {
-
+        
     }
 
     const getCollectionsList = () => {

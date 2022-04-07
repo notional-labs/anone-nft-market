@@ -1,4 +1,5 @@
 import { Image } from 'antd'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import bannerLogo from '../../assets/img/logo1.png'
 import ConnectButton from './connect_button/ConnectButton'

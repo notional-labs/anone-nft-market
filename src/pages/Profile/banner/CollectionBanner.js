@@ -1,9 +1,23 @@
 import { Image } from "antd"
 import Contact from "../contact/Contact"
 import verifiedImg from '../../../assets/img/verified.png'
+import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { dummyGetUserById } from "../../../utils/api/user"
 
-const Banner = ({ user, type }) => {
-    console.log(user)
+const CollectionBanner = ({ user, type }) => {
+    const [author, setAuthor] = useState(null)
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        setLoading(true)
+        if (type === 'collection') {
+            const res = dummyGetUserById(2)
+            setAuthor(`${JSON.stringify(res)}`)
+            setLoading(false)
+        }
+    }, [])
+
     return (
         <div>
             <div
@@ -13,8 +27,7 @@ const Banner = ({ user, type }) => {
             >
                 <div
                     style={{
-                        backgroundImage: `url(${type === 'profile' ? JSON.parse(user).banner_img : JSON.parse(user).user.banner_img
-                            })`,
+                        backgroundImage: `url(${JSON.parse(user).banner_img})`,
                         backgroundSize: 'cover',
                         backgroundRepeat: 'no-repeat',
                         backgroundPosition: 'center',
@@ -30,7 +43,7 @@ const Banner = ({ user, type }) => {
                 >
                     <Image
                         src={
-                            type === 'profile' ? JSON.parse(user).avt : JSON.parse(user).user.avt
+                            JSON.parse(user).avt
                         }
                         preview={false}
                         width={'200px'}
@@ -52,7 +65,7 @@ const Banner = ({ user, type }) => {
                         }}
                     >
                         {
-                            type === 'profile' ? JSON.parse(user).userName : JSON.parse(user).user.userName
+                            JSON.parse(user).title
                         }
                         <Image
                             src={verifiedImg}
@@ -63,22 +76,31 @@ const Banner = ({ user, type }) => {
                             }}
                         />
                     </p>
-                    {
-                        type === 'user-profile' && (
-                            <p
-                                style={{
-                                    color: '#00FFA3',
-                                    fontSize: '20px',
-                                    fontWeight: 'bold',
-                                    position: 'relative',
-                                    top: '-50px',
-                                    margin: 0
-                                }}
+
+                    <div
+                        style={{
+                            color: '#ffffff',
+                            fontSize: '20px',
+                            fontWeight: 'bold',
+                            position: 'relative',
+                            top: '-50px',
+                            margin: 0
+                        }}
+                    >
+                        Create by
+                        {/* <span
+                            style={{
+                                color: '#00FFA3',
+                                marginLeft: '20px'
+                            }}
+                        >
+                            <Link
+                                to={`/profile/${JSON.parse(author).id}`}
                             >
-                                {JSON.parse(user).account.address}
-                            </p>
-                        )
-                    }
+                                {JSON.parse(author).userName}
+                            </Link>
+                        </span> */}
+                    </div>
                     <p
                         style={{
                             color: '#ffffff',
@@ -89,7 +111,7 @@ const Banner = ({ user, type }) => {
                             margin: 0
                         }}
                     >
-                        {type === 'profile' ? JSON.parse(user).description : JSON.parse(user).user.description}
+                        {JSON.parse(user).description}
                     </p>
                 </div>
                 <div
@@ -173,4 +195,4 @@ const Banner = ({ user, type }) => {
     )
 }
 
-export default Banner
+export default CollectionBanner

@@ -33,7 +33,7 @@ const style = {
     }
 }
 
-const Contact = ({ }) => {
+const Contact = ({ type }) => {
     let location = useLocation();
 
     const handleClick = () => {
@@ -54,7 +54,9 @@ const Contact = ({ }) => {
             <div
                 style={{
                     display: 'flex',
-                    justifyContent: 'end'
+                    justifyContent: 'end',
+                    position: 'relative',
+                    top: '-100px',
                 }}
             >
                 <Button
@@ -69,79 +71,87 @@ const Contact = ({ }) => {
                         />
                     )}
                 />
-                <Button
-                    type={'link'}
-                    style={style.button}
-                    url={'/user/profile/setting'}
-                    text={(
-                        <Image
-                            src={settingImg}
-                            preview={false}
-                            width={'100%'}
+                {
+                    type === 'user-profile' && (
+                        <Button
+                            type={'link'}
+                            style={style.button}
+                            url={'/user/profile/setting'}
+                            text={(
+                                <Image
+                                    src={settingImg}
+                                    preview={false}
+                                    width={'100%'}
+                                />
+                            )}
                         />
-                    )}
-                />
+                    )
+                }
             </div>
-            <div
-                style={style.contactContainer}
-            >
-                <p>
-                    <Image
-                        src={emailImg}
-                        preview={false}
-                        width={'30px'}
-
-                    />
-                    <span
-                        style={style.link}
+            {
+                type !== 'collection' && (
+                    <div
+                        style={style.contactContainer}
                     >
-                        info@exmaple.com
-                    </span>
-                </p>
-                <p>
-                    <Image
-                        src={facebookImg}
-                        preview={false}
-                        width={'30px'}
+                        <p>
+                            <Image
+                                src={emailImg}
+                                preview={false}
+                                width={'30px'}
 
-                    />
-                    <span
-                        style={style.link}
-                    >
-                        /infor.com
-                    </span>
-                </p>
-                <p>
-                    <Image
-                        src={twitterImg}
-                        preview={false}
-                        width={'30px'}
+                            />
+                            <span
+                                style={style.link}
+                            >
+                                info@exmaple.com
+                            </span>
+                        </p>
+                        <p>
+                            <Image
+                                src={facebookImg}
+                                preview={false}
+                                width={'30px'}
 
-                    />
-                    <span
-                        style={style.link}
-                    >
-                        /infor.com
-                    </span>
-                </p>
-                <p
-                    style={{
-                        margin: 0
-                    }}
-                >
-                    <Image
-                        src={behanceImg}
-                        preview={false}
-                        width={'30px'}
+                            />
+                            <span
+                                style={style.link}
+                            >
+                                /infor.com
+                            </span>
+                        </p>
+                        <p>
+                            <Image
+                                src={twitterImg}
+                                preview={false}
+                                width={'30px'}
 
-                    />
-                    <span
-                        style={style.link}
-                    >
-                        /infor.com
-                    </span>
-                </p>
-            </div>
+                            />
+                            <span
+                                style={style.link}
+                            >
+                                /infor.com
+                            </span>
+                        </p>
+                        <p
+                            style={{
+                                margin: 0
+                            }}
+                        >
+                            <Image
+                                src={behanceImg}
+                                preview={false}
+                                width={'30px'}
+
+                            />
+                            <span
+                                style={style.link}
+                            >
+                                /infor.com
+                            </span>
+                        </p>
+                    </div>
+                )
+            }
         </div>
     )
 }
