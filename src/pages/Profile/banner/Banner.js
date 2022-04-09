@@ -3,7 +3,6 @@ import Contact from "../contact/Contact"
 import verifiedImg from '../../../assets/img/verified.png'
 
 const Banner = ({ user, type }) => {
-    console.log(user)
     return (
         <div>
             <div

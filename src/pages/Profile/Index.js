@@ -20,7 +20,6 @@ const Profile = ({ type, account, wrapSetAccount }) => {
     let { id } = useParams();
 
     useEffect(() => {
-        console.log('hello')
         if (type === 'user-profile') {
             setInfo(account)
         }

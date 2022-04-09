@@ -6,5 +6,6 @@ export const user = {
     banner_img: banner,
     userName: 'dummy',
     description: 'dummy description',
-    id: 1
+    id: 1,
+    addr: 'one324hkj32423jh4'
 }

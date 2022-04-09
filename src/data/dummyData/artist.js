@@ -2,10 +2,11 @@ import avt from '../../assets/img/dummy_artist_avt.jpg'
 
 export const artists = [
     {
-        id: 1,
+        id: 2,
         name: 'dummy1',
         floor_price: 2,
-        avt: avt
+        avt: avt,
+        addr: 'one42324n23bfjkdg'
     },
     {
         id: 1,

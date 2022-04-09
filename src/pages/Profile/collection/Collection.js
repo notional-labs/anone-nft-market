@@ -47,8 +47,8 @@ const Collection = ({ }) => {
                 <div
                     className="card"
                 >
-                    <Link
-                        to={`/collection/${col.id}`}
+                    <a
+                        href={`${process.env.REACT_APP_HOST}/collection/${col.id}`}
                     >
                         <div
                             style={style.card}
@@ -96,7 +96,7 @@ const Collection = ({ }) => {
                                 </p>
                             </div>
                         </div>
-                    </Link>
+                    </a>
                 </div>
             )
             list.push(jsx)

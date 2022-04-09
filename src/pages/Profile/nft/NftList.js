@@ -67,8 +67,8 @@ const NftList = ({ }) => {
                     className="card"
                     style={style.card}
                 >
-                    <Link
-                        to={`/nft/${nft.id}`}
+                    <a
+                        href={`${process.env.REACT_APP_HOST}/nft/${nft.id}`}
                     >
                         <div
                             style={{
@@ -105,7 +105,7 @@ const NftList = ({ }) => {
                                 {nft.price} AN1
                             </p>
                         </div>
-                    </Link>
+                    </a>
                 </div>
             )
             list.push(jsx)

@@ -3,6 +3,7 @@ import { Image } from "antd"
 import Grid from "../../../components/grids/Grid"
 import { fetchDummyBestCollections } from "../../../utils/fetch"
 import Button from "../../../components/buttons/Button"
+import { Link } from "react-router-dom"
 import './Collections.css'
 
 const style = {
@@ -17,6 +18,7 @@ const style = {
     },
     card: {
         backgroundColor: '#ffffff',
+        color: '#000000'
     },
     bannerCard: {
         padding: '0.8em',
@@ -61,7 +63,7 @@ const Collection = ({ }) => {
     }, [])
 
     const handleClick = () => {
-        
+
     }
 
     const getCollectionsList = () => {
@@ -72,52 +74,56 @@ const Collection = ({ }) => {
                 <div
                     className="card"
                 >
-                    <div
-                        style={style.card}
+                    <a
+                        href={`${process.env.REACT_APP_HOST}/collection/${col.id}`}
                     >
                         <div
-                            style={style.bannerCard}
+                            style={style.card}
                         >
-                            <Image
-                                src={col.banner_img}
-                                preview={false}
-                                width={'100%'}
-                            />
-                        </div>
-                        <div
-                            style={style.avt}
-                        >
-                            <Image
-                                src={col.avt}
-                                preview={false}
-                                style={{
-                                    borderRadius: '50%',
-                                    margin: 'auto'
-                                }}
-                                width={'30%'}
-                            />
-                        </div>
-                        <div
-                            style={style.cardText}
-                        >
-                            <p
-                                style={{
-                                    fontSize: '20px',
-                                    fontWeight: 'bold',
-                                    margin: 0
-                                }}
+                            <div
+                                style={style.bannerCard}
                             >
-                                {col.title}
-                            </p>
-                            <p
-                                style={{
-                                    margin: 0
-                                }}
+                                <Image
+                                    src={col.banner_img}
+                                    preview={false}
+                                    width={'100%'}
+                                />
+                            </div>
+                            <div
+                                style={style.avt}
                             >
-                                {col.description}
-                            </p>
+                                <Image
+                                    src={col.avt}
+                                    preview={false}
+                                    style={{
+                                        borderRadius: '50%',
+                                        margin: 'auto'
+                                    }}
+                                    width={'30%'}
+                                />
+                            </div>
+                            <div
+                                style={style.cardText}
+                            >
+                                <p
+                                    style={{
+                                        fontSize: '20px',
+                                        fontWeight: 'bold',
+                                        margin: 0
+                                    }}
+                                >
+                                    {col.title}
+                                </p>
+                                <p
+                                    style={{
+                                        margin: 0
+                                    }}
+                                >
+                                    {col.description}
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             )
             list.push(jsx)

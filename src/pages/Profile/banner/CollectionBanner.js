@@ -10,13 +10,11 @@ const CollectionBanner = ({ user, type }) => {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        setLoading(true)
-        if (type === 'collection') {
-            const res = dummyGetUserById(2)
-            setAuthor(`${JSON.stringify(res)}`)
-            setLoading(false)
-        }
+        const res = dummyGetUserById(2)
+        setAuthor(`${JSON.stringify(res)}`)
     }, [])
+
+    console.log(author)
 
     return (
         <div>
@@ -76,31 +74,34 @@ const CollectionBanner = ({ user, type }) => {
                             }}
                         />
                     </p>
-
-                    <div
-                        style={{
-                            color: '#ffffff',
-                            fontSize: '20px',
-                            fontWeight: 'bold',
-                            position: 'relative',
-                            top: '-50px',
-                            margin: 0
-                        }}
-                    >
-                        Create by
-                        {/* <span
-                            style={{
-                                color: '#00FFA3',
-                                marginLeft: '20px'
-                            }}
-                        >
-                            <Link
-                                to={`/profile/${JSON.parse(author).id}`}
+                    {
+                        author !== null && (
+                            <div
+                                style={{
+                                    color: '#ffffff',
+                                    fontSize: '20px',
+                                    fontWeight: 'bold',
+                                    position: 'relative',
+                                    top: '-50px',
+                                    margin: 0
+                                }}
                             >
-                                {JSON.parse(author).userName}
-                            </Link>
-                        </span> */}
-                    </div>
+                                Create by
+                                <span
+                                    style={{
+                                        color: '#00FFA3',
+                                        marginLeft: '10px'
+                                    }}
+                                >
+                                    <Link
+                                        to={`/profile/${JSON.parse(author).id}`}
+                                    >
+                                        {JSON.parse(author).userName}
+                                    </Link>
+                                </span>
+                            </div>
+                        )
+                    }
                     <p
                         style={{
                             color: '#ffffff',

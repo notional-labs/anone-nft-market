@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Image } from "antd"
 import Grid from "../../../components/grids/Grid"
 import { fetchDummyTopArtists } from "../../../utils/fetch"
+import { Link } from "react-router-dom"
 import './Artist.css'
 
 const style = {
@@ -48,36 +49,40 @@ const Artist = ({ }) => {
                 <div
                     className="card"
                 >
-                    <div
-                        style={style.card}
+                    <Link
+                        to={`/profile/${artist.id}`}
                     >
-                        <div>
-                            <Image 
-                                src={artist.avt}
-                                preview={false}
-                                width={100}
-                            />
-                        </div>
                         <div
-                            style={style.cardText}
+                            style={style.card}
                         >
-                            <p
-                                style={{
-                                    fontSize: '20px',
-                                    margin: 0
-                                }}
+                            <div>
+                                <Image
+                                    src={artist.avt}
+                                    preview={false}
+                                    width={100}
+                                />
+                            </div>
+                            <div
+                                style={style.cardText}
                             >
-                                {artist.name}
-                            </p>
-                            <p
-                                style={{
-                                    margin: 0
-                                }}
-                            >
-                                Floor price: {artist.floor_price}
-                            </p>
+                                <p
+                                    style={{
+                                        fontSize: '20px',
+                                        margin: 0
+                                    }}
+                                >
+                                    {artist.name}
+                                </p>
+                                <p
+                                    style={{
+                                        margin: 0
+                                    }}
+                                >
+                                    Floor price: {artist.floor_price}
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                 </div>
             )
             list.push(jsx)
