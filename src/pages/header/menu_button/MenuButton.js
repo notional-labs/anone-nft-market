@@ -33,7 +33,7 @@ const MenuButton = ({account, wrapSetAccount}) => {
                 border: 'solid 1px #00FFA3',
                 display: 'flex',
                 justifyContent: 'space-between',
-                margin: '2em 5em',
+                margin: '1em 5em',
                 padding: '0.5em 0em 0.5em 2em',
             }}
         >
@@ -77,7 +77,7 @@ const MenuButton = ({account, wrapSetAccount}) => {
                         <Image
                             src={walletButton}
                             preview={false}
-                            width={'120%'}
+                            width={35}
                             style={style.buttonImg}
                         />
                     }
@@ -90,7 +90,7 @@ const MenuButton = ({account, wrapSetAccount}) => {
                         <Image
                             src={profileButton}
                             preview={false}
-                            width={'120%'}
+                            width={35}
                             style={style.buttonImg}
                         />
                     }
@@ -103,7 +103,7 @@ const MenuButton = ({account, wrapSetAccount}) => {
                         <Image
                             src={logoutButton}
                             preview={false}
-                            width={'120%'}
+                            width={35}
                             style={{...style.buttonImg, marginRight: 0}}
                         />}
                 />

@@ -1,0 +1,63 @@
+.logo:hover {
+    animation: fade 0.5s normal forwards;
+    cursor: pointer;
+}
+
+.ant-checkbox .ant-checkbox-inner {
+    width: 40px;
+    height: 40px;
+    border: solid 1px #00FFA3 !important;
+    background-color: transparent !important;
+}
+
+.ant-checkbox-checked::after {
+    border-color: #00FFA3 !important;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner::after {
+    width: 10px;
+    height: 20px;
+    border-color: #00FFA3 !important;
+    position: relative;
+    left: 10px;
+    top: 15px
+}
+
+.ant-switch[aria-checked='false'] {
+    background-color: #626262 ;
+}
+
+.ant-switch[aria-checked='true'] {
+    background-color: #00FFA3;
+}
+
+.ant-switch {
+    border-radius: 5px !important;
+    width: 170% !important;
+    height: 30px !important;
+    border: none !important;
+    position: relative !important;
+    top: 15px !important;
+    left: -70% !important;
+}
+
+.ant-switch-checked:focus {
+    box-shadow: none !important;
+}
+
+.ant-switch-handle {
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50% !important;
+    position: absolute !important;
+    top: 5px !important;
+}
+
+@keyframes fade {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.5;
+    }
+}

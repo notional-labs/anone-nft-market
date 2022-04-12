@@ -10,41 +10,48 @@ const Button = ({ clickFunction, style, text, type, url, className }) => {
         <div>
             {
                 type === 'function' ? (
-                    <button 
-                        style={style} 
+                    <button
+                        style={style}
                         onClick={handleClick}
                         className={`${className || ''}`}
                     >
                         {text}
                     </button>
                 ) : type === 'href' ? (
-                    <a 
+                    <a
                         href={url}
                         style={{
                             textDecoration: 'none'
                         }}
                     >
-                        <button 
+                        <button
                             style={style}
                             className={`${className || ''}`}
                         >
                             {text}
                         </button>
                     </a>
-                ) : (
-                    <Link 
+                ) : type === 'link' ? (
+                    <Link
                         to={`${url}`}
                         style={{
                             textDecoration: 'none'
                         }}
                     >
-                        <button 
+                        <button
                             style={style}
                             className={`${className || ''}`}
                         >
                             {text}
                         </button>
                     </Link>
+                ) : (
+                    <button
+                        style={style}
+                        className={`${className || ''}`}
+                    >
+                        {text}
+                    </button>
                 )
             }
         </div>

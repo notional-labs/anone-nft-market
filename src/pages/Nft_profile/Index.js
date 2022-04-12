@@ -1,6 +1,7 @@
 import Header from "../header/Header"
 import Footer from "../footer/Footer"
 import ImgAndSpec from "./img_and_specs/ImgAndSpec"
+import Description from "./description/Description"
 import { getNftById } from "../../utils/api/nft"
 import { useEffect, useState } from "react"
 
@@ -29,9 +30,14 @@ const NftProfile = ({ account, wrapSetAccount }) => {
             />
             {
                 nft !== null && (
-                    <ImgAndSpec
-                        nft={nft}
-                    />
+                    <>
+                        <ImgAndSpec
+                            nft={nft}
+                        />
+                        <Description
+                            nft={JSON.parse(nft)}
+                        />
+                    </>
                 )
             }
             <Footer />

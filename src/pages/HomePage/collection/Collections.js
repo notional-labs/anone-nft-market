@@ -3,7 +3,6 @@ import { Image } from "antd"
 import Grid from "../../../components/grids/Grid"
 import { fetchDummyBestCollections } from "../../../utils/fetch"
 import Button from "../../../components/buttons/Button"
-import { Link } from "react-router-dom"
 import './Collections.css'
 
 const style = {
