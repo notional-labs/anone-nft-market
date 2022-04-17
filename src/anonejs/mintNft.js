@@ -20,7 +20,8 @@ export const mintCallFromUser = async (Config) => {
   );
 
   console.log("Mint call from user Tx", result);
-  return result;
+  const wasmEvent = result.logs[0].events.find((e) => e.type === 'wasm');
+  return wasmEvent;
 };
 
 export const mintToRecipient = async (Config) => {
@@ -46,7 +47,8 @@ export const mintToRecipient = async (Config) => {
     "Mint a NFT without tokenId to recipient (call from admin) Tx",
     result
   );
-  return result;
+  const wasmEvent = result.logs[0].events.find((e) => e.type === 'wasm');
+  return wasmEvent;
 };
 
 export const mintForRecipient = async (Config) => {
@@ -72,5 +74,7 @@ export const mintForRecipient = async (Config) => {
     "Mint a NFT with tokenId for recipient (call from admin) Tx",
     result
   );
-  return result;
+
+  const wasmEvent = result.logs[0].events.find((e) => e.type === 'wasm');
+  return wasmEvent;
 };
