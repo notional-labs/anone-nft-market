@@ -1,12 +1,16 @@
-import { Form, Switch, Input, message, Image, Checkbox, Col, Row } from "antd"
-import { useState } from "react";
+import { Form, Switch, Input, message, Image, Select } from "antd"
+import { useCallback, useEffect, useState } from "react";
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { beforeUpload } from "../../../utils/imageProcessing";
 import noImg from '../../../assets/img/no_image.png'
+import Size from "../size/Size";
 import { openNotification } from "../../../components/notifications/notification";
+import { fetchDummyBestCollections } from "../../../utils/fetch";
 import './Forms.css'
 
 const { TextArea } = Input;
+
+const { Option } = Select;
 
 const options = [
     { label: 'Sneaker', value: 'sneaker' },
@@ -40,6 +44,13 @@ const Forms = ({ }) => {
     const [loading, setLoading] = useState(false)
     const [imgUrlLogo, setImgUrlLogo] = useState('')
     const [imgUrlBanner, setImgUrlBanner] = useState('')
+    const [collections, setCollections] = useState([])
+    const [sizes, setSizes] = useState([])
+
+    useEffect(() => {
+        const res = fetchDummyBestCollections()
+        setCollections([...res])
+    }, [])
 
     const create = (values) => {
         console.log(values)
@@ -56,6 +67,10 @@ const Forms = ({ }) => {
         setImgUrlLogo('')
         setImgUrlBanner('')
     }
+
+    const wrapSetSize = useCallback((sizeList) => {
+        setSizes([...sizeList])
+    })
 
     const handleChange = (e, type) => {
         const reader = new FileReader();
@@ -89,7 +104,7 @@ const Forms = ({ }) => {
             <p
                 style={style.title}
             >
-                Create New Collection
+                Create New Item
             </p>
             <Form
                 form={form}
@@ -108,7 +123,7 @@ const Forms = ({ }) => {
                     rules={[
                         () => ({
                             validator() {
-                                if(imgUrlLogo && imgUrlLogo !== '') {
+                                if (imgUrlLogo && imgUrlLogo !== '') {
                                     return Promise.resolve()
                                 }
                                 return Promise.reject('Must upload an image')
@@ -150,57 +165,7 @@ const Forms = ({ }) => {
                         marginTop: '50px'
                     }}
                 >
-                    Banner collection
-                </p>
-                <Form.Item
-                    name={'banner'}
-                    rules={[
-                        () => ({
-                            validator() {
-                                if(imgUrlLogo && imgUrlLogo !== '') {
-                                    return Promise.resolve()
-                                }
-                                return Promise.reject('Must upload an image')
-                            }
-                        }),
-                    ]}
-                >
-                    <input
-                        type='file'
-                        accept="image/png, image/jpeg, image/gif, image/jpg"
-                        id='input-banner'
-                        onChange={(e) => { handleChange(e, 'banner') }}
-                        style={{
-                            display: 'none'
-                        }}
-                    />
-                    <div
-                        style={{
-                            width: '65%',
-                            backgroundColor: '#626262',
-                            height: '250px',
-                            overflow: "hidden"
-                        }}
-                    >
-                        <label
-                            htmlFor="input-banner"
-                            className="logo"
-                        >
-                            <Image
-                                src={imgUrlBanner || noImg}
-                                preview={false}
-                                width={'100%'}
-                            />
-                        </label>
-                    </div>
-                </Form.Item>
-                <p
-                    style={{
-                        ...style.label,
-                        marginTop: '50px'
-                    }}
-                >
-                    Name collection
+                    Name
                 </p>
                 <p
                     style={{
@@ -260,49 +225,57 @@ const Forms = ({ }) => {
                         marginTop: '50px'
                     }}
                 >
-                    Categories
+                    Collection
+                </p>
+                <p
+                    style={{
+                        ...style.label,
+                        fontSize: '10px',
+                    }}
+                >
+                    This is the collection where your item will appear.
                 </p>
                 <Form.Item
-                    name={'trait'}
+                    name={'collection'}
                     rules={[
-                        { required: true, message: 'Please select a trait(s)' },
+                        { required: true, message: 'Please input select a collection!' },
                     ]}
                 >
-                    <Checkbox.Group
-                        style={{
+                    <Select 
+                        placeholder='Select Collection'
+                        allowClear={true}
+                        style={{ 
                             width: '100%',
-                            marginTop: '20px'
                         }}
-                        onChange={handleChangeCheckbox}
                     >
-                        <Row>
-                            {
-                                options.map(option => {
-                                    return (
-                                        <Col span={8}>
-                                            <Checkbox
-                                                value={`${option.value}`}
-                                                style={{
-                                                    color: '#F2F1F1',
-                                                    fontSize: '20px',
-                                                }}
-                                            >
-                                                <p
-                                                    style={{
-                                                        position: 'relative',
-                                                        top: '-10px',
-                                                        marginLeft: '20px'
-                                                    }}
-                                                >
-                                                    {option.label}
-                                                </p>
-                                            </Checkbox>
-                                        </Col>
-                                    )
-                                })
-                            }
-                        </Row>
-                    </Checkbox.Group>
+                        {
+                            collections.map(collection => {
+                                return (
+                                    <Option 
+                                        value={`${collection.id}`}
+                                    >
+                                        {collection.title}
+                                    </Option>
+                                )
+                            })
+                        }
+                    </Select>
+                </Form.Item>
+                <p
+                    style={{
+                        ...style.label,
+                        marginTop: '50px'
+                    }}
+                >
+                    Size
+                </p>
+                <Form.Item
+                    name={'size'}
+                    rules={[
+                        { required: true, message: 'Please add at least one size!' },
+                    ]}
+                >
+                    <Size wrapSetSize={wrapSetSize}/>
                 </Form.Item>
                 <div
                     style={{

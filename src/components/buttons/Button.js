@@ -11,6 +11,7 @@ const Button = ({ clickFunction, style, text, type, url, className }) => {
             {
                 type === 'function' ? (
                     <button
+                        type='button'
                         style={style}
                         onClick={handleClick}
                         className={`${className || ''}`}

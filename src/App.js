@@ -12,6 +12,7 @@ import {
 import Profile from './pages/Profile/Index';
 import NftProfile from './pages/Nft_profile/Index';
 import CollectionCreate from './pages/Collection_create/Index';
+import NftCreate from './pages/Nft_create/Index';
 import { useState, useEffect, useCallback } from 'react';
 
 function App() {
@@ -54,6 +55,10 @@ function App() {
         />} />
         <Route exact path="/profile/:id" element={<Profile
           type={'profile'}
+          account={account}
+          wrapSetAccount={wrapSetAccount}
+        />} />
+        <Route exact path="/nft/create" element={<NftCreate
           account={account}
           wrapSetAccount={wrapSetAccount}
         />} />

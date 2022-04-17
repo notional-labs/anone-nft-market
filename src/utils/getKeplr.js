@@ -1,4 +1,4 @@
-import { anoneTestnetChain } from "../data/chainObjects/anone_testnet";
+import { anoneTestnetChain } from "../data/data/anone_testnet";
 import { dummyLogin } from "./api/user";
 
 export const getKeplr = async () => {

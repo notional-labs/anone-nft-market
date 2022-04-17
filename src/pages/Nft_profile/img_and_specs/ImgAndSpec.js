@@ -50,7 +50,7 @@ const ImgAndSpec = ({ nft }) => {
                         color: '#ffffff',
                         fontSize: '16px',
                         textAlign: 'center',
-                        padding: '0.5em'
+                        padding: '5px'
                     }}
                 >
                     {trait}
@@ -64,8 +64,8 @@ const ImgAndSpec = ({ nft }) => {
     return (
         <div
             style={{
-                margin: '10em 5em',
-                padding: '0em 20em'
+                margin: '10em 0',
+                padding: '0em 25em'
             }}
         >
             <div
@@ -76,7 +76,8 @@ const ImgAndSpec = ({ nft }) => {
                         backgroundColor: '#ffffff',
                         padding: '10em',
                         border: 'solid 1px #00FFA3',
-                        width: '90%'
+                        width: '80%',
+                        marginRight: '50px'
                     }}
                 >
                     <Image
@@ -90,7 +91,6 @@ const ImgAndSpec = ({ nft }) => {
                 </div>
                 <div
                     style={{
-                        marginLeft: '50px',
                         width: '100%'
                     }}
                 >
@@ -190,12 +190,18 @@ const ImgAndSpec = ({ nft }) => {
                             {JSON.parse(nft).like}
                         </p>
                     </div>
-                    <Grid
-                        lists={getTraitsList()}
-                        numberOfColumn={5}
-                        rowGap={10}
-                        colGap={10}
-                    />
+                    <div
+                        style={{
+                            width: '90%'
+                        }}
+                    >
+                        <Grid
+                            lists={getTraitsList()}
+                            numberOfColumn={4}
+                            rowGap={10}
+                            colGap={10}
+                        />
+                    </div>
                     <DropBox nft={nft} />
                     <div>
                         <p

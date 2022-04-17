@@ -18,12 +18,12 @@
 }
 
 .buy-button:hover {
-  animation-name: fade;
+  animation-name: faded;
   animation-fill-mode: forwards;
   animation-duration: 1s;
 }
 
-@keyframes fade {
+@keyframes faded {
   from {
       color: #000000
   }

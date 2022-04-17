@@ -107,7 +107,7 @@ const Footer = ({ }) => {
                                 marginLeft: '10em'
                             }}
                         >
-                            {'2021 ANOTHER-1 All rights reserved Terms & Conditions Privacy Polic'}
+                            {'2021 ANOTHER-1 All rights reserved Terms & Conditions Privacy Policy'}
                         </p>
                     </div>
                 </div>
