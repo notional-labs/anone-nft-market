@@ -1,9 +1,8 @@
-import { getWasmClient } from "../utils/getKeplr";
 import { calculateFee, GasPrice } from "@cosmjs/stargate";
 
 export const createCollection = async (Config) => {
   const account = JSON.parse(localStorage.getItem("account")).account.address;
-  const wasmClient = await getWasmClient();
+  const wasmClient = JSON.parse(localStorage.getItem("wasmClient"));
   const gasPrice = GasPrice.fromString('0.002uan1');
   const royaltyInfo = {
     payment_address: Config.royaltyPaymentAddress,
@@ -31,7 +30,7 @@ export const createCollection = async (Config) => {
 
   const txFee = calculateFee(300000, gasPrice);
 
-  const tx = await wasmClient.instantiate(
+  const result = await wasmClient.instantiate(
     account,
     50, // minter_code_id (stored)
     instantiateMsg,
@@ -39,6 +38,11 @@ export const createCollection = async (Config) => {
     txFee
   );
 
-  console.log('Create Collection Tx', tx);
-  return tx;
+  console.log("Create Collection Tx", result);
+  const wasmEvent = result.logs[0].events.find((e) => e.type === 'wasm');
+  const minter_info = {
+      minter_contract_address: wasmEvent.attributes[0]['value'],
+      an721_contract_address: wasmEvent.attributes[5]['value']
+  }
+  return minter_info;
 }
