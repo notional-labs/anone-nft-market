@@ -22,15 +22,15 @@ export const getKeplr = async () => {
 }
 
 
-export const getWasmClient = async (offlineSigner) => {
+export const getWasmClient = async () => {
+    let offlineSigner = await window.getOfflineSigner(process.env.REACT_APP_CHAIN_ID);
     const wasmClient = await SigningCosmWasmClient.connectWithSigner(anoneTestnetChain.rpc, offlineSigner);
     return wasmClient
 }
 
 
 export const dummyConnectWallet = async () => {
-    const { accounts, offlineSigner } = await getKeplr()
-    const wasmClient = await getWasmClient(offlineSigner)
+    const { accounts } = await getKeplr()
 
     if(!accounts || accounts.length === 0) return
     const user = dummyLogin(accounts[0].address)
@@ -46,17 +46,6 @@ export const dummyConnectWallet = async () => {
         localStorage.setItem('account', JSON.stringify({
             account: accounts[0],
             user: user
-        }))
-    }
-    if (localStorage.getItem('wasmClient') === null) {
-        localStorage.setItem('wasmClient', JSON.stringify({
-            wasmClient: wasmClient
-        }))
-    }
-    else {
-        localStorage.removeItem('wasmClient')
-        localStorage.setItem('wasmClient', JSON.stringify({
-            wasmClient: wasmClient
         }))
     }
 }
