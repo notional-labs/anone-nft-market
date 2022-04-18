@@ -2,6 +2,7 @@ import { Form, Switch, Input, message, Image, Checkbox, Col, Row } from "antd"
 import { useState } from "react";
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import Button from "../../../components/buttons/Button";
+import { createCollection } from "../../../anonejs/createCollection";
 import { getBase64, beforeUpload } from "../../../utils/imageProcessing";
 import noImg from '../../../assets/img/no_image.png'
 import './Forms.css'
@@ -74,6 +75,25 @@ const Forms = ({ }) => {
             <div style={{ marginTop: 8 }}>Upload</div>
         </div>
     )
+
+    const Config = {
+        royaltyPaymentAddress: JSON.parse(localStorage.getItem("account")).account.address,
+        royaltyShare: '0.1',
+        baseTokenUri: 'ipfs://bafybeidfe5acjamg7kax65mvspt637ksr3wcdvvaiutmzhjgi74kddxf5q/galaxyiOigcK',
+        numTokens: 5,
+        an721CodeId: 42,
+        name: 'Test Collection 2',
+        symbol: 'TESTTWO',
+        description: 'An awesome NFT series',
+        image: 'ipfs://bafybeigi3bwpvyvsmnbj46ra4hyffcxdeaj6ntfk5jpic5mx27x6ih2qvq/images/1.png',
+        externalLink: 'https://www.youtube.com/watch?v=1YML6_zRssg',
+        perAddressLimit: 1,
+    }
+
+    const handleClick = async () => {
+        const result = await createCollection(Config);
+        console.log(result)
+    }
 
     return (
         <div
@@ -313,8 +333,11 @@ const Forms = ({ }) => {
                     </Form.Item>
                 </div>
                 <div>
-                    <button
-                        htmlType="submit"
+                    
+                    <Button
+                        clickFunction={handleClick}
+                        type={'function'}
+                        text={'CREATE'}
                         style={{
                             border: 0,
                             backgroundColor: '#00FFA3',
@@ -325,9 +348,7 @@ const Forms = ({ }) => {
                             padding: '0.5em 2em',
                             cursor: 'pointer'
                         }}
-                    >
-                        Create
-                    </button>
+                    />
                 </div>
             </Form>
         </div>
