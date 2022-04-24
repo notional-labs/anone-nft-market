@@ -69,7 +69,7 @@ const CreateButton = ({ }) => {
                             style={style.subButton}
                             text={'New Collection'}
                             type={'href'}
-                            url={`${process.env.REACT_APP_HOST}/collection/create`}
+                            url={`/collection/create`}
                         />
                     </div>
                 )
