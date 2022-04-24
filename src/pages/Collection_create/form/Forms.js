@@ -5,7 +5,8 @@ import Button from "../../../components/buttons/Button";
 // import { createCollection } from "../../../anonejs/createCollection";
 // import { createSale } from "../../../anonejs/createSale";
 // import {makeOrder} from "../../../anonejs/makeOrder";
-import { updatePrice } from "../../../anonejs/updatePrice";
+// import { updatePrice } from "../../../anonejs/updatePrice";
+import { cancelSale } from "../../../anonejs/cancelSale";
 import { getBase64, beforeUpload } from "../../../utils/imageProcessing";
 import noImg from "../../../assets/img/no_image.png";
 import "./Forms.css";
@@ -117,11 +118,18 @@ const Forms = ({}) => {
     update_price: '10000000'
   };
 
+  const Config5 = {
+    nftMarketplaceContractAddr:
+      "one1mcy2qkuphhz4h4mncdzrxf3fh57fk98l6m30zfp7lggk4zh407rqq2carw",
+    offering_id: '4'
+  };
+
   const handleClick = async () => {
     // const result = await createCollection(Config);
     // const result = await createSale(Config2);
     // const result = await makeOrder(Config3);
-    const result = await updatePrice(Config4);
+    // const result = await updatePrice(Config4);
+    const result = await cancelSale(Config5);
     console.log(result);
   };
 
