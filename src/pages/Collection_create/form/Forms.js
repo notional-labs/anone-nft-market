@@ -6,7 +6,11 @@ import Button from "../../../components/buttons/Button";
 // import { createSale } from "../../../anonejs/createSale";
 // import {makeOrder} from "../../../anonejs/makeOrder";
 // import { updatePrice } from "../../../anonejs/updatePrice";
-import { cancelSale } from "../../../anonejs/cancelSale";
+// import { cancelSale } from "../../../anonejs/cancelSale";
+// import { queryAccountInfo } from "../../../anonejs/queryInfo";
+// import { queryOfferingList } from "../../../anonejs/queryInfo";
+import { queryNftInfoById } from "../../../anonejs/queryInfo";
+import { queryNumberOfNfts } from "../../../anonejs/queryInfo";
 import { getBase64, beforeUpload } from "../../../utils/imageProcessing";
 import noImg from "../../../assets/img/no_image.png";
 import "./Forms.css";
@@ -124,12 +128,28 @@ const Forms = ({}) => {
     offering_id: '4'
   };
 
+  const Config6 = {
+    nftMarketplaceContractAddr:
+      "one1mcy2qkuphhz4h4mncdzrxf3fh57fk98l6m30zfp7lggk4zh407rqq2carw",
+    sortListing: "price_lowest"
+  };
+
+  const Config7 = {
+    cw721ContractAddr:
+      "one1mych7nr7fk86y2ezekkqfwsqpl8ax659ez4r4lm87x6clhz65q9sn4ngte",
+    tokenId: '1'
+  };
+
   const handleClick = async () => {
     // const result = await createCollection(Config);
     // const result = await createSale(Config2);
     // const result = await makeOrder(Config3);
     // const result = await updatePrice(Config4);
-    const result = await cancelSale(Config5);
+    // const result = await cancelSale(Config5);
+    // const result = await queryAccountInfo();
+    // const result = await queryOfferingList(Config6);
+    const result = await queryNftInfoById(Config7);
+    // const result = await queryNumberOfNfts('one1mych7nr7fk86y2ezekkqfwsqpl8ax659ez4r4lm87x6clhz65q9sn4ngte');
     console.log(result);
   };
 
