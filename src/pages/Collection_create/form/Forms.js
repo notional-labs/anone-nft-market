@@ -8,10 +8,10 @@ import Button from "../../../components/buttons/Button";
 // import { updatePrice } from "../../../anonejs/updatePrice";
 // import { cancelSale } from "../../../anonejs/cancelSale";
 // import { queryAccountInfo } from "../../../anonejs/queryInfo";
-// import { queryOfferingList } from "../../../anonejs/queryInfo";
+import { queryOfferingList } from "../../../anonejs/queryInfo";
 // import { queryNftInfoById } from "../../../anonejs/queryInfo";
 // import { queryNumberOfNfts } from "../../../anonejs/queryInfo";
-import { queryCollectionInfo } from "../../../anonejs/queryInfo";
+// import { queryCollectionInfo } from "../../../anonejs/queryInfo";
 import { getDataFromUri } from "../../../anonejs/getDataFromUri";
 import { getBase64, beforeUpload } from "../../../utils/imageProcessing";
 import noImg from "../../../assets/img/no_image.png";
@@ -149,11 +149,11 @@ const Forms = ({}) => {
     // const result = await updatePrice(Config4);
     // const result = await cancelSale(Config5);
     // const result = await queryAccountInfo();
-    // const result = await queryOfferingList(Config6);
+    const result = await queryOfferingList(Config6);
     // const result = await queryNftInfoById(Config7);
     // const result = await queryNumberOfNfts('one1mych7nr7fk86y2ezekkqfwsqpl8ax659ez4r4lm87x6clhz65q9sn4ngte');
     // const result = await queryCollectionInfo('one1mych7nr7fk86y2ezekkqfwsqpl8ax659ez4r4lm87x6clhz65q9sn4ngte');
-    const result = await getDataFromUri('https://ipfs.io/ipfs/bafybeiaivv62j7jxlkahxobfr5io7h2j56obw5mojljho2ybg7zhah2eue/galaxyfcnCU3/1');
+    // const result = await getDataFromUri('https://ipfs.io/ipfs/bafybeiaivv62j7jxlkahxobfr5io7h2j56obw5mojljho2ybg7zhah2eue/galaxyfcnCU3/1');
     console.log(result);
   };
 
