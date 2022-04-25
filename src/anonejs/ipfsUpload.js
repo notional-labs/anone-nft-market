@@ -8,8 +8,8 @@ export const upload = async (uploadPath) => {
   return file;
 };
 
-export const ipfsUpload = async (image) => {
-  const uploadResult = await upload(image)
+export const ipfsUpload = async (path) => {
+  const uploadResult = await upload(path)
   const uploadResultPath = IPFS_PREFIX + String(uploadResult.cid)
   return uploadResultPath
 }
