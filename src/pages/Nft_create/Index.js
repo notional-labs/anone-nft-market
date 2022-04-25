@@ -20,7 +20,6 @@ const NftCreate = ({ account, wrapSetAccount }) => {
                 wrapSetAccount={wrapSetAccount}
             />
             <Forms/>
-            <Footer/>
         </div>
     )
 }

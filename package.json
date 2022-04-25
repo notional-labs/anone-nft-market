@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "cosmwasm": "^1.0.2",
     "@cosmjs/cosmwasm-stargate": "^0.26.4",
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "antd": "^4.19.3",
+    "cosmwasm": "^1.0.2",
     "inquirer": "^8.2.0",
     "ipfs-http-client": "^56.0.1",
     "path": "^0.12.7",

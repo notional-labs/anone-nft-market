@@ -1,23 +1,27 @@
-import { Form, Switch, Input, message, Image, Checkbox, Col, Row } from "antd"
+import { Form, Switch, Input, Slider, Image, Checkbox, Col, Row, InputNumber } from "antd"
 import { useState } from "react";
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { beforeUpload } from "../../../utils/imageProcessing";
 import Button from "../../../components/buttons/Button";
 import { createCollection } from "../../../anonejs/createCollection";
 import noImg from '../../../assets/img/no_image.png'
 import { openNotification } from "../../../components/notifications/notification";
+import { ipfsUpload } from "../../../anonejs/ipfsUpload";
 import './Forms.css'
 
 const { TextArea } = Input;
 
-const options = [
-    { label: 'Sneaker', value: 'sneaker' },
-    { label: 'Shoes', value: 'shoes' },
-    { label: 'Sport shoes', value: 'sport shoes' },
-    { label: 'Running shoes', value: 'running shoes' },
-    { label: 'Boots', value: 'boots' },
-    { label: 'Sandal', value: 'sandal' },
-];
+const checkValidString = (string) => {
+
+}
+
+// const options = [
+//     { label: 'Sneaker', value: 'sneaker' },
+//     { label: 'Shoes', value: 'shoes' },
+//     { label: 'Sport shoes', value: 'sport shoes' },
+//     { label: 'Running shoes', value: 'running shoes' },
+//     { label: 'Boots', value: 'boots' },
+//     { label: 'Sandal', value: 'sandal' },
+// ];
 
 const style = {
     container: {
@@ -37,16 +41,44 @@ const style = {
     }
 }
 
-const Forms = ({ }) => {
+const Forms = ({ account }) => {
     const [form] = Form.useForm()
     const [loading, setLoading] = useState(false)
     const [imgUrlLogo, setImgUrlLogo] = useState('')
     const [imgUrlBanner, setImgUrlBanner] = useState('')
+    const [imgIpfsLogo, setImgIpfsLogo] = useState('')
+    const [imgIpfsBanner, setImgIpfsBanner] = useState('')
+    const [paymentAddr, setPaymentAddr] = useState(JSON.parse(account).account.address)
 
     const create = (values) => {
-        console.log(values)
-        openNotification('success', 'Submit successfully')
-        reset()
+        setLoading(true)
+        let config = {
+            ...values,
+            logo: imgIpfsLogo,
+            banner: imgIpfsBanner,
+            royaltyPaymentAddress: paymentAddr
+        }
+        const contractConfig = {
+            royaltyPaymentAddress: config.royaltyPaymentAddress,
+            royaltyShare: `${config.commission/10}`,
+            baseTokenUri: 'ipfs://bafybeidfe5acjamg7kax65mvspt637ksr3wcdvvaiutmzhjgi74kddxf5q/galaxyiOigcK',
+            numTokens: 5,
+            an721CodeId: 42,
+            name: `${config.name}`,
+            symbol: 'TESTTWO',
+            description: `${config.description}`,
+            image: `${config.logo}`,
+            externalLink: `${config.externalLink}`,
+            perAddressLimit: config.limit,
+        }
+        const result = createCollection(contractConfig).then(result => {
+            console.log(result)
+            openNotification('success', 'Submit successfully')
+            reset()
+        }).catch(e => {
+            openNotification('error', e.message)
+            reset()
+        })
     }
 
     const submitFail = () => {
@@ -63,44 +95,29 @@ const Forms = ({ }) => {
         const reader = new FileReader();
         reader.onload = () => {
             if (reader.readyState === 2) {
-                type === 'logo' ? setImgUrlLogo(reader.result) : setImgUrlBanner(reader.result)
+                if (type === 'logo') {
+                    setImgUrlLogo(reader.result)
+                    ipfsUpload(reader.result).then(url => {
+                        setImgIpfsLogo(url)
+                    })
+                } else {
+                    setImgUrlBanner(reader.result)
+                    ipfsUpload(reader.result).then(url => {
+                        setImgIpfsBanner(url)
+                    })
+                }
             }
         }
         reader.readAsDataURL(e.target.files[0]);
     };
 
-    const handleChangeText = () => {
+    // const handleClick = async () => {
+    //     const result = await createCollection(Config);
+    //     console.log(result)
+    // }
 
-    }
-
-    const handleChangeCheckbox = (e) => {
-
-    }
-
-    const uploadButton = (
-        <div>
-            {loading ? <LoadingOutlined /> : <PlusOutlined />}
-            <div style={{ marginTop: 8 }}>Upload</div>
-        </div>
-    )
-
-    const Config = {
-        royaltyPaymentAddress: JSON.parse(localStorage.getItem("account")).account.address,
-        royaltyShare: '0.1',
-        baseTokenUri: 'ipfs://bafybeidfe5acjamg7kax65mvspt637ksr3wcdvvaiutmzhjgi74kddxf5q/galaxyiOigcK',
-        numTokens: 5,
-        an721CodeId: 42,
-        name: 'Test Collection 2',
-        symbol: 'TESTTWO',
-        description: 'An awesome NFT series',
-        image: 'ipfs://bafybeigi3bwpvyvsmnbj46ra4hyffcxdeaj6ntfk5jpic5mx27x6ih2qvq/images/1.png',
-        externalLink: 'https://www.youtube.com/watch?v=1YML6_zRssg',
-        perAddressLimit: 1,
-    }
-
-    const handleClick = async () => {
-        const result = await createCollection(Config);
-        console.log(result)
+    const handleChangeAddress = (e) => {
+        setPaymentAddr(e.target.value)
     }
 
     return (
@@ -129,7 +146,7 @@ const Forms = ({ }) => {
                     rules={[
                         () => ({
                             validator() {
-                                if(imgUrlLogo && imgUrlLogo !== '') {
+                                if (imgUrlLogo && imgUrlLogo !== '') {
                                     return Promise.resolve()
                                 }
                                 return Promise.reject('Must upload an image')
@@ -175,16 +192,6 @@ const Forms = ({ }) => {
                 </p>
                 <Form.Item
                     name={'banner'}
-                    rules={[
-                        () => ({
-                            validator() {
-                                if(imgUrlLogo && imgUrlLogo !== '') {
-                                    return Promise.resolve()
-                                }
-                                return Promise.reject('Must upload an image')
-                            }
-                        }),
-                    ]}
                 >
                     <input
                         type='file'
@@ -281,20 +288,46 @@ const Forms = ({ }) => {
                         marginTop: '50px'
                     }}
                 >
-                    Categories
+                    Receive address
                 </p>
                 <Form.Item
-                    name={'trait'}
+                    name={'royaltyPaymentAddress'}
                     rules={[
-                        { required: true, message: 'Please select a trait(s)' },
+                        () => ({
+                            validator() {
+                                if (paymentAddr !== '') {
+                                    return Promise.resolve()
+                                }
+                                return Promise.reject('Please input payment address!')
+                            }
+                        }),
                     ]}
                 >
-                    <Checkbox.Group
+                    <Input
+                        placeholder="Royalty payment address"
+                        defaultValue={JSON.parse(account).account.address}
+                        onChange={handleChangeAddress}
+                        style={{
+                            padding: '1em'
+                        }}
+                    />
+                </Form.Item>
+                <p
+                    style={{
+                        ...style.label,
+                        marginTop: '50px'
+                    }}
+                >
+                    External link
+                </p>
+                <Form.Item
+                    name={'externalLink'}
+                >
+                    {/* <Checkbox.Group
                         style={{
                             width: '100%',
                             marginTop: '20px'
                         }}
-                        onChange={handleChangeCheckbox}
                     >
                         <Row>
                             {
@@ -323,12 +356,53 @@ const Forms = ({ }) => {
                                 })
                             }
                         </Row>
-                    </Checkbox.Group>
+                    </Checkbox.Group> */}
+                    <Input
+                        placeholder="External link"
+                        style={{
+                            padding: '1em',
+                            color: '#286afa'
+                        }}
+                    />
                 </Form.Item>
-                <div
+                <p
+                    style={{
+                        ...style.label,
+                    }}
+                >
+                    Limit per address
+                </p>
+                <p
+                    style={{
+                        ...style.label,
+                        fontSize: '10px',
+                    }}
+                >
+                    Mint limit per address
+                </p>
+                <Form.Item
+                    name={'limit'}
+                    rules={[
+                        { required: true, message: 'Please input a number!' },
+                    ]}
+                >
+                    <InputNumber
+                        placeholder="limit per address"
+                        min={0}
+                        max={50}
+                        step={1}
+                        style={{
+                            padding: '.25em',
+                            width: '100%',
+                            fontSize: '20px'
+                        }}
+                    />
+                </Form.Item>
+                {/* <div
                     style={{
                         display: 'flex',
                         justifyContent: 'space-between',
+                        marginTop: '50px'
                     }}
                 >
                     <div>
@@ -358,15 +432,31 @@ const Forms = ({ }) => {
                             marginBottom: 0
                         }}
                     >
-                        <Switch />
+                        <Switch
+                            defaultValue={true}
+                        />
                     </Form.Item>
-                </div>
+                </div> */}
+                <p
+                    style={{
+                        ...style.label,
+                        marginTop: '50px'
+                    }}
+                >
+                    Commission rate (%)
+                </p>
+                <Form.Item
+                    name={'commission'}
+                >
+                    <Slider
+                        min={0.1}
+                        max={10}
+                        step={0.1}
+                    />
+                </Form.Item>
                 <div>
-                    
-                    <Button
-                        clickFunction={handleClick}
-                        type={'function'}
-                        text={'CREATE'}
+                    <button
+                        htmlType="submit"
                         style={{
                             border: 0,
                             backgroundColor: '#00FFA3',
@@ -377,7 +467,9 @@ const Forms = ({ }) => {
                             padding: '0.5em 2em',
                             cursor: 'pointer'
                         }}
-                    />
+                    >
+                        Create
+                    </button>
                 </div>
             </Form>
         </div>

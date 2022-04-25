@@ -1,16 +1,16 @@
-import Header from "../header/Header"
-import Footer from "../footer/Footer"
-import Forms from "./form/Forms"
+import Header from '../header/Header'
+import NftList from './nft_list/NftList'
+import Footer from '../footer/Footer'
+import { useState, useEffect, useCallback } from "react";
 
 const style = {
     container: {
-        color: '#F2F1F1',
         position: 'relative',
         zIndex: 0   
-    },
+    }
 }
 
-const CollectionCreate = ({ account, wrapSetAccount }) => {
+const NftMarketplace = ({ account, wrapSetAccount }) => {
     return (
         <div
             style={style.container}
@@ -19,11 +19,9 @@ const CollectionCreate = ({ account, wrapSetAccount }) => {
                 account={account}
                 wrapSetAccount={wrapSetAccount}
             />
-            <Forms
-                account={account}
-            />
+            <NftList/>
         </div>
     )
 }
 
-export default CollectionCreate
+export default NftMarketplace

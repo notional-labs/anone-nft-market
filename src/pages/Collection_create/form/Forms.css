@@ -53,6 +53,10 @@
     top: 5px !important;
 }
 
+.ant-slider-track {
+    background-color: #00FFA3 !important;
+}
+
 @keyframes fade {
     from {
         opacity: 1;

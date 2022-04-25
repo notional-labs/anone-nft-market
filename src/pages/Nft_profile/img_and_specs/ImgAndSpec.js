@@ -76,8 +76,9 @@ const ImgAndSpec = ({ nft }) => {
                         backgroundColor: '#ffffff',
                         padding: '10em',
                         border: 'solid 1px #00FFA3',
-                        width: '80%',
-                        marginRight: '50px'
+                        width: '70%',
+                        marginRight: '50px',
+                        aspectRatio: '1/1'
                     }}
                 >
                     <Image

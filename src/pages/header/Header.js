@@ -5,6 +5,7 @@ import bannerLogo from '../../assets/img/logo1.png'
 import ConnectButton from './connect_button/ConnectButton'
 import MenuButton from './menu_button/MenuButton'
 import CreateButton from './create_button/CreateButton'
+import MarketplaceButton from './marketplace_button/MarketplaceButton'
 
 const style = {
     headerNavbar: {
@@ -14,7 +15,7 @@ const style = {
         zIndex: 2
     },
     logoContainer: {
-        padding: '3em 7em'
+        padding: '3em 2em 3em 7em'
     },
 }
 
@@ -57,6 +58,7 @@ const Header = ({ account, wrapSetAccount }) => {
                     zIndex: 0
                 }}
             />
+            <MarketplaceButton />
             <CreateButton />
             {
                 account === null ? (

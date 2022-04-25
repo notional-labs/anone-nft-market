@@ -23,7 +23,7 @@ export const getKeplr = async () => {
 
 
 export const getWasmClient = async () => {
-    let offlineSigner = await window.getOfflineSigner(process.env.REACT_APP_CHAIN_ID);
+    const { offlineSigner } = await getKeplr()
     const wasmClient = await SigningCosmWasmClient.connectWithSigner(anoneTestnetChain.rpc, offlineSigner);
     return wasmClient
 }

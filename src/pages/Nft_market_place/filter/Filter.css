@@ -1,0 +1,14 @@
+.filter-tab { 
+    animation-name: open;
+    animation-fill-mode: forwards;
+    animation-duration: 0.5s;
+}
+
+  @keyframes open {
+    from {
+        width: 0%;  
+    }
+    to {
+        width: 100%;
+    }
+  }
