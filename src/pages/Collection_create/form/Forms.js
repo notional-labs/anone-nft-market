@@ -1,11 +1,19 @@
-import { Form, Switch, Input, Slider, Image, Checkbox, Col, Row, InputNumber } from "antd"
+import { Form, Input, Slider, InputNumber, Image } from "antd"
 import { useState } from "react";
-import { beforeUpload } from "../../../utils/imageProcessing";
-import Button from "../../../components/buttons/Button";
 import { createCollection } from "../../../anonejs/createCollection";
-import noImg from '../../../assets/img/no_image.png'
 import { openNotification } from "../../../components/notifications/notification";
 import { ipfsUpload } from "../../../anonejs/ipfsUpload";
+// import { createCollection } from "../../../anonejs/createCollection";
+// import { createSale } from "../../../anonejs/createSale";
+// import {makeOrder} from "../../../anonejs/makeOrder";
+// import { updatePrice } from "../../../anonejs/updatePrice";
+// import { cancelSale } from "../../../anonejs/cancelSale";
+// import { queryAccountInfo } from "../../../anonejs/queryInfo";
+// import { queryOfferingList } from "../../../anonejs/queryInfo";
+import { queryNftInfoById } from "../../../anonejs/queryInfo";
+// import { queryNumberOfNfts } from "../../../anonejs/queryInfo";
+// import { queryCollectionInfo } from "../../../anonejs/queryInfo";
+import noImg from '../../../assets/img/no_image.png'
 import './Forms.css'
 
 const { TextArea } = Input;
@@ -27,7 +35,7 @@ const style = {
     container: {
         padding: '5em 35em',
         position: 'relative',
-        marginTop: '100px' 
+        marginTop: '100px'
     },
     title: {
         fontSize: '48px',
@@ -61,7 +69,7 @@ const Forms = ({ account }) => {
         }
         const contractConfig = {
             royaltyPaymentAddress: config.royaltyPaymentAddress,
-            royaltyShare: `${config.commission/10}`,
+            royaltyShare: `${config.commission / 10}`,
             baseTokenUri: 'ipfs://bafybeidfe5acjamg7kax65mvspt637ksr3wcdvvaiutmzhjgi74kddxf5q/galaxyiOigcK',
             numTokens: 5,
             an721CodeId: 42,
@@ -110,26 +118,82 @@ const Forms = ({ account }) => {
             }
         }
         reader.readAsDataURL(e.target.files[0]);
-    };
-
-    // const handleClick = async () => {
-    //     const result = await createCollection(Config);
-    //     console.log(result)
-    // }
+    }
 
     const handleChangeAddress = (e) => {
         setPaymentAddr(e.target.value)
     }
 
+    const handleChangeText = () => { };
+
+    const handleChangeCheckbox = (e) => { };
+
+    const Config2 = {
+        cw721ContractAddr:
+            "one1mych7nr7fk86y2ezekkqfwsqpl8ax659ez4r4lm87x6clhz65q9sn4ngte",
+        nftMarketplaceContractAddr:
+            "one1mcy2qkuphhz4h4mncdzrxf3fh57fk98l6m30zfp7lggk4zh407rqq2carw",
+        msgListingPrice: { list_price: "5000000" }, // This msg is sent from cw721_contract to nft_marketplace_contract to list Nft
+        token_id: "2",
+    };
+
+    const Config3 = {
+        nftMarketplaceContractAddr:
+            "one1mcy2qkuphhz4h4mncdzrxf3fh57fk98l6m30zfp7lggk4zh407rqq2carw",
+        offering_id: '3',
+        funds: [{ denom: 'uan1', amount: '5000000' }]
+    };
+
+    const Config4 = {
+        nftMarketplaceContractAddr:
+            "one1mcy2qkuphhz4h4mncdzrxf3fh57fk98l6m30zfp7lggk4zh407rqq2carw",
+        offering_id: '4',
+        update_price: '10000000'
+    };
+
+    const Config5 = {
+        nftMarketplaceContractAddr:
+            "one1mcy2qkuphhz4h4mncdzrxf3fh57fk98l6m30zfp7lggk4zh407rqq2carw",
+        offering_id: '4'
+    };
+
+    const Config6 = {
+        nftMarketplaceContractAddr:
+            "one1mcy2qkuphhz4h4mncdzrxf3fh57fk98l6m30zfp7lggk4zh407rqq2carw",
+        sortListing: "price_lowest"
+    };
+
+    const Config7 = {
+        cw721ContractAddr:
+            "one1tj748034gl3zvujn2tz4p4m8rf9j9uarsj5j3c5a5z2neqel77cslz2lp0",
+        tokenId: '1'
+    };
+
+    const Config8 = {
+        cw721ContractAddr:
+            "one1tj748034gl3zvujn2tz4p4m8rf9j9uarsj5j3c5a5z2neqel77cslz2lp0",
+        modelId: '1'
+    };
+
+    const handleClick = async () => {
+        // const result = await createCollection(Config);
+        // const result = await createSale(Config2);
+        // const result = await makeOrder(Config3);
+        // const result = await updatePrice(Config4);
+        // const result = await cancelSale(Config5);
+        // const result = await queryAccountInfo();
+        // const result = await queryOfferingList(Config6);
+        const result = await queryNftInfoById(Config7);
+        // const result = await queryModelInfoById(Config8);
+        // const result = await queryNumberOfNfts('one1mych7nr7fk86y2ezekkqfwsqpl8ax659ez4r4lm87x6clhz65q9sn4ngte');
+        // const result = await queryCollectionInfo('one1mych7nr7fk86y2ezekkqfwsqpl8ax659ez4r4lm87x6clhz65q9sn4ngte');
+        // const result = await getDataFromUri('https://ipfs.io/ipfs/bafybeiaivv62j7jxlkahxobfr5io7h2j56obw5mojljho2ybg7zhah2eue/galaxyfcnCU3/1');
+        console.log(result);
+    };
+
     return (
-        <div
-            style={style.container}
-        >
-            <p
-                style={style.title}
-            >
-                Create New Collection
-            </p>
+        <div style={style.container}>
+            <p style={style.title}>Create New Collection</p>
             <Form
                 form={form}
                 onFinish={create}
@@ -473,8 +537,8 @@ const Forms = ({ account }) => {
                     </button>
                 </div>
             </Form>
-        </div>
-    )
-}
+        </div >
+    );
+};
 
-export default Forms
+export default Forms;
