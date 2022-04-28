@@ -6,7 +6,7 @@ import { useState, useEffect, useCallback } from "react";
 const style = {
     container: {
         position: 'relative',
-        zIndex: 0   
+        zIndex: 0 ,
     }
 }
 

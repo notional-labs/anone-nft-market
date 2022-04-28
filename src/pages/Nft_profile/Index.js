@@ -30,14 +30,18 @@ const NftProfile = ({ account, wrapSetAccount }) => {
             />
             {
                 nft !== null && (
-                    <>
+                    <div
+                        style={{
+                            marginTop: '100px' 
+                        }}
+                    >
                         <ImgAndSpec
                             nft={nft}
                         />
                         <Description
                             nft={JSON.parse(nft)}
                         />
-                    </>
+                    </div>
                 )
             }
             <Footer />

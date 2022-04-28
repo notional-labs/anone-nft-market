@@ -43,7 +43,11 @@ const Profile = ({ type, account, wrapSetAccount }) => {
             />
             {
                 info !== null ? (
-                    <div>
+                    <div
+                        style={{
+                            marginTop: '100px' 
+                        }}
+                    >
                         {
                             type !== 'collection' ?
                                 type === 'user-profile' && account !== null ? (

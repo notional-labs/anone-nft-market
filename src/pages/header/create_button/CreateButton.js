@@ -51,12 +51,13 @@ const CreateButton = ({ }) => {
                 show && (
                     <div
                         style={{
-                            backgroundColor: '#000000',
+                            backgroundColor: '#626262',
                             padding: '1em',
                             position: 'absolute',
                             textAlign: 'center',
                             left: '-70%',
-                            width: '250%'
+                            width: '250%',
+                            borderRadius: '10px'
                         }}
                     >
                         <Button

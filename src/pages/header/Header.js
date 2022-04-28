@@ -11,11 +11,15 @@ const style = {
     headerNavbar: {
         display: 'flex',
         justifyContent: 'space-between',
-        postion: 'relative',
-        zIndex: 2
+        position: 'fixed',
+        zIndex: 2,
+        backgroundColor: '#000000',
+        width: '100%',
+        top: 0,
+        boxShadow: '0 1px 20px -2px #363636'
     },
     logoContainer: {
-        padding: '3em 2em 3em 7em'
+        padding: '3em'
     },
 }
 
@@ -47,7 +51,6 @@ const Header = ({ account, wrapSetAccount }) => {
                 placeholder="Search"
                 onChange={handleInputChange}
                 style={{
-                    width: '40%',
                     height: '10%',
                     backgroundColor: 'transparent',
                     border: 'solid 1px #00FFA3',

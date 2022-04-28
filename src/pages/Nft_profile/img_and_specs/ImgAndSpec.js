@@ -65,7 +65,7 @@ const ImgAndSpec = ({ nft }) => {
         <div
             style={{
                 margin: '10em 0',
-                padding: '0em 25em'
+                padding: '0em 25em',
             }}
         >
             <div

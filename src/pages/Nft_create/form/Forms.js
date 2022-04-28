@@ -15,7 +15,8 @@ const { Option } = Select;
 const style = {
     container: {
         padding: '5em 35em',
-        position: 'relative'
+        position: 'relative',
+        marginTop: '100px' 
     },
     title: {
         fontSize: '48px',
@@ -130,12 +131,12 @@ const Forms = ({ }) => {
                 <Form.Item
                     name={'name'}
                     rules={[
-                        { required: true, message: 'Please input your collection name!' },
+                        { required: true, message: 'Please input your NFT name!' },
                         { max: 80, message: 'Max 80 characters!' }
                     ]}
                 >
                     <Input
-                        placeholder="Collection name"
+                        placeholder="NFT name"
                         style={{
                             padding: '1em'
                         }}

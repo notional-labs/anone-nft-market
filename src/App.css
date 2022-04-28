@@ -51,3 +51,19 @@
   font-size: 16px !important;
 }
  
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  display: none;
+  background: transparent
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #00FFA3; 
+  border-radius: 10px;
+}

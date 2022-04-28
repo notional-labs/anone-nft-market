@@ -26,7 +26,8 @@ const checkValidString = (string) => {
 const style = {
     container: {
         padding: '5em 35em',
-        position: 'relative'
+        position: 'relative',
+        marginTop: '100px' 
     },
     title: {
         fontSize: '48px',

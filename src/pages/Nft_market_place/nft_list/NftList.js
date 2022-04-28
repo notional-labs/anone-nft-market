@@ -18,7 +18,7 @@ const style = {
     },
     container: {
         display: 'flex',
-        justifyContent: 'start'
+        justifyContent: 'start',
     },
     card: {
         backgroundColor: 'transparent',
@@ -77,11 +77,22 @@ const zeroPad = (num) => {
 const filterButtonText = (hasOpen) => {
 
     return hasOpen ? (
-        <Image
-            src={filterButtonImg}
-            preview={false}
-            width={30}
-        />
+        <div>
+            <Image
+                src={filterButtonImg}
+                preview={false}
+                width={30}
+            />
+            <span
+                style={{
+                    color: '#00FFA3',
+                    fontSize: '24px',
+                    margin: '0 0 0 10px'
+                }}
+            >
+                Filter
+            </span>
+        </div>
     ) : (
         < Tooltip placement="topLeft" title={'Filter'} >
             <Image
@@ -95,12 +106,11 @@ const filterButtonText = (hasOpen) => {
 }
 
 
-
 const NftList = ({ }) => {
     const [nfts, setNfts] = useState([])
     const [loading, setLoading] = useState(false)
     const [select, setSelect] = useState('newest')
-    const [showFilter, setShowFilter] = useState(false)
+    const [showFilter, setShowFilter] = useState(true)
 
     useEffect(() => {
         const res = fetchDummyTopNft()
@@ -186,11 +196,13 @@ const NftList = ({ }) => {
             style={style.container}
         >
             <div
+                className="filter-tab-content"
                 style={{
-                    padding: '2em',
-                    paddingRight: 0,
+                    padding: '100px 2em 2em 2em',
+                    backgroundColor: '#000000',
                     position: 'fixed',
-                    width: '300px'
+                    width: showFilter ? '350px' : '100px',
+                    overflow: 'auto',
                 }}
             >
                 <Button
@@ -199,7 +211,7 @@ const NftList = ({ }) => {
                     clickFunction={handleFilterClick}
                     style={{
                         backgroundColor: '#000000',
-                        padding: '1em',
+                        padding: '2em 1em 1em 0',
                         borderRadius: showFilter ? '10px 10px 0 0' : '10px',
                         border: 0
                     }}
@@ -210,8 +222,9 @@ const NftList = ({ }) => {
             </div>
             <div
                 style={{
-                    marginLeft: '300px',
-                    padding: '2em 5em'
+                    padding: '2em 5em',
+                    marginTop: '150px',
+                    marginLeft: showFilter ? '350px' : '50px'
                 }}
             >
                 <div
@@ -223,10 +236,9 @@ const NftList = ({ }) => {
                 >
                     <p
                         style={{
-                            fontSize: '24px',
+                            fontSize: '20px',
                             color: '#ffffff',
                             marginBottom: 0,
-                            fontWeight: 'bold'
                         }}
                     >
                         12132 items
