@@ -1,7 +1,7 @@
 export const anoneTestnetChain = {
     chainId: "anone-testnet-1",
     chainName: "anone-testnet",
-    rpc: "https://rpc-anone.notional.ventures/",
+    rpc: "http://65.108.128.139:2281",
     rest: "http://65.108.128.139:2284",
     bip44: {
       coinType: 118,
