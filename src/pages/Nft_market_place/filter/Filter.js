@@ -6,6 +6,8 @@ import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { useState, useEffect } from "react";
 import './Filter.css'
 import Grid from "../../../components/grids/Grid";
+import { IoSearch } from "react-icons/io5";
+import tick from '../../../assets/img/verified.png'
 
 const { Option } = Select;
 
@@ -51,11 +53,10 @@ const statusList = [
     'Buy Now', 'Has Offers'
 ]
 
-
 const Filter = ({ }) => {
     const [form] = Form.useForm()
     const [collections, setCollections] = useState([])
-    const [options, setOptions] = useState([]);
+    const [filterCollection, setFilterCollection] = useState([])
     const [showTab, setShowTab] = useState({
         status: false,
         collections: false,
@@ -73,12 +74,8 @@ const Filter = ({ }) => {
     useEffect(() => {
         const res = fetchDummyBestCollections()
         setCollections([...res])
+        setFilterCollection([...res])
     }, [])
-
-    useEffect(() => {
-        const res = fetchDummyBestCollections()
-        setCollections([...res])
-    }, [filterValue.collections])
 
     const apply = (value) => {
         console.log(value)
@@ -92,28 +89,11 @@ const Filter = ({ }) => {
         openNotification('error', 'Apply unsuccessfully')
     }
 
-    const searchResult = (query) => {
-        let result = collections.filter(collection => collection.title.includes(query))
-        const option = result.map((res, index) => {
-            return {
-                value: res.title,
-                key: index,
-                label: (
-                    <div>
-                        {res.title}
-                    </div>
-                ),
-            };
-        })
-        return option
-    }
-
-    const handleSearch = (value) => {
-        setOptions(value ? searchResult(value) : []);
-    };
-
-    const select = () => {
-        setOptions([])
+    const checkIfPicked = (id) => {
+        if (filterValue.collections.filter(col => col === id).length > 0) {
+            return true
+        }
+        return false
     }
 
     const handleClickStatus = (value) => {
@@ -201,14 +181,27 @@ const Filter = ({ }) => {
                     position: 'relative'
                 }}
             >
-                <Image
-                    src={collection.avt}
-                    preview={false}
-                    width={'15%'}
-                    style={{
-                        borderRadius: '50%',
-                    }}
-                />
+                {
+                    checkIfPicked(collection.id) ? (
+                        <Image
+                            src={tick}
+                            preview={false}
+                            width={'55%'}
+                            style={{
+                                borderRadius: '50%',
+                            }}
+                        />
+                    ) : (
+                        <Image
+                            src={collection.avt}
+                            preview={false}
+                            width={'15%'}
+                            style={{
+                                borderRadius: '50%',
+                            }}
+                        />
+                    )
+                }
                 <p
                     style={{
                         marginLeft: '20px'
@@ -221,13 +214,19 @@ const Filter = ({ }) => {
     }
 
     const handleSelectCollection = (collection) => {
-        if (filterValue.collections.filter(col => col.id === collection.id).length === 0) {
-            setFilterValue({ ...filterValue, collection: [...filterValue.collections, collection.id] })
+        
+        if (!checkIfPicked(collection.id)) {
+            setFilterValue({ ...filterValue, collections: [...filterValue.collections, collection.id] })
+        }
+        else {
+            let filter = filterValue.collections.filter(id=> id !== collection.id)
+            setFilterValue({ ...filterValue, collections: [...filter] })
         }
     }
 
     const handleCollectionInput = (e) => {
-
+        const filter = collections.filter(col => col.title.includes(e.target.value))
+        setFilterCollection([...filter])
     }
 
     return (
@@ -267,6 +266,7 @@ const Filter = ({ }) => {
                 />
                 {showTab.price && (
                     <div
+                        className="input"
                         style={{
                             ...style.dropBox,
                             display: 'flex',
@@ -308,13 +308,17 @@ const Filter = ({ }) => {
                 />
                 {showTab.collections && (
                     <div
+                        className="input"
                         style={{
                             ...style.dropBox,
                         }}
                     >
                         <Input
-                            placeholder="Filter"
+                            placeholder="Filter press enter to search"
+                            prefix={<IoSearch />}
                             onChange={handleCollectionInput}
+                            onPressEnter={handleCollectionInput}
+                            style={{ borderRadius: '10px' }}
                         />
                         <div
                             style={{
@@ -324,7 +328,7 @@ const Filter = ({ }) => {
                             }}
                         >
                             {
-                                collections.map((collection, index) => {
+                                filterCollection.map((collection, index) => {
                                     return (
                                         <Button
                                             type={'function'}
@@ -353,6 +357,7 @@ const Filter = ({ }) => {
                 />
                 {showTab.traits && (
                     <div
+                        className="input"
                         style={style.dropBox}
                     >
                         <Input />
@@ -371,7 +376,7 @@ const Filter = ({ }) => {
                         marginTop: '20px',
                         position: 'relative'
                     }}
-                    clickFunction={() => {console.log('click')}}
+                    clickFunction={() => { console.log('click') }}
                 />
             </div>
         </div>

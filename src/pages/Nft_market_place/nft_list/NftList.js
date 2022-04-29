@@ -248,6 +248,7 @@ const NftList = ({ }) => {
                         allowClear={true}
                         style={{
                             width: '20%',
+                            borderRadius: '10px'
                         }}
                         onChange={handleSelect}
                     >

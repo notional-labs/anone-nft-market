@@ -90,7 +90,8 @@ const Banner = ({ }) => {
                     >
                         SIGN UP FOR DROP
                     </p>
-                    <Input 
+                    <Input
+                        className="banner"
                         placeholder="Email"
                         onChange={handleChangeSubscriptionInput}
                         style={{
