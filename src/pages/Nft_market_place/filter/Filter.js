@@ -349,7 +349,7 @@ const Filter = ({ }) => {
                     </div>
                 )}
                 {/*need add traits specific*/}
-                <Button
+                {/* <Button
                     style={style.button}
                     clickFunction={() => (handleClick('traits'))}
                     text={getButtonText('Traits', showTab.traits)}
@@ -362,7 +362,7 @@ const Filter = ({ }) => {
                     >
                         <Input />
                     </div>
-                )}
+                )} */}
                 <Button
                     type={'function'}
                     text={'Apply'}

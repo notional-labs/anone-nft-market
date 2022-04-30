@@ -19,7 +19,7 @@ const style = {
     }
 }
 
-const CreateButton = ({ }) => {
+const CreateButton = ({ pathname }) => {
     const [show, setShow] = useState(false)
 
     const handleMouseOver = () => {
@@ -32,49 +32,56 @@ const CreateButton = ({ }) => {
 
     return (
         <div
-            className="menu-hover-button"
             style={{
-                margin: '3em',
-                position: 'relative',
-                margin: 'auto 50px',
-                height: '100%',
-                zIndex: 2
+                borderBottom: pathname.includes('create') ? 'solid 2px #00FFA3' : 'none'
             }}
             onMouseEnter={handleMouseOver}
             onMouseLeave={handleMouseLeft}
         >
-            <Button
-                style={style.button}
-                text={'Create'}
-            />
-            {
-                show && (
-                    <div
-                        style={{
-                            backgroundColor: '#626262',
-                            padding: '1em',
-                            position: 'absolute',
-                            textAlign: 'center',
-                            left: '-70%',
-                            width: '250%',
-                            borderRadius: '10px'
-                        }}
-                    >
-                        <Button
-                            style={style.subButton}
-                            text={'New Item'}
-                            type={'href'}
-                            url={`${process.env.REACT_APP_HOST}/nft/create`}
-                        />
-                        <Button
-                            style={style.subButton}
-                            text={'New Collection'}
-                            type={'href'}
-                            url={`/collection/create`}
-                        />
-                    </div>
-                )
-            }
+            <div
+                className="menu-hover-button"
+                style={{
+                    position: 'relative',
+                    margin: 'auto 50px',
+                    height: '100%',
+                    top: '30%',
+                    zIndex: 2,
+                }}
+            >
+                <Button
+                    style={style.button}
+                    text={'Create'}
+                />
+                {
+                    show && (
+                        <div
+                            style={{
+                                backgroundColor: '#626262',
+                                padding: '1em',
+                                position: 'absolute',
+                                textAlign: 'center',
+                                left: '-70%',
+                                width: '250%',
+                                top: '70%',
+                                borderRadius: '10px'
+                            }}
+                        >
+                            <Button
+                                style={style.subButton}
+                                text={'New Item'}
+                                type={'href'}
+                                url={`${process.env.REACT_APP_HOST}/nft/create`}
+                            />
+                            <Button
+                                style={style.subButton}
+                                text={'New Collection'}
+                                type={'href'}
+                                url={`/collection/create`}
+                            />
+                        </div>
+                    )
+                }
+            </div>
         </div>
     )
 }

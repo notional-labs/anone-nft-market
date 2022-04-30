@@ -6,6 +6,8 @@ import ConnectButton from './connect_button/ConnectButton'
 import MenuButton from './menu_button/MenuButton'
 import CreateButton from './create_button/CreateButton'
 import MarketplaceButton from './marketplace_button/MarketplaceButton'
+import WalletButton from './wallet_button/WalletButton'
+import { useLocation } from 'react-router-dom'
 
 const style = {
     headerNavbar: {
@@ -25,6 +27,7 @@ const style = {
 
 const Header = ({ account, wrapSetAccount }) => {
     const [search, setSearch] = useState('')
+    const { pathname } = useLocation()  
 
     const handleInputChange = (e) => {
         setSearch(e.target.value)
@@ -58,11 +61,16 @@ const Header = ({ account, wrapSetAccount }) => {
                     padding: '10px',
                     margin: 'auto',
                     position: 'relative',
-                    zIndex: 0
+                    zIndex: 0,
+                    width: '40%'
                 }}
             />
-            <MarketplaceButton />
-            <CreateButton />
+            <MarketplaceButton 
+                pathname={pathname}
+            />
+            <CreateButton
+                pathname={pathname}
+            />
             {
                 account === null ? (
                     <div>
@@ -71,12 +79,18 @@ const Header = ({ account, wrapSetAccount }) => {
                         />
                     </div>
                 ) : (
-                    <div>
+                    <>
                         <MenuButton
                             account={account}
                             wrapSetAccount={wrapSetAccount}
+                            pathname={pathname}
                         />
-                    </div>
+                        <WalletButton
+                            account={account}
+                            wrapSetAccount={wrapSetAccount}
+                            pathname={pathname}
+                        />
+                    </>
                 )
             }
         </div>
