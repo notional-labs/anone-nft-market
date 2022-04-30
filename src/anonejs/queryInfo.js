@@ -68,7 +68,7 @@ export const queryAllDataOfAllModels = async (cw721ContractAddr) => {
   const modelInfo = await wasmClient.queryContractSmart(cw721ContractAddr, {
     all_models_info: {},
   });
-  return modelInfo; // return all data of all nfts
+  return modelInfo; // return all data of all models
 };
 
 export const queryNumberOfNfts = async (cw721ContractAddr) => {
