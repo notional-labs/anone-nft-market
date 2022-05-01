@@ -18,6 +18,7 @@ import Button from "../../../components/buttons/Button";
 // import { queryAllContracts } from "../../../anonejs/queryInfo";
 import { queryOfferingListByPriceRange } from "../../../anonejs/queryInfo";
 import { queryOfferingListOfCollection } from "../../../anonejs/queryInfo";
+import { queryOfferingListOfSeller } from "../../../anonejs/queryInfo";
 // import { queryCollectionInfo } from "../../../anonejs/queryInfo";
 // import { getDataFromUri } from "../../../anonejs/getDataFromUri";
 // import { getBase64, beforeUpload } from "../../../utils/imageProcessing";
@@ -170,6 +171,13 @@ const Forms = ({}) => {
     collectionAddr: "one1mych7nr7fk86y2ezekkqfwsqpl8ax659ez4r4lm87x6clhz65q9sn4ngte"
   };
 
+  const Config11 = {
+    nftMarketplaceContractAddr:
+      "one1hkw0czu90estdr04pp4u76treyrkdm7mxuktk593qcs239wrwdnq2dgysh",
+    sortListing: "price_lowest",
+    seller: "one1k2x29vppqrhgsdxtkmkpspnawm229lcpec7mm3"
+  };
+
   const handleClick = async () => {
     // const result = await createCollection(Config);
     // const result = await createSale(Config2);
@@ -187,7 +195,8 @@ const Forms = ({}) => {
     // const result = await queryAllDataOfAllModels('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq');
     // const result = await queryAllContracts(69);
     // const result = await queryOfferingListByPriceRange(Config9);
-    const result = await queryOfferingListOfCollection(Config10);
+    // const result = await queryOfferingListOfCollection(Config10);
+    const result = await queryOfferingListOfSeller(Config11);
     console.log(result);
   };
 
