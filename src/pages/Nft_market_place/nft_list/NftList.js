@@ -6,6 +6,8 @@ import Button from "../../../components/buttons/Button"
 import './NftList.css'
 import Filter from "../filter/Filter"
 import filterButtonImg from '../../../assets/img/filter.png'
+import { getMarketplaceNft } from "../../../utils/nft/queryNft"
+import NftCard from "../nft_card/NftCard"
 
 const { Option } = Select;
 
@@ -70,10 +72,6 @@ const style = {
     },
 }
 
-const zeroPad = (num) => {
-    return num.toString().padStart(3, "0");
-}
-
 const filterButtonText = (hasOpen) => {
 
     return hasOpen ? (
@@ -113,19 +111,11 @@ const NftList = ({ }) => {
     const [showFilter, setShowFilter] = useState(true)
 
     useEffect(() => {
-        const res = fetchDummyTopNft()
-        if (Array.isArray(res) && res.length > 0) {
+        (async () => {
+            const res = await getMarketplaceNft()
             setNfts([...res])
-        }
+        })()
     }, [])
-
-    const handleClick = () => {
-
-    }
-
-    const handleClickBuy = () => {
-
-    }
 
     const handleSelect = (value) => {
         setSelect(value)
@@ -135,52 +125,9 @@ const NftList = ({ }) => {
         let list = []
         nfts.forEach(nft => {
             const jsx = (
-                <div
-                    style={style.card}
-                >
-                    <div
-                        style={{
-                            padding: '2em',
-                            paddingBottom: '5em'
-                        }}
-                    >
-                        <Image
-                            src={nft.img}
-                            preview={false}
-                            width={'100%'}
-                            style={style.imge}
-                        />
-                    </div>
-                    <div
-                        style={style.cardText}
-                    >
-                        <p
-                            style={{
-                                fontSize: '24px',
-                                fontWeight: 'bold',
-                                margin: 0
-                            }}
-                        >
-                            Sneaker #{zeroPad(nft.id)}
-                        </p>
-                        <p>
-                            {nft.quantity}/100
-                        </p>
-                    </div>
-                    <div
-                        style={{
-                            width: '100%'
-                        }}
-                    >
-                        <Button
-                            clickFunction={handleClickBuy}
-                            style={style.button}
-                            type={'function'}
-                            text={'Buy'}
-                            className={'buy-button'}
-                        />
-                    </div>
-                </div>
+                <NftCard
+                    offerObject={nft}
+                />
             )
             list.push(jsx)
         })
@@ -224,14 +171,16 @@ const NftList = ({ }) => {
                 style={{
                     padding: '2em 5em',
                     marginTop: '150px',
-                    marginLeft: showFilter ? '350px' : '50px'
+                    marginLeft: showFilter ? '350px' : '50px',
+                    width: '100%'
                 }}
             >
                 <div
+                    className='option-header'
                     style={{
                         display: 'flex',
                         justifyContent: 'space-between',
-                        marginBottom: '5em'
+                        marginBottom: '5em',
                     }}
                 >
                     <p
@@ -247,8 +196,8 @@ const NftList = ({ }) => {
                         placeholder='Sort by'
                         allowClear={true}
                         style={{
-                            width: '20%',
-                            borderRadius: '10px'
+                            borderRadius: '10px',
+                            width: '20%'
                         }}
                         onChange={handleSelect}
                     >

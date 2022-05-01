@@ -20,33 +20,10 @@ const style = {
 
 const MenuButton = ({ account, wrapSetAccount, pathname }) => {
     const [showProfile, setShowProfile] = useState(false)
-    const [showWallet, setShowWallet] = useState(false)
-    const [balances, setBalances] = useState([])
-
-    useEffect(() => {
-        (async () => {
-            try {
-                const res = await getBalance(JSON.parse(account).account.address)
-                console.log(res)
-                setBalances([...res])
-            }
-            catch (e) {
-                console.log(e)
-            }
-        })()
-    }, [showWallet])
 
     const logout = () => {
         localStorage.removeItem('account')
         wrapSetAccount(null)
-    }
-
-    const handleClickWallet = () => {
-        setShowWallet(true)
-    }
-
-    const onClose = () => {
-        setShowWallet(false)
     }
 
     const handleMouseOver = () => {

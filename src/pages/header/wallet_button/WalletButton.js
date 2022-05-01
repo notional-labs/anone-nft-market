@@ -27,7 +27,6 @@ const WalletButton = ({ account, wrapSetAccount }) => {
         (async () => {
             try {
                 const res = await getBalance(JSON.parse(account).account.address)
-                console.log(res)
                 setBalances([...res])
             }
             catch (e) {

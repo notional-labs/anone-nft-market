@@ -214,7 +214,7 @@ const Forms = ({ }) => {
                         }
                     </Select>
                 </Form.Item>
-                <p
+                {/* <p
                     style={{
                         ...style.label,
                         marginTop: '50px'
@@ -229,7 +229,7 @@ const Forms = ({ }) => {
                     ]}
                 >
                     <Size wrapSetSize={wrapSetSize}/>
-                </Form.Item>
+                </Form.Item> */}
                 <div>
                     <button
                         htmlType="submit"
