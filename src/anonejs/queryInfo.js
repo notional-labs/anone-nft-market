@@ -21,15 +21,24 @@ export const queryNftInfoById = async (Config) => {
   );
 
   const result = {
+    token_id: Config.tokenId,
     owner: nftInfo.access.owner,
     approvals: nftInfo.access.approvals,
     model_id: nftInfo.info.model_id,
     token_uri: nftInfo.info.token_uri,
     size: nftInfo.info.size,
     extension: nftInfo.info.extension,
-    contract_addr: Config.cw721ContractAddr
+    contract_addr: Config.cw721ContractAddr,
   };
   return result; // return all info about nft with this token_id
+};
+
+export const queryAllDataOfAllNfts = async (cw721ContractAddr) => {
+  const wasmClient = await getWasmClient();
+  const nftInfo = await wasmClient.queryContractSmart(cw721ContractAddr, {
+    all_tokens_info: {},
+  });
+  return nftInfo; // return all data of all nfts
 };
 
 export const queryModelInfoById = async (Config) => {
@@ -44,13 +53,22 @@ export const queryModelInfoById = async (Config) => {
   );
 
   const result = {
+    model_id: Config.modelId,
     owner: modelInfo.owner,
     model_uri: modelInfo.model_uri,
     extension: modelInfo.extension,
-    contract_addr: Config.cw721ContractAddr
+    contract_addr: Config.cw721ContractAddr,
   };
 
   return result; // return all info about shoe model with this model_id
+};
+
+export const queryAllDataOfAllModels = async (cw721ContractAddr) => {
+  const wasmClient = await getWasmClient();
+  const modelInfo = await wasmClient.queryContractSmart(cw721ContractAddr, {
+    all_models_info: {},
+  });
+  return modelInfo; // return all data of all models
 };
 
 export const queryNumberOfNfts = async (cw721ContractAddr) => {
@@ -60,6 +78,15 @@ export const queryNumberOfNfts = async (cw721ContractAddr) => {
   });
 
   return numTokens.count; // return the number of nfts on this collection
+};
+
+export const queryNumberOfModels = async (cw721ContractAddr) => {
+  const wasmClient = await getWasmClient();
+  const numModels = await wasmClient.queryContractSmart(cw721ContractAddr, {
+    num_models: {},
+  });
+
+  return numModels.count; // return the number of models on this collection
 };
 
 export const queryCollectionInfo = async (cw721ContractAddr) => {
@@ -77,14 +104,14 @@ export const queryCollectionInfo = async (cw721ContractAddr) => {
   );
 
   const result = {
-      name: contractInfo.name,
-      symbol: contractInfo.symbol,
-      creator: collectionInfo.creator,
-      image: collectionInfo.image,
-      description: collectionInfo.description,
-      externalLink: collectionInfo.external_link,
-      royaltyInfo: collectionInfo.royalty_info,
-  }
+    name: contractInfo.name,
+    symbol: contractInfo.symbol,
+    creator: collectionInfo.creator,
+    image: collectionInfo.image,
+    description: collectionInfo.description,
+    externalLink: collectionInfo.external_link,
+    royaltyInfo: collectionInfo.royalty_info,
+  };
   return result; // return all infomation about this collection
 };
 
@@ -102,3 +129,10 @@ export const queryOfferingList = async (Config) => {
 
   return offeringList.offerings; // return an array contains all of offerings on markerplace
 };
+
+// 4. Functions for query all collection contract have the same code_id
+export const queryAllContracts = async (code_id) => {
+  const wasmClient = await getWasmClient();
+  const contracts = await wasmClient.getContracts(code_id);
+  return contracts;
+}
