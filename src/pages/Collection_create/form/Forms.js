@@ -13,8 +13,9 @@ import Button from "../../../components/buttons/Button";
 // import { queryModelInfoById } from "../../../anonejs/queryInfo";
 // import { queryNumberOfNfts } from "../../../anonejs/queryInfo";
 // import { queryNumberOfModels } from "../../../anonejs/queryInfo";
-import { queryAllDataOfAllNfts } from "../../../anonejs/queryInfo";
-import { queryAllDataOfAllModels } from "../../../anonejs/queryInfo";
+// import { queryAllDataOfAllNfts } from "../../../anonejs/queryInfo";
+// import { queryAllDataOfAllModels } from "../../../anonejs/queryInfo";
+import { queryAllContracts } from "../../../anonejs/queryInfo";
 // import { queryCollectionInfo } from "../../../anonejs/queryInfo";
 // import { getDataFromUri } from "../../../anonejs/getDataFromUri";
 // import { getBase64, beforeUpload } from "../../../utils/imageProcessing";
@@ -166,8 +167,8 @@ const Forms = ({}) => {
     // const result = await queryNumberOfModels('one1tj748034gl3zvujn2tz4p4m8rf9j9uarsj5j3c5a5z2neqel77cslz2lp0');
     // const result = await queryCollectionInfo('one1mych7nr7fk86y2ezekkqfwsqpl8ax659ez4r4lm87x6clhz65q9sn4ngte');
     // const result = await getDataFromUri('https://ipfs.io/ipfs/bafybeiaivv62j7jxlkahxobfr5io7h2j56obw5mojljho2ybg7zhah2eue/galaxyfcnCU3/1');
-
-    const result = await queryAllDataOfAllModels('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq');
+    // const result = await queryAllDataOfAllModels('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq');
+    const result = await queryAllContracts(69);
     console.log(result);
   };
 
