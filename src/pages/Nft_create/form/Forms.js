@@ -184,7 +184,7 @@ const Forms = ({ account }) => {
                 <Form.Item
                     name={'collection'}
                     rules={[
-                        { required: true, message: 'Please input select a collection!' },
+                        { required: true, message: 'Please select a collection!' },
                     ]}
                 >
                     <Select 

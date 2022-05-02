@@ -57,7 +57,7 @@ const AddSizeModal = ({ show, wrapSetShow, wrapSetSize }) => {
                         marginBottom: '40px'
                     }}
                 >
-                    You'll need a wallet on Anther-1 to continue
+                    Input Size
                 </p>
                 <div
                     style={{
