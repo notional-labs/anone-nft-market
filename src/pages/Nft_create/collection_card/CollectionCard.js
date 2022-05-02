@@ -11,7 +11,6 @@ const CollectionCard = ({ addr }) => {
             const res = await queryCollectionInfo(addr)
             const res2 = await getDataFromUri(res.image)
             setCollection(JSON.stringify(res))
-            console.log(res2)
         })()
     }, [])
 

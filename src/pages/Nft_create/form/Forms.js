@@ -43,7 +43,7 @@ const Forms = ({ account }) => {
 
     useEffect(() => {
         (async() => {
-            const res = await queryAllContracts(69)
+            const res = await queryAllContracts(42)
             setCollections([...res])
         })()
     }, [])
@@ -57,8 +57,7 @@ const Forms = ({ account }) => {
         }
         const mintConfig = {
             address: config.address,
-            minter_contract: config.collection,
-            token_id: 69
+            minterContract: config.collection,
         }
         mintCallFromUser(mintConfig).then(result => {
             console.log(result)
