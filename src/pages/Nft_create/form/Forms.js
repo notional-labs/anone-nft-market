@@ -6,6 +6,8 @@ import Size from "../size/Size";
 import { openNotification } from "../../../components/notifications/notification";
 import { fetchDummyBestCollections } from "../../../utils/fetch";
 import { mintCallFromUser } from '../../../anonejs/mintNft'
+import { queryAllContracts } from "../../../anonejs/queryInfo";
+import CollectionCard from "../collection_card/CollectionCard";
 import './Forms.css'
 
 const { TextArea } = Input;
@@ -31,7 +33,7 @@ const style = {
     }
 }
 
-const Forms = ({ }) => {
+const Forms = ({ account }) => {
     const [form] = Form.useForm()
     const [loading, setLoading] = useState(false)
     const [imgUrlLogo, setImgUrlLogo] = useState('')
@@ -40,33 +42,30 @@ const Forms = ({ }) => {
     const [sizes, setSizes] = useState([])
 
     useEffect(() => {
-        const res = fetchDummyBestCollections()
-        setCollections([...res])
+        (async() => {
+            const res = await queryAllContracts(69)
+            setCollections([...res])
+        })()
     }, [])
 
     const create = (values) => {
+        console.log(values)
         setLoading(true)
         let config = {
             ...values,
+            address: JSON.parse(account).account.address
         }
         const mintConfig = {
-            royaltyPaymentAddress: config.royaltyPaymentAddress,
-            royaltyShare: `${config.commission/10}`,
-            baseTokenUri: 'ipfs://bafybeidfe5acjamg7kax65mvspt637ksr3wcdvvaiutmzhjgi74kddxf5q/galaxyiOigcK',
-            numTokens: 5,
-            an721CodeId: 42,
-            name: `${config.name}`,
-            symbol: 'TESTTWO',
-            description: `${config.description}`,
-            image: `${config.logo}`,
-            externalLink: `${config.externalLink}`,
-            perAddressLimit: config.limit,
+            address: config.address,
+            minter_contract: config.collection,
+            token_id: 69
         }
-        const result = mintCallFromUser(mintConfig).then(result => {
+        mintCallFromUser(mintConfig).then(result => {
             console.log(result)
             openNotification('success', 'Submit successfully')
             reset()
         }).catch(e => {
+            console.log(e.message)
             openNotification('error', e.message)
             reset()
         })
@@ -82,19 +81,15 @@ const Forms = ({ }) => {
         setImgUrlBanner('')
     }
 
-    const wrapSetSize = useCallback((sizeList) => {
-        setSizes([...sizeList])
-    })
-
-    const handleChange = (e, type) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-                type === 'logo' ? setImgUrlLogo(reader.result) : setImgUrlBanner(reader.result)
-            }
-        }
-        reader.readAsDataURL(e.target.files[0]);
-    };
+    // const handleChange = (e, type) => {
+    //     const reader = new FileReader();
+    //     reader.onload = () => {
+    //         if (reader.readyState === 2) {
+    //             type === 'logo' ? setImgUrlLogo(reader.result) : setImgUrlBanner(reader.result)
+    //         }
+    //     }
+    //     reader.readAsDataURL(e.target.files[0]);
+    // };
 
     return (
         <div
@@ -131,7 +126,6 @@ const Forms = ({ }) => {
                 <Form.Item
                     name={'name'}
                     rules={[
-                        { required: true, message: 'Please input your NFT name!' },
                         { max: 80, message: 'Max 80 characters!' }
                     ]}
                 >
@@ -161,7 +155,6 @@ const Forms = ({ }) => {
                 <Form.Item
                     name={'description'}
                     rules={[
-                        { required: true, message: 'Please input your collection description!' },
                         { max: 2000, message: 'Max 2000 characters!' }
                     ]}
                 >
@@ -205,9 +198,11 @@ const Forms = ({ }) => {
                             collections.map(collection => {
                                 return (
                                     <Option 
-                                        value={`${collection.id}`}
+                                        value={`${collection}`}
                                     >
-                                        {collection.title}
+                                        <CollectionCard
+                                            addr={collection}
+                                        />
                                     </Option>
                                 )
                             })
