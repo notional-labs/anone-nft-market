@@ -2,7 +2,7 @@ import { Form, Switch, Input, message, Image, Checkbox, Col, Row } from "antd";
 import { useState } from "react";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import Button from "../../../components/buttons/Button";
-// import { createCollection } from "../../../anonejs/createCollection";
+import { createCollection } from "../../../anonejs/createCollection";
 // import { createSale } from "../../../anonejs/createSale";
 // import {makeOrder} from "../../../anonejs/makeOrder";
 // import { updatePrice } from "../../../anonejs/updatePrice";
@@ -24,6 +24,7 @@ import { queryOfferingListOfSeller } from "../../../anonejs/queryInfo";
 // import { getBase64, beforeUpload } from "../../../utils/imageProcessing";
 import noImg from "../../../assets/img/no_image.png";
 import "./Forms.css";
+import { mintCallFromUser } from "../../../anonejs/mintNft";
 
 const { TextArea } = Input;
 
@@ -178,6 +179,11 @@ const Forms = ({}) => {
     seller: "one1k2x29vppqrhgsdxtkmkpspnawm229lcpec7mm3"
   };
 
+  const Config12 = {
+    minterContract:
+      "one10jsmew5rqtk4kptymz75lncg0tguwleuj60mw5hn0wxuexkder0q4lvf42",
+  }
+
   const handleClick = async () => {
     // const result = await createCollection(Config);
     // const result = await createSale(Config2);
@@ -196,7 +202,8 @@ const Forms = ({}) => {
     // const result = await queryAllContracts(69);
     // const result = await queryOfferingListByPriceRange(Config9);
     // const result = await queryOfferingListOfCollection(Config10);
-    const result = await queryOfferingListOfSeller(Config11);
+    // const result = await queryOfferingListOfSeller(Config11);
+    const result = await mintCallFromUser(Config12);
     console.log(result);
   };
 
