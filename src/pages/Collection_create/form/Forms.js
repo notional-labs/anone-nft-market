@@ -15,12 +15,16 @@ import { queryNftInfoById } from "../../../anonejs/queryInfo";
 // import { queryNumberOfModels } from "../../../anonejs/queryInfo";
 // import { queryAllDataOfAllNfts } from "../../../anonejs/queryInfo";
 // import { queryAllDataOfAllModels } from "../../../anonejs/queryInfo";
-import { queryAllContracts } from "../../../anonejs/queryInfo";
+// import { queryAllContracts } from "../../../anonejs/queryInfo";
+import { queryOfferingListByPriceRange } from "../../../anonejs/queryInfo";
+import { queryOfferingListOfCollection } from "../../../anonejs/queryInfo";
+import { queryOfferingListOfSeller } from "../../../anonejs/queryInfo";
 // import { queryCollectionInfo } from "../../../anonejs/queryInfo";
 // import { getDataFromUri } from "../../../anonejs/getDataFromUri";
 // import { getBase64, beforeUpload } from "../../../utils/imageProcessing";
 import noImg from "../../../assets/img/no_image.png";
 import "./Forms.css";
+import { mintCallFromUser } from "../../../anonejs/mintNft";
 
 const { TextArea } = Input;
 
@@ -181,6 +185,33 @@ const Forms = ({ account }) => {
         modelId: '1'
     };
 
+  const Config9 = {
+    nftMarketplaceContractAddr:
+      "one1sh9n6msknq5w0psaczat0egrf692xkznmwt4wpnthfwdhryldrzstdqtsz",
+    sortListing: "price_lowest",
+    min: "10000",
+    max: "1000000"
+  };
+
+  const Config10 = {
+    nftMarketplaceContractAddr:
+      "one1hkw0czu90estdr04pp4u76treyrkdm7mxuktk593qcs239wrwdnq2dgysh",
+    sortListing: "price_lowest",
+    collectionAddr: "one1mych7nr7fk86y2ezekkqfwsqpl8ax659ez4r4lm87x6clhz65q9sn4ngte"
+  };
+
+  const Config11 = {
+    nftMarketplaceContractAddr:
+      "one1hkw0czu90estdr04pp4u76treyrkdm7mxuktk593qcs239wrwdnq2dgysh",
+    sortListing: "price_lowest",
+    seller: "one1k2x29vppqrhgsdxtkmkpspnawm229lcpec7mm3"
+  };
+
+  const Config12 = {
+    minterContract:
+      "one10jsmew5rqtk4kptymz75lncg0tguwleuj60mw5hn0wxuexkder0q4lvf42",
+  }
+
   const handleClick = async () => {
     // const result = await createCollection(Config);
     // const result = await createSale(Config2);
@@ -196,7 +227,11 @@ const Forms = ({ account }) => {
     // const result = await queryCollectionInfo('one1mych7nr7fk86y2ezekkqfwsqpl8ax659ez4r4lm87x6clhz65q9sn4ngte');
     // const result = await getDataFromUri('https://ipfs.io/ipfs/bafybeiaivv62j7jxlkahxobfr5io7h2j56obw5mojljho2ybg7zhah2eue/galaxyfcnCU3/1');
     // const result = await queryAllDataOfAllModels('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq');
-    const result = await queryAllContracts(69);
+    // const result = await queryAllContracts(69);
+    // const result = await queryOfferingListByPriceRange(Config9);
+    // const result = await queryOfferingListOfCollection(Config10);
+    // const result = await queryOfferingListOfSeller(Config11);
+    const result = await mintCallFromUser(Config12);
     console.log(result);
   };
 
