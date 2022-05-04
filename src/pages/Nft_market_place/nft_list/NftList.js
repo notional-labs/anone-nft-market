@@ -8,6 +8,7 @@ import Filter from "../filter/Filter"
 import filterButtonImg from '../../../assets/img/filter.png'
 import { getMarketplaceNft } from "../../../utils/nft/queryNft"
 import NftCard from "../nft_card/NftCard"
+import noItem from '../../../assets/img/no_item.png'
 
 const { Option } = Select;
 
@@ -107,15 +108,15 @@ const filterButtonText = (hasOpen) => {
 const NftList = ({ }) => {
     const [nfts, setNfts] = useState([])
     const [loading, setLoading] = useState(false)
-    const [select, setSelect] = useState('newest')
+    const [select, setSelect] = useState('')
     const [showFilter, setShowFilter] = useState(true)
 
     useEffect(() => {
         (async () => {
-            const res = await getMarketplaceNft()
+            const res = await getMarketplaceNft(select)
             setNfts([...res])
         })()
-    }, [])
+    }, [select])
 
     const handleSelect = (value) => {
         setSelect(value)
@@ -190,7 +191,7 @@ const NftList = ({ }) => {
                             marginBottom: 0,
                         }}
                     >
-                        12132 items
+                        {nfts.length} items
                     </p>
                     <Select
                         placeholder='Sort by'
@@ -223,16 +224,52 @@ const NftList = ({ }) => {
                         </Option>
                     </Select>
                 </div>
-                <div
-                    style={style.grid}
-                >
-                    <Grid
-                        lists={getNftList()}
-                        numberOfColumn={4}
-                        rowGap={35}
-                        colGap={50}
-                    />
-                </div>
+                {
+                    nfts.length > 0 ? (
+                        <div
+                            style={style.grid}
+                        >
+                            <Grid
+                                lists={getNftList()}
+                                numberOfColumn={4}
+                                rowGap={35}
+                                colGap={50}
+                            />
+                        </div>
+                    ) : (
+                        <div
+                            style={{
+                                border: 'solid 1px #00FFA3',
+                                color: '#ffffff',
+                                fontSize: '3rem',
+                                textAlign: 'center',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                padding: '1em'
+                            }}
+                        >
+                            <div>
+                                <Image
+                                    src={noItem}
+                                    preview={false}
+                                    width={'20%'}
+                                    style={{
+                                        opacity: 0.6
+                                    }}
+                                />
+                            </div>
+                            <p
+                                style={{
+                                    marginBottom: 0,
+                                    marginTop: '1em'
+                                }}
+                            >
+                                NO ITEMS FOUND
+                            </p>
+                        </div>
+                    )
+                }
             </div>
         </div>
     )

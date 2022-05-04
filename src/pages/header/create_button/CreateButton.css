@@ -5,3 +5,11 @@
 .menu-hover-button:hover {
     color: #00FFA3
 }
+
+.upper-button:hover {
+    background-color: #404040;
+}
+
+.lower-button:hover {
+    background-color: #404040;
+}

@@ -7,7 +7,8 @@ import { useState, useEffect } from "react";
 import './Filter.css'
 import Grid from "../../../components/grids/Grid";
 import { IoSearch } from "react-icons/io5";
-import tick from '../../../assets/img/verified.png'
+import { queryAllContracts } from "../../../anonejs/queryInfo";
+import CollectionCard from "../collection_card/CollectionCard";
 
 const { Option } = Select;
 
@@ -72,9 +73,11 @@ const Filter = ({ }) => {
     })
 
     useEffect(() => {
-        const res = fetchDummyBestCollections()
-        setCollections([...res])
-        setFilterCollection([...res])
+        (async () => {
+            const res = await queryAllContracts(42)
+            setCollections([...res])
+            setFilterCollection([...res])
+        })()
     }, [])
 
     const apply = (value) => {
@@ -175,57 +178,37 @@ const Filter = ({ }) => {
         return (
             <div
                 key={index}
-                style={{
-                    display: 'flex',
-                    justifyContent: 'start',
-                    position: 'relative'
-                }}
             >
                 {
-                    checkIfPicked(collection.id) ? (
-                        <Image
-                            src={tick}
-                            preview={false}
-                            width={'55%'}
-                            style={{
-                                borderRadius: '50%',
-                            }}
+                    checkIfPicked(collection) ? (
+                        <CollectionCard
+                            addr={collection}
+                            selected={true}
                         />
                     ) : (
-                        <Image
-                            src={collection.avt}
-                            preview={false}
-                            width={'15%'}
-                            style={{
-                                borderRadius: '50%',
-                            }}
+                        <CollectionCard
+                            addr={collection}
+                            selected={false}
                         />
                     )
                 }
-                <p
-                    style={{
-                        marginLeft: '20px'
-                    }}
-                >
-                    {collection.title}
-                </p>
             </div>
         )
     }
 
     const handleSelectCollection = (collection) => {
-        
-        if (!checkIfPicked(collection.id)) {
-            setFilterValue({ ...filterValue, collections: [...filterValue.collections, collection.id] })
+
+        if (!checkIfPicked(collection)) {
+            setFilterValue({ ...filterValue, collections: [...filterValue.collections, collection] })
         }
         else {
-            let filter = filterValue.collections.filter(id=> id !== collection.id)
+            let filter = filterValue.collections.filter(id => id !== collection)
             setFilterValue({ ...filterValue, collections: [...filter] })
         }
     }
 
     const handleCollectionInput = (e) => {
-        const filter = collections.filter(col => col.title.includes(e.target.value))
+        const filter = collections.filter(col => col.includes(e.target.value))
         setFilterCollection([...filter])
     }
 

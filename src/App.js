@@ -14,6 +14,7 @@ import NftProfile from './pages/Nft_profile/Index';
 import CollectionCreate from './pages/Collection_create/Index';
 import NftCreate from './pages/Nft_create/Index';
 import NftMarketplace from './pages/Nft_market_place/Index';
+import CollectionExplorer from './pages/Collection_explorer/Index'
 import { useState, useEffect, useCallback } from 'react';
 
 function App() {
@@ -64,6 +65,10 @@ function App() {
           wrapSetAccount={wrapSetAccount}
         />} />
         <Route exact path="/nft/marketplace" element={<NftMarketplace
+          account={account}
+          wrapSetAccount={wrapSetAccount}
+        />} />
+        <Route exact path="/collection/explorer" element={<CollectionExplorer
           account={account}
           wrapSetAccount={wrapSetAccount}
         />} />

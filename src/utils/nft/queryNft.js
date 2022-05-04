@@ -1,13 +1,12 @@
 import { queryNftInfoById, queryOfferingList } from "../../anonejs/queryInfo";
 import { getDataFromUri } from "../../anonejs/getDataFromUri";
 
-const configMarketplace = {
-    nftMarketplaceContractAddr:
-        "one1mcy2qkuphhz4h4mncdzrxf3fh57fk98l6m30zfp7lggk4zh407rqq2carw",
-    sortListing: "price_lowest"
-};
-
-export const getMarketplaceNft = async () => {
+export const getMarketplaceNft = async (sortListing = 'price_lowest') => {
+    const configMarketplace = {
+        nftMarketplaceContractAddr:
+            "one1mcy2qkuphhz4h4mncdzrxf3fh57fk98l6m30zfp7lggk4zh407rqq2carw",
+        sortListing: sortListing
+    };
     let list = await queryOfferingList(configMarketplace)
     return list
 }

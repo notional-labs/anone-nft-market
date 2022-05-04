@@ -14,7 +14,8 @@ const style = {
         border: 0,
         color: '#F2F1F1',
         fontSize: '16px',
-        padding: '1em',
+        width: '100%',
+        padding: '2em',
         cursor: 'pointer'
     }
 }
@@ -57,27 +58,35 @@ const MarketplaceButton = ({ pathname }) => {
                         <div
                             style={{
                                 backgroundColor: '#626262',
-                                padding: '1em',
                                 position: 'absolute',
                                 textAlign: 'center',
                                 left: '-70%',
                                 width: '250%',
                                 top: '70%',
-                                borderRadius: '10px'
+                                borderRadius: '10px',
+                                overflow: 'hidden'
                             }}
                         >
-                            <Button
-                                style={style.subButton}
-                                text={'NFT'}
-                                type={'href'}
-                                url={`${process.env.REACT_APP_HOST}/nft/marketplace`}
-                            />
-                            <Button
-                                style={style.subButton}
-                                text={'Collection'}
-                                type={'href'}
-                                url={`${process.env.REACT_APP_HOST}/collection/marketplace`}
-                            />
+                            <div
+                                className="upper-button"
+                            >
+                                <Button
+                                    style={style.subButton}
+                                    text={'NFT'}
+                                    type={'href'}
+                                    url={`${process.env.REACT_APP_HOST}/nft/marketplace`}
+                                />
+                            </div>
+                            <div
+                                className="lower-button"
+                            >
+                                <Button
+                                    style={style.subButton}
+                                    text={'Collection'}
+                                    type={'href'}
+                                    url={`${process.env.REACT_APP_HOST}/collection/explorer`}
+                                />
+                            </div>
                         </div>
                     )
                 }
