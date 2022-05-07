@@ -27,7 +27,7 @@ const style = {
 
 const Header = ({ account, wrapSetAccount }) => {
     const [search, setSearch] = useState('')
-    const { pathname } = useLocation()  
+    const { pathname } = useLocation()
 
     const handleInputChange = (e) => {
         setSearch(e.target.value)
@@ -50,49 +50,41 @@ const Header = ({ account, wrapSetAccount }) => {
                     />
                 </Link>
             </div>
-            <Input
-                placeholder="Search"
-                onChange={handleInputChange}
+            <div
                 style={{
-                    height: '10%',
-                    backgroundColor: 'transparent',
-                    border: 'solid 1px #00FFA3',
-                    color: '#ffffff',
-                    padding: '10px',
-                    margin: 'auto',
-                    position: 'relative',
-                    zIndex: 0,
-                    width: '40%'
+                    display: 'flex',
+                    justifyContent: 'space-between',
                 }}
-            />
-            <MarketplaceButton 
-                pathname={pathname}
-            />
-            <CreateButton
-                pathname={pathname}
-            />
-            {
-                account === null ? (
-                    <div>
-                        <ConnectButton
-                            wrapSetAccount={wrapSetAccount}
-                        />
-                    </div>
-                ) : (
-                    <>
-                        <MenuButton
-                            account={account}
-                            wrapSetAccount={wrapSetAccount}
-                            pathname={pathname}
-                        />
-                        <WalletButton
-                            account={account}
-                            wrapSetAccount={wrapSetAccount}
-                            pathname={pathname}
-                        />
-                    </>
-                )
-            }
+            >
+                <MarketplaceButton
+                    pathname={pathname}
+                />
+                <CreateButton
+                    pathname={pathname}
+                />
+                {
+                    account === null ? (
+                        <div>
+                            <ConnectButton
+                                wrapSetAccount={wrapSetAccount}
+                            />
+                        </div>
+                    ) : (
+                        <>
+                            <MenuButton
+                                account={account}
+                                wrapSetAccount={wrapSetAccount}
+                                pathname={pathname}
+                            />
+                            <WalletButton
+                                account={account}
+                                wrapSetAccount={wrapSetAccount}
+                                pathname={pathname}
+                            />
+                        </>
+                    )
+                }
+            </div>
         </div>
     )
 }

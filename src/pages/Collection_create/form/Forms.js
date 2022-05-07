@@ -43,9 +43,6 @@ const checkValidString = (string) => {
 
 const style = {
     container: {
-        padding: '5em 35em',
-        position: 'relative',
-        marginTop: '100px'
     },
     title: {
         fontSize: '48px',
@@ -56,7 +53,8 @@ const style = {
         color: '#F2F1F1',
         fontSize: '24px',
         marginBottom: 0,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginTop: '50px'
     }
 }
 
@@ -69,12 +67,14 @@ const Forms = ({ account }) => {
     const [imgIpfsBanner, setImgIpfsBanner] = useState('')
     const [paymentAddr, setPaymentAddr] = useState(JSON.parse(account).account.address)
 
-    const create = (values) => {
+    const create = async (values) => {
         setLoading(true)
+        const logo = await ipfsUpload(imgUrlLogo)
+        const banner = await ipfsUpload(imgUrlBanner)
         let config = {
             ...values,
-            logo: imgIpfsLogo,
-            banner: imgIpfsBanner,
+            logo: logo,
+            banner: banner,
             royaltyPaymentAddress: paymentAddr
         }
         const contractConfig = {
@@ -115,14 +115,8 @@ const Forms = ({ account }) => {
             if (reader.readyState === 2) {
                 if (type === 'logo') {
                     setImgUrlLogo(reader.result)
-                    ipfsUpload(reader.result).then(url => {
-                        setImgIpfsLogo(url)
-                    })
                 } else {
                     setImgUrlBanner(reader.result)
-                    ipfsUpload(reader.result).then(url => {
-                        setImgIpfsBanner(url)
-                    })
                 }
             }
         }
@@ -162,7 +156,6 @@ const Forms = ({ account }) => {
 
     return (
         <div style={style.container}>
-            <p style={style.title}>Create New Collection</p>
             <Form
                 form={form}
                 onFinish={create}

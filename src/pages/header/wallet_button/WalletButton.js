@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import Button from '../../../components/buttons/Button'
 import walletButton from '../../../assets/img/wallet_button.png'
 import { getBalance } from '../../../utils/user/getBalance'
+import { AiOutlineWallet } from "react-icons/ai";
 import './WalletButton.css'
 
 const style = {
@@ -22,6 +23,7 @@ const style = {
 const WalletButton = ({ account, wrapSetAccount }) => {
     const [showWallet, setShowWallet] = useState(false)
     const [balances, setBalances] = useState([])
+    const [hover, setHover] = useState(false)
 
     useEffect(() => {
         (async () => {
@@ -43,6 +45,14 @@ const WalletButton = ({ account, wrapSetAccount }) => {
         setShowWallet(false)
     }
 
+    const handleMouseOver = () => {
+        setHover(true)
+    }
+
+    const handleMouseLeft = () => {
+        setHover(false)
+    }
+
     return (
         <div>
             <div
@@ -50,20 +60,20 @@ const WalletButton = ({ account, wrapSetAccount }) => {
                     position: 'relative',
                     margin: 'auto 20px',
                     height: '100%',
-                    top: '20%',
+                    top: '25%',
                     zIndex: 2,
                 }}
+                className="menu-hover-button"
             >
                 <Button
                     type={'function'}
                     clickFunction={handleClickWallet}
                     style={style.button}
                     text={
-                        <Image
-                            src={walletButton}
-                            preview={false}
-                            width={50}
-                            style={style.buttonImg}
+                        <AiOutlineWallet
+                            style={{
+                                fontSize: '3em',
+                            }}
                         />
                     }
                 />

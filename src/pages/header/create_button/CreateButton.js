@@ -9,38 +9,16 @@ const style = {
         fontSize: '24px',
         cursor: 'pointer',
     },
-    subButton: {
-        backgroundColor: 'transparent',
-        border: 0,
-        color: '#F2F1F1',
-        fontSize: '16px',
-        width: '100%',
-        padding: '2em',
-        cursor: 'pointer'
-    }
 }
 
 const CreateButton = ({ pathname }) => {
-    const [show, setShow] = useState(false)
-
-    const handleMouseOver = () => {
-        setShow(true)
-    }
-
-    const handleMouseLeft = () => {
-        setShow(false)
-    }
-
     return (
         <div
             style={{
-                borderBottom: pathname.includes('create') ? 'solid 2px #00FFA3' : 'none'
+                borderBottom: pathname.includes('create') ? 'solid 2px #00FFA3' : 'none',
             }}
-            onMouseEnter={handleMouseOver}
-            onMouseLeave={handleMouseLeft}
         >
             <div
-                className="menu-hover-button"
                 style={{
                     position: 'relative',
                     margin: 'auto 50px',
@@ -52,44 +30,10 @@ const CreateButton = ({ pathname }) => {
                 <Button
                     style={style.button}
                     text={'Create'}
+                    type={'href'}
+                    url={`${process.env.REACT_APP_HOST}/create`}
+                    className={"menu-hover-button"}
                 />
-                {
-                    show && (
-                        <div
-                            style={{
-                                backgroundColor: '#626262',
-                                position: 'absolute',
-                                textAlign: 'center',
-                                left: '-70%',
-                                width: '250%',
-                                top: '70%',
-                                borderRadius: '10px',
-                                overflow: 'hidden'
-                            }}
-                        >
-                            <div
-                                className="upper-button"
-                            >
-                                <Button
-                                    style={style.subButton}
-                                    text={'New Item'}
-                                    type={'href'}
-                                    url={`${process.env.REACT_APP_HOST}/nft/create`}
-                                />
-                            </div>
-                            <div
-                                className="lower-button"
-                            >
-                                <Button
-                                    style={style.subButton}
-                                    text={'New Collection'}
-                                    type={'href'}
-                                    url={`/collection/create`}
-                                />
-                            </div>
-                        </div>
-                    )
-                }
             </div>
         </div>
     )

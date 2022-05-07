@@ -16,9 +16,7 @@ const { Option } = Select;
 
 const style = {
     container: {
-        padding: '5em 35em',
         position: 'relative',
-        marginTop: '100px' 
     },
     title: {
         fontSize: '48px',
@@ -94,11 +92,6 @@ const Forms = ({ account }) => {
         <div
             style={style.container}
         >
-            <p
-                style={style.title}
-            >
-                Create New Item
-            </p>
             <Form
                 form={form}
                 onFinish={create}

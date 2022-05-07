@@ -78,7 +78,7 @@ const Filter = ({ }) => {
             setCollections([...res])
             setFilterCollection([...res])
         })()
-    }, [])
+    }, [showTab.collections, filterValue.collections])
 
     const apply = (value) => {
         console.log(value)

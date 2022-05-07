@@ -1,5 +1,3 @@
-import Header from "../header/Header"
-import Footer from "../footer/Footer"
 import Forms from "./form/Forms"
 
 const style = {
@@ -15,10 +13,6 @@ const NftCreate = ({ account, wrapSetAccount }) => {
         <div
             style={style.container}
         >
-            <Header
-                account={account}
-                wrapSetAccount={wrapSetAccount}
-            />
             <Forms
                 account={account}
             />

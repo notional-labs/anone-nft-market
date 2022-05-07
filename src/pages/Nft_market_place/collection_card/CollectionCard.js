@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react"
 import { queryCollectionInfo } from "../../../anonejs/queryInfo"
-import { Image } from "antd"
+import { Image, Skeleton } from "antd"
 import { getDataFromUri } from "../../../anonejs/getDataFromUri"
 import tick from '../../../assets/img/verified.png'
 
 const CollectionCard = ({ addr, selected }) => {
     const [collection, setCollection] = useState('')
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         (async () => {
+            setLoading(true)
             const res = await queryCollectionInfo(addr)
-            const res2 = await getDataFromUri(res.image)
             setCollection(JSON.stringify(res))
+            setLoading(false)
         })()
     }, [])
 
@@ -22,26 +24,48 @@ const CollectionCard = ({ addr, selected }) => {
                 justifyContent: 'start',
                 position: 'relative',
                 fontSize: '20px',
+                marginTop: '10px'
             }}
         >
             {
-                collection !== '' && (
+                loading ? (
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'start'
+                        }}
+                    >
+                        <Skeleton.Avatar
+                            size={'default'}
+                        />
+                        <div
+                            style={{
+                                marginLeft: '20px'
+                            }}
+                        >
+                            <Skeleton.Input
+                                active
+                                size='small'
+                            />
+                        </div>
+                    </div>
+                ) : collection !== '' && (
                     <>
                         {
                             selected ? (
                                 <Image
                                     src={tick}
                                     preview={false}
-                                    width={'20px'}
+                                    width={'30px'}
                                     style={{
                                         borderRadius: '50%',
                                     }}
                                 />
                             ) : (
                                 <Image
-                                    src={JSON.parse(collection).image}
+                                    src={`https://ipfs.io/ipfs/${JSON.parse(collection).image.split('ipfs://')[1]}`}
                                     preview={false}
-                                    width={'20px'}
+                                    width={'30px'}
                                     style={{
                                         borderRadius: '50%',
                                     }}

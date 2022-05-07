@@ -15,10 +15,6 @@ const CollectionCreate = ({ account, wrapSetAccount }) => {
         <div
             style={style.container}
         >
-            <Header
-                account={account}
-                wrapSetAccount={wrapSetAccount}
-            />
             <Forms
                 account={account}
             />

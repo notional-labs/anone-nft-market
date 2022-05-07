@@ -9,6 +9,7 @@ import filterButtonImg from '../../../assets/img/filter.png'
 import { getMarketplaceNft } from "../../../utils/nft/queryNft"
 import NftCard from "../nft_card/NftCard"
 import noItem from '../../../assets/img/no_item.png'
+import loadingGif from '../../../assets/img/another.gif'
 
 const { Option } = Select;
 
@@ -113,8 +114,10 @@ const NftList = ({ }) => {
 
     useEffect(() => {
         (async () => {
+            setLoading(true)
             const res = await getMarketplaceNft(select)
             setNfts([...res])
+            setLoading(false)
         })()
     }, [select])
 
@@ -225,7 +228,26 @@ const NftList = ({ }) => {
                     </Select>
                 </div>
                 {
-                    nfts.length > 0 ? (
+                    loading ? (
+                        <div
+                            style={{
+                                border: 'solid 1px #00FFA3',
+                                color: '#ffffff',
+                                fontSize: '3rem',
+                                textAlign: 'center',
+                                display: 'flex',
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                padding: '1em'
+                            }}
+                        >
+                            <Image
+                                src={loadingGif}
+                                preview={false}
+                                width={'20%'}
+                            />
+                        </div>
+                    ) : nfts.length > 0 ? (
                         <div
                             style={style.grid}
                         >
@@ -241,7 +263,7 @@ const NftList = ({ }) => {
                             style={{
                                 border: 'solid 1px #00FFA3',
                                 color: '#ffffff',
-                                fontSize: '3rem',
+                                fontSize: '2rem',
                                 textAlign: 'center',
                                 display: 'flex',
                                 flexDirection: 'column',
