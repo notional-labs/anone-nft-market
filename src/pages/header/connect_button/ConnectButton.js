@@ -52,7 +52,7 @@ const ConnectButton = ({ wrapSetAccount }) => {
 
     return (
         <div style={{
-            padding: '2em 3em'
+            padding: '1.5em 3em'
         }}>
             <Button
                 style={style.button}

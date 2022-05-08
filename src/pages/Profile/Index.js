@@ -5,6 +5,7 @@ import Asset from "./asset/Asset";
 import Footer from "../footer/Footer";
 import { dummyGetUserById } from "../../utils/api/user";
 import { getCollectionById } from "../../utils/api/collections";
+import ConnectWalletPage from "../Connect_wallet_error_page/Index";
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 
@@ -42,10 +43,26 @@ const Profile = ({ type, account, wrapSetAccount }) => {
                 wrapSetAccount={wrapSetAccount}
             />
             {
-                info !== null ? (
+                !account && type === 'user-profile' ? (
                     <div
                         style={{
-                            marginTop: '90px' 
+                            height: '100vh',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            width: '40%',
+                            margin: 'auto',
+                            color: '#ffffff'
+                        }}
+                    >
+                        <ConnectWalletPage
+                            wrapSetAccount={wrapSetAccount}
+                        />
+                    </div>
+                ) : info !== null ? (
+                    <div
+                        style={{
+                            marginTop: '90px'
                         }}
                     >
                         {
@@ -82,7 +99,6 @@ const Profile = ({ type, account, wrapSetAccount }) => {
                     </div>
                 )
             }
-            <Footer />
         </div>
     )
 }

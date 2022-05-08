@@ -2,7 +2,9 @@ import { useState } from "react"
 import Button from "../../components/buttons/Button"
 import NftCreate from "../Nft_create/Index"
 import CollectionCreate from "../Collection_create/Index"
+import ConnectButton from "../header/connect_button/ConnectButton"
 import Header from "../header/Header"
+import ConnectWalletPage from "../Connect_wallet_error_page/Index"
 
 const style = {
     container: {
@@ -38,68 +40,87 @@ const CreatePage = ({ account, wrapSetAccount }) => {
                 account={account}
                 wrapSetAccount={wrapSetAccount}
             />
-            <div
-                style={{
-                    padding: '3em 35em',
-                    position: 'relative',
-                    marginTop: '100px'
-                }}
-            >
-                <p
-                    style={{
-                        fontSize: '48px',
-                        color: '#00FFA3',
-                        fontWeight: 'bold'
-                    }}
-                >
-                    Create
-                </p>
-                <div>
+            {
+                account ? (
                     <div
-                        style={style.buttonContainer}
+                        style={{
+                            padding: '3em 35em',
+                            position: 'relative',
+                            marginTop: '100px'
+                        }}
                     >
-                        <Button
-                            type={'function'}
+                        <p
                             style={{
-                                ...style.button,
-                                backgroundColor: tabSelect === 1 ? '#00FFA3' : 'transparent',
-                                color: tabSelect === 1 ? '#000000' : '#ffffff'
+                                fontSize: '48px',
+                                color: '#00FFA3',
+                                fontWeight: 'bold'
                             }}
-                            clickFunction={() => {
-                                changeTab(1)
-                            }}
-                            text={'NFT'}
-                        />
-                        <Button
-                            type={'function'}
-                            style={{
-                                ...style.button,
-                                backgroundColor: tabSelect === 2 ? '#00FFA3' : 'transparent',
-                                color: tabSelect === 2 ? '#000000' : '#ffffff'
-                            }}
-                            clickFunction={() => {
-                                changeTab(2)
-                            }}
-                            text={'COLLECTION'}
+                        >
+                            Create
+                        </p>
+                        <div>
+                            <div
+                                style={style.buttonContainer}
+                            >
+                                <Button
+                                    type={'function'}
+                                    style={{
+                                        ...style.button,
+                                        backgroundColor: tabSelect === 1 ? '#00FFA3' : 'transparent',
+                                        color: tabSelect === 1 ? '#000000' : '#ffffff'
+                                    }}
+                                    clickFunction={() => {
+                                        changeTab(1)
+                                    }}
+                                    text={'NFT'}
+                                />
+                                <Button
+                                    type={'function'}
+                                    style={{
+                                        ...style.button,
+                                        backgroundColor: tabSelect === 2 ? '#00FFA3' : 'transparent',
+                                        color: tabSelect === 2 ? '#000000' : '#ffffff'
+                                    }}
+                                    clickFunction={() => {
+                                        changeTab(2)
+                                    }}
+                                    text={'COLLECTION'}
+                                />
+                            </div>
+                            <div>
+                                {
+                                    tabSelect === 1 ? (
+                                        <NftCreate
+                                            account={account}
+                                            wrapSetAccount={wrapSetAccount}
+                                        />
+                                    ) : (
+                                        <CollectionCreate
+                                            account={account}
+                                            wrapSetAccount={wrapSetAccount}
+                                        />
+                                    )
+                                }
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <div
+                        style={{
+                            height: '100vh',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            width: '40%',
+                            margin: 'auto'
+                        }}
+                    >
+                        <ConnectWalletPage
+                            wrapSetAccount={wrapSetAccount}
                         />
                     </div>
-                    <div>
-                        {
-                            tabSelect === 1 ? (
-                                <NftCreate
-                                    account={account}
-                                    wrapSetAccount={wrapSetAccount}
-                                />
-                            ) : (
-                                <CollectionCreate
-                                    account={account}
-                                    wrapSetAccount={wrapSetAccount}
-                                />
-                            )
-                        }
-                    </div>
-                </div>
-            </div>
+                )
+            }
         </div>
     )
 }

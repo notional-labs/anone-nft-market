@@ -38,7 +38,7 @@ const Forms = ({ account }) => {
     const [paymentAddr, setPaymentAddr] = useState(JSON.parse(account).account.address)
 
     const update = async (values) => {
-        let val = {...values}
+        let val = { ...values }
         val.log = imgUrlLogo
         val.banner = imgUrlBanner
         console.log(val)
@@ -66,6 +66,10 @@ const Forms = ({ account }) => {
             }
         }
         reader.readAsDataURL(e.target.files[0]);
+    }
+
+    const handleClick = () => {
+        console.log(form.getFieldsValue())
     }
 
     const handleChangeAddress = (e) => {
@@ -262,7 +266,7 @@ const Forms = ({ account }) => {
                         marginTop: '50px'
                     }}
                 >
-                    Links
+                    Socials
                 </p>
                 <Form.Item
                     name={'facebookLink'}
@@ -318,6 +322,27 @@ const Forms = ({ account }) => {
                         }}
                     />
                 </Form.Item>
+                <p
+                    style={{
+                        ...style.label,
+                        marginTop: '50px'
+                    }}
+                >
+                    Wallet Address
+                </p>
+                <Form.Item
+                    name={'address'}
+                >
+                    <Input
+                        defaultValue={JSON.parse(account).account.address}
+                        disabled={true}
+                        style={{
+                            padding: '1em',
+                            color: '#000000',
+                            backgroundColor: '#a3a3a3'
+                        }}
+                    />
+                </Form.Item>
                 <div
                     style={{
                         display: 'flex',
@@ -325,7 +350,8 @@ const Forms = ({ account }) => {
                     }}
                 >
                     <button
-                        htmlType="submit"
+                        onClick={handleClick}
+                        type="button"
                         style={{
                             border: 0,
                             backgroundColor: '#ffffff',

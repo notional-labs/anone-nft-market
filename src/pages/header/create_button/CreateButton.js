@@ -32,7 +32,7 @@ const CreateButton = ({ pathname }) => {
                     text={'Create'}
                     type={'href'}
                     url={`${process.env.REACT_APP_HOST}/create`}
-                    className={"menu-hover-button"}
+                    className="menu-hover-button"
                 />
             </div>
         </div>

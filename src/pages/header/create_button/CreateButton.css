@@ -3,7 +3,16 @@
 }
 
 .menu-hover-button:hover {
-    color: #00FFA3
+    animation: transfer .5s forwards !important;
+}
+
+@keyframes transfer {
+    from {
+        color: #ffffff
+    }
+    to {
+        color: #00FFA3
+    }
 }
 
 .upper-button:hover {
