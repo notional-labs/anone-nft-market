@@ -149,7 +149,7 @@ const NftList = ({ }) => {
             <div
                 className="filter-tab-content"
                 style={{
-                    padding: '100px 2em 2em 2em',
+                    padding: '90px 2em 2em 2em',
                     backgroundColor: '#000000',
                     position: 'fixed',
                     width: showFilter ? '350px' : '100px',
@@ -174,7 +174,7 @@ const NftList = ({ }) => {
             <div
                 style={{
                     padding: '2em 5em',
-                    marginTop: '150px',
+                    marginTop: '100px',
                     marginLeft: showFilter ? '350px' : '50px',
                     width: '100%'
                 }}
@@ -231,7 +231,6 @@ const NftList = ({ }) => {
                     loading ? (
                         <div
                             style={{
-                                border: 'solid 1px #00FFA3',
                                 color: '#ffffff',
                                 fontSize: '3rem',
                                 textAlign: 'center',
@@ -261,7 +260,6 @@ const NftList = ({ }) => {
                     ) : (
                         <div
                             style={{
-                                border: 'solid 1px #00FFA3',
                                 color: '#ffffff',
                                 fontSize: '2rem',
                                 textAlign: 'center',

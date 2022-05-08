@@ -4,18 +4,13 @@ import Image from 'rc-image';
 import background from './assets/img/background.png'
 import {
   Routes,
-  Route,
-  Link,
-  NavLink,
-  useLocation
-} from "react-router-dom";
+  Route} from "react-router-dom";
 import Profile from './pages/Profile/Index';
 import NftProfile from './pages/Nft_profile/Index';
-import CollectionCreate from './pages/Collection_create/Index';
-import NftCreate from './pages/Nft_create/Index';
 import NftMarketplace from './pages/Nft_market_place/Index';
 import CollectionExplorer from './pages/Collection_explorer/Index'
 import CreatePage from './pages/Create/Index';
+import EditPage from './pages/Edit/Index';
 import { useState, useEffect, useCallback } from 'react';
 
 function App() {
@@ -53,6 +48,10 @@ function App() {
         />} />
         <Route exact path="/user/profile" element={<Profile
           type={'user-profile'}
+          account={account}
+          wrapSetAccount={wrapSetAccount}
+        />} />
+        <Route exact path="/user/edit" element={<EditPage
           account={account}
           wrapSetAccount={wrapSetAccount}
         />} />

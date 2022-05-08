@@ -32,7 +32,7 @@ const NftProfile = ({ account, wrapSetAccount }) => {
                 nft !== null && (
                     <div
                         style={{
-                            marginTop: '100px' 
+                            marginTop: '90px' 
                         }}
                     >
                         <ImgAndSpec

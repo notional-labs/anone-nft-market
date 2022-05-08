@@ -14,7 +14,6 @@ const style = {
     buttonImg: {
         position: 'relative',
         zIndex: 2,
-        top: '5px'
     }
 }
 
@@ -45,7 +44,7 @@ const MenuButton = ({ account, wrapSetAccount, pathname }) => {
             <div
                 style={{
                     position: 'relative',
-                    margin: 'auto 50px',
+                    margin: 'auto 30px',
                     height: '100%',
                     top: '20%',
                     zIndex: 2,
@@ -63,6 +62,7 @@ const MenuButton = ({ account, wrapSetAccount, pathname }) => {
                             style={{
                                 ...style.buttonImg,
                                 borderRadius: '50%',
+                                boxShadow: showProfile && ' 0 0 20px .5px #00FFA3'
                             }}
                         />
                     }

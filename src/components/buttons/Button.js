@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom"
 
-const Button = ({ clickFunction, style, text, type, url, className }) => {
+const Button = ({ clickFunction, style, text, type, url, className, index }) => {
 
     const handleClick = ({ }) => {
         clickFunction()
     }
 
     return (
-        <div>
+        <div
+            key={index}
+        >
             {
                 type === 'function' ? (
                     <button

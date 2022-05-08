@@ -6,7 +6,7 @@ const style = {
     button: {
         backgroundColor: 'transparent',
         border: 0,
-        fontSize: '24px',
+        fontSize: '20px',
         cursor: 'pointer',
     },
 }
@@ -21,7 +21,7 @@ const CreateButton = ({ pathname }) => {
             <div
                 style={{
                     position: 'relative',
-                    margin: 'auto 50px',
+                    margin: 'auto 30px',
                     height: '100%',
                     top: '30%',
                     zIndex: 2,

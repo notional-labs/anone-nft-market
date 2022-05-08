@@ -40,7 +40,7 @@ const CreatePage = ({ account, wrapSetAccount }) => {
             />
             <div
                 style={{
-                    padding: '5em 35em',
+                    padding: '3em 35em',
                     position: 'relative',
                     marginTop: '100px'
                 }}

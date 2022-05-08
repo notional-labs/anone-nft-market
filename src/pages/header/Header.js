@@ -18,10 +18,13 @@ const style = {
         backgroundColor: '#000000',
         width: '100%',
         top: 0,
-        boxShadow: '0 1px 20px -2px #363636'
+        boxShadow: '0 1px 20px -2px #363636',
+        height: '90px'
     },
     logoContainer: {
-        padding: '3em'
+        padding: '3em',
+        position: 'relative',
+        top: '-10px'
     },
 }
 

@@ -45,7 +45,7 @@ const Profile = ({ type, account, wrapSetAccount }) => {
                 info !== null ? (
                     <div
                         style={{
-                            marginTop: '100px' 
+                            marginTop: '90px' 
                         }}
                     >
                         {

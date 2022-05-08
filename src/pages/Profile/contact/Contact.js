@@ -76,7 +76,7 @@ const Contact = ({ type }) => {
                         <Button
                             type={'link'}
                             style={style.button}
-                            url={'/user/profile/setting'}
+                            url={'/user/edit'}
                             text={(
                                 <Image
                                     src={settingImg}

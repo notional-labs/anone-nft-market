@@ -63,8 +63,6 @@ const Forms = ({ account }) => {
     const [loading, setLoading] = useState(false)
     const [imgUrlLogo, setImgUrlLogo] = useState('')
     const [imgUrlBanner, setImgUrlBanner] = useState('')
-    const [imgIpfsLogo, setImgIpfsLogo] = useState('')
-    const [imgIpfsBanner, setImgIpfsBanner] = useState('')
     const [paymentAddr, setPaymentAddr] = useState(JSON.parse(account).account.address)
 
     const create = async (values) => {
