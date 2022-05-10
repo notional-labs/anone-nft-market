@@ -13,8 +13,8 @@ import { createCollection } from "../../../anonejs/createCollection";
 // import { queryModelInfoById } from "../../../anonejs/queryInfo";
 // import { queryNumberOfNfts } from "../../../anonejs/queryInfo";
 // import { queryNumberOfModels } from "../../../anonejs/queryInfo";
-// import { queryAllDataOfAllNfts } from "../../../anonejs/queryInfo";
-// import { queryAllDataOfAllModels } from "../../../anonejs/queryInfo";
+import { queryAllDataOfAllNfts } from "../../../anonejs/queryInfo";
+import { queryAllDataOfAllModels } from "../../../anonejs/queryInfo";
 // import { queryAllContracts } from "../../../anonejs/queryInfo";
 import { queryOfferingListByPriceRange } from "../../../anonejs/queryInfo";
 import { queryOfferingListOfCollection } from "../../../anonejs/queryInfo";
@@ -22,6 +22,7 @@ import { queryOfferingListOfSeller } from "../../../anonejs/queryInfo";
 // import { queryCollectionInfo } from "../../../anonejs/queryInfo";
 // import { getDataFromUri } from "../../../anonejs/getDataFromUri";
 // import { getBase64, beforeUpload } from "../../../utils/imageProcessing";
+import {burnNft} from "../../../anonejs/burnNft";
 import noImg from "../../../assets/img/no_image.png";
 import "./Forms.css";
 import { mintCallFromUser } from "../../../anonejs/mintNft";
@@ -184,6 +185,12 @@ const Forms = ({}) => {
       "one10jsmew5rqtk4kptymz75lncg0tguwleuj60mw5hn0wxuexkder0q4lvf42",
   }
 
+  const Config13 = {
+    cw721ContractAddr:
+      "one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq",
+    tokenId: '1'
+  }
+
   const handleClick = async () => {
     // const result = await createCollection(Config);
     // const result = await createSale(Config2);
@@ -199,11 +206,13 @@ const Forms = ({}) => {
     // const result = await queryCollectionInfo('one1mych7nr7fk86y2ezekkqfwsqpl8ax659ez4r4lm87x6clhz65q9sn4ngte');
     // const result = await getDataFromUri('https://ipfs.io/ipfs/bafybeiaivv62j7jxlkahxobfr5io7h2j56obw5mojljho2ybg7zhah2eue/galaxyfcnCU3/1');
     // const result = await queryAllDataOfAllModels('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq');
+    const result = await queryAllDataOfAllNfts('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq');
     // const result = await queryAllContracts(69);
     // const result = await queryOfferingListByPriceRange(Config9);
     // const result = await queryOfferingListOfCollection(Config10);
     // const result = await queryOfferingListOfSeller(Config11);
-    const result = await mintCallFromUser(Config12);
+    // const result = await mintCallFromUser(Config12);
+    // const result = await burnNft(Config13)
     console.log(result);
   };
 
