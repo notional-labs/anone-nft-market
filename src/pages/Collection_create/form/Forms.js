@@ -19,9 +19,10 @@ import { queryAllDataOfAllModels } from "../../../anonejs/queryInfo";
 import { queryOfferingListByPriceRange } from "../../../anonejs/queryInfo";
 import { queryOfferingListOfCollection } from "../../../anonejs/queryInfo";
 import { queryOfferingListOfSeller } from "../../../anonejs/queryInfo";
-// import { queryCollectionInfo } from "../../../anonejs/queryInfo";
+import { queryCollectionInfo } from "../../../anonejs/queryInfo";
 // import { getDataFromUri } from "../../../anonejs/getDataFromUri";
 // import { getBase64, beforeUpload } from "../../../utils/imageProcessing";
+import { modifyCollectionInfo } from "../../../anonejs/modifyCollectionInfo";
 import {burnNft} from "../../../anonejs/burnNft";
 import {transferNft} from "../../../anonejs/transferNft";
 import noImg from "../../../assets/img/no_image.png";
@@ -199,6 +200,16 @@ const Forms = ({}) => {
     recipient: 'one1k2x29vppqrhgsdxtkmkpspnawm229lcpec7mm3'
   }
 
+  const Config15 = {
+    cw721ContractAddr:
+      "one1xmacmeqhdcr5w6qn2jpx8vs6kg3zaql944t4365jdsr8d8m67vns5mamhw",
+    description: "Chinh yeu Linh",
+    image: "ipfs://bafybeigi3bwpvyvsmnbj46ra4hyffcxdeaj6ntfk5jpic5mx27x6ih2qvq/images/1.png",
+    externalLink: "123",
+    royaltyPaymentAddress: "one1k2x29vppqrhgsdxtkmkpspnawm229lcpec7mm3",
+    royaltyShare: "0.04"
+  }
+
   const handleClick = async () => {
     // const result = await createCollection(Config);
     // const result = await createSale(Config2);
@@ -211,10 +222,10 @@ const Forms = ({}) => {
     // const result = await queryModelInfoById(Config8);
     // const result = await queryNumberOfNfts('one1tj748034gl3zvujn2tz4p4m8rf9j9uarsj5j3c5a5z2neqel77cslz2lp0');
     // const result = await queryNumberOfModels('one1tj748034gl3zvujn2tz4p4m8rf9j9uarsj5j3c5a5z2neqel77cslz2lp0');
-    // const result = await queryCollectionInfo('one1mych7nr7fk86y2ezekkqfwsqpl8ax659ez4r4lm87x6clhz65q9sn4ngte');
+    // const result = await queryCollectionInfo('one1xmacmeqhdcr5w6qn2jpx8vs6kg3zaql944t4365jdsr8d8m67vns5mamhw');
     // const result = await getDataFromUri('https://ipfs.io/ipfs/bafybeiaivv62j7jxlkahxobfr5io7h2j56obw5mojljho2ybg7zhah2eue/galaxyfcnCU3/1');
     // const result = await queryAllDataOfAllModels('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq');
-      const result = await queryAllDataOfAllNfts('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq');
+    // const result = await queryAllDataOfAllNfts('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq');
     // const result = await queryAllContracts(69);
     // const result = await queryOfferingListByPriceRange(Config9);
     // const result = await queryOfferingListOfCollection(Config10);
@@ -222,6 +233,7 @@ const Forms = ({}) => {
     // const result = await mintCallFromUser(Config12);
     // const result = await burnNft(Config13);
     // const result = await transferNft(Config14)
+    const result = await modifyCollectionInfo(Config15);
     console.log(result);
   };
 
