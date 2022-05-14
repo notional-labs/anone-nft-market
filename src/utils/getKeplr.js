@@ -1,5 +1,5 @@
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
-import { anoneTestnetChain } from "../data/chainObjects/anone_testnet";
+import { anoneTestnetChain } from "../data/data/anone_testnet";
 import { dummyLogin } from "./api/user";
 
 export const getKeplr = async () => {
@@ -11,8 +11,8 @@ export const getKeplr = async () => {
     } else {
         await window.keplr.experimentalSuggestChain(anoneTestnetChain)
         await window.keplr.enable(process.env.REACT_APP_CHAIN_ID)
-        let offlineSigner = await window.getOfflineSigner(process.env.REACT_APP_CHAIN_ID);
-        let accounts = await offlineSigner.getAccounts()
+        const offlineSigner = window.keplr.getOfflineSigner(process.env.REACT_APP_CHAIN_ID);
+        const accounts = await offlineSigner.getAccounts();
         accounts.chain = process.env.REACT_APP_CHAIN_ID
         return {
             accounts,
@@ -23,7 +23,7 @@ export const getKeplr = async () => {
 
 
 export const getWasmClient = async () => {
-    let offlineSigner = await window.getOfflineSigner(process.env.REACT_APP_CHAIN_ID);
+    const { offlineSigner } = await getKeplr()
     const wasmClient = await SigningCosmWasmClient.connectWithSigner(anoneTestnetChain.rpc, offlineSigner);
     return wasmClient
 }

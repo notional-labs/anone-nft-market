@@ -33,7 +33,7 @@ const style = {
     }
 }
 
-const Contact = ({ type }) => {
+const Contact = ({ type, info, id, account }) => {
     let location = useLocation();
 
     const handleClick = () => {
@@ -72,11 +72,24 @@ const Contact = ({ type }) => {
                     )}
                 />
                 {
-                    type === 'user-profile' && (
+                    type === 'user-profile' ? (
                         <Button
                             type={'link'}
                             style={style.button}
-                            url={'/user/profile/setting'}
+                            url={'/user/edit'}
+                            text={(
+                                <Image
+                                    src={settingImg}
+                                    preview={false}
+                                    width={'100%'}
+                                />
+                            )}
+                        />
+                    ) : type === 'collection' && account && JSON.parse(info).creator === JSON.parse(account).account.address && (
+                        <Button
+                            type={'link'}
+                            style={style.button}
+                            url={`/collection/${id}/edit`}
                             text={(
                                 <Image
                                     src={settingImg}

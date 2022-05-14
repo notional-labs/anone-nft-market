@@ -1,0 +1,48 @@
+.logo:hover {
+    animation: fade 0.5s normal forwards;
+    cursor: pointer;
+}
+
+.ant-switch[aria-checked='false'] {
+    background-color: #626262 ;
+}
+
+.ant-switch[aria-checked='true'] {
+    background-color: #00FFA3;
+}
+
+.ant-switch {
+    border-radius: 5px !important;
+    width: 170% !important;
+    height: 30px !important;
+    border: none !important;
+    position: relative !important;
+    top: 15px !important;
+    left: -70% !important;
+}
+
+.ant-switch-checked:focus {
+    box-shadow: none !important;
+}
+
+.ant-switch-handle {
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50% !important;
+    position: absolute !important;
+    top: 5px !important;
+}
+
+@keyframes fade {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.5;
+    }
+}
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    height: 50px !important;
+    font-size: 20px !important;
+}

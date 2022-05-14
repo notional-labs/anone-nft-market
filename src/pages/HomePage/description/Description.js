@@ -2,6 +2,7 @@ import Grid from "../../../components/grids/Grid"
 import { Image } from "antd"
 import footerImg1 from '../../../assets/img/footer_1.png'
 import footerImg2 from '../../../assets/img/footer_2.png'
+import sneaker from '../../../assets/img/sneaker2.png'
 
 const footer = [
     {
@@ -28,9 +29,10 @@ const style = {
     },
     img: {
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row',
         justifyContent: 'end',
         padding: '0em 7em 2em 7em',
+        margin: 'auto'
     },
     text: {
         textAlign: 'center',
@@ -87,6 +89,41 @@ const Description = ({ }) => {
         <div
             style={style.container}
         >
+            <div
+                style={{
+                    fontSize: '48px',
+                    fontWeight: 'bold',
+                    textAlign: 'center'
+                }}
+            >
+                <span
+                    style={{
+                        color: '#00FFA3'
+                    }}
+                >
+                    NFTS SNEAKERS
+                </span>
+                <span
+                    style={{
+                        color: '#ffffff',
+                        marginLeft: '10px'
+                    }}
+                >
+                    SYSTEM
+                </span>
+            </div>
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginBottom: '15em'
+                }}
+            >
+                <Image
+                    src={sneaker}
+                    preview={false}
+                />
+            </div>
             <Grid
                 lists={getFooterGrid()}
                 numberOfColumn={2}

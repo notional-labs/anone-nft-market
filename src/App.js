@@ -4,14 +4,13 @@ import Image from 'rc-image';
 import background from './assets/img/background.png'
 import {
   Routes,
-  Route,
-  Link,
-  NavLink,
-  useLocation
-} from "react-router-dom";
+  Route} from "react-router-dom";
 import Profile from './pages/Profile/Index';
 import NftProfile from './pages/Nft_profile/Index';
-import CollectionCreate from './pages/Collection_create/Index';
+import NftMarketplace from './pages/Nft_market_place/Index';
+import CollectionExplorer from './pages/Collection_explorer/Index'
+import CreatePage from './pages/Create/Index';
+import EditPage from './pages/Edit/Index';
 import { useState, useEffect, useCallback } from 'react';
 
 function App() {
@@ -52,17 +51,29 @@ function App() {
           account={account}
           wrapSetAccount={wrapSetAccount}
         />} />
+        <Route exact path="/user/edit" element={<EditPage
+          account={account}
+          wrapSetAccount={wrapSetAccount}
+        />} />
         <Route exact path="/profile/:id" element={<Profile
           type={'profile'}
           account={account}
           wrapSetAccount={wrapSetAccount}
         />} />
-        <Route exact path="/collection/:id" element={<Profile
-          type={'collection'}
+        <Route exact path="/create" element={<CreatePage
           account={account}
           wrapSetAccount={wrapSetAccount}
         />} />
-        <Route exact path="/collection/create" element={<CollectionCreate
+        <Route exact path="/nft/marketplace" element={<NftMarketplace
+          account={account}
+          wrapSetAccount={wrapSetAccount}
+        />} />
+        <Route exact path="/collection/explorer" element={<CollectionExplorer
+          account={account}
+          wrapSetAccount={wrapSetAccount}
+        />} />
+        <Route exact path="/collection/:id" element={<Profile
+          type={'collection'}
           account={account}
           wrapSetAccount={wrapSetAccount}
         />} />

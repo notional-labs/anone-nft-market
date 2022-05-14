@@ -2,8 +2,8 @@ import { calculateFee, GasPrice } from "@cosmjs/stargate";
 import { getWasmClient } from "../utils/getKeplr";
 
 export const mintCallFromUser = async (Config) => {
-  const account = JSON.parse(localStorage.getItem("account")).account.address;
-  const wasmClient = await getWasmClient();
+  const account = Config.address;
+  const wasmClient = await getWasmClient()
   const gasPrice = GasPrice.fromString("0.002uan1");
 
   let entrypoint = {

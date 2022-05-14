@@ -5,8 +5,10 @@ import Asset from "./asset/Asset";
 import Footer from "../footer/Footer";
 import { dummyGetUserById } from "../../utils/api/user";
 import { getCollectionById } from "../../utils/api/collections";
+import ConnectWalletPage from "../Connect_wallet_error_page/Index";
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
+import { queryCollectionInfo } from "../../anonejs/queryInfo";
 
 const style = {
     container: {
@@ -20,17 +22,19 @@ const Profile = ({ type, account, wrapSetAccount }) => {
     let { id } = useParams();
 
     useEffect(() => {
-        if (type === 'user-profile') {
-            setInfo(account)
-        }
-        else if (type === 'profile') {
-            const user = dummyGetUserById()
-            user && setInfo(JSON.stringify(user))
-        }
-        else if (type === 'collection') {
-            const collection = getCollectionById()
-            setInfo(JSON.stringify(collection))
-        }
+        (async () => {
+            if (type === 'user-profile') {
+                setInfo(account)
+            }
+            else if (type === 'profile') {
+                const user = dummyGetUserById()
+                user && setInfo(JSON.stringify(user))
+            }
+            else if (type === 'collection') {
+                const res = await queryCollectionInfo(id)
+                setInfo(JSON.stringify(res))
+            }
+        })()
     }, [type, account])
 
     return (
@@ -42,8 +46,28 @@ const Profile = ({ type, account, wrapSetAccount }) => {
                 wrapSetAccount={wrapSetAccount}
             />
             {
-                info !== null ? (
-                    <div>
+                !account && type === 'user-profile' ? (
+                    <div
+                        style={{
+                            height: '100vh',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            width: '40%',
+                            margin: 'auto',
+                            color: '#ffffff'
+                        }}
+                    >
+                        <ConnectWalletPage
+                            wrapSetAccount={wrapSetAccount}
+                        />
+                    </div>
+                ) : info !== null ? (
+                    <div
+                        style={{
+                            marginTop: '90px'
+                        }}
+                    >
                         {
                             type !== 'collection' ?
                                 type === 'user-profile' && account !== null ? (
@@ -58,13 +82,16 @@ const Profile = ({ type, account, wrapSetAccount }) => {
                                     />
                                 ) : (
                                     <CollectionBanner
-                                        user={info}
+                                        collection={info}
                                         type={type}
+                                        id={id}
+                                        account={account}
                                     />
                                 )
                         }
                         <Asset
-                            user={info}
+                            id={id}
+                            info={info}
                             type={type}
                         />
                     </div>
@@ -78,7 +105,6 @@ const Profile = ({ type, account, wrapSetAccount }) => {
                     </div>
                 )
             }
-            <Footer />
         </div>
     )
 }

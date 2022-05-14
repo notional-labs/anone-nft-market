@@ -1,0 +1,24 @@
+.filter-tab-content {
+    height: 100% ;
+}
+
+.option-header > .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    border-radius: 10px !important;
+    height: 50px !important;
+    font-size: 20px !important;
+}
+.ant-select-selection-item {
+    position: relative !important;
+    top: 20% !important;
+}
+
+.ant-select-selection-placeholder{
+    position: relative !important;
+    top: 20% !important;
+}
+
+.filter-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 10px -2px #363636;
+}
+

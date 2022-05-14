@@ -1,0 +1,12 @@
+.hover-button:hover {
+    animation: transfer 1s forwards;
+}
+
+@keyframes transfer {
+    from {
+        color: #ffffff
+    }
+    to {
+        color: #00FFA3
+    }
+}

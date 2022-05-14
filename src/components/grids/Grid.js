@@ -1,5 +1,5 @@
 
-const Grid = ({lists, numberOfColumn, rowGap, colGap}) => {
+const Grid = ({lists, numberOfColumn, rowGap = 10, colGap = 10}) => {
 
     const style = {
         container: {

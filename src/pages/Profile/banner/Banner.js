@@ -37,7 +37,8 @@ const Banner = ({ user, type }) => {
                             borderRadius: '50%',
                             position: 'relative',
                             top: '-100px',
-                            left: '10px'
+                            left: '10px',
+                            border: 'solid 2px white'
                         }}
                     />
                     <p
@@ -58,7 +59,7 @@ const Banner = ({ user, type }) => {
                             preview={false}
                             width={'30px'}
                             style={{
-                                marginLeft: '30px'
+                                marginLeft: '30px',
                             }}
                         />
                     </p>

@@ -1,0 +1,16 @@
+menu-hover-button {
+    color: #F2F1F1
+}
+
+.menu-hover-button:hover {
+    animation: transfer .5s forwards;
+}
+
+@keyframes transfer {
+    from {
+        color: #ffffff
+    }
+    to {
+        color: #00FFA3
+    }
+}

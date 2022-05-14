@@ -121,7 +121,7 @@ const DropBox = ({ nft }) => {
         <div
             style={{
                 marginTop: '5em',
-                width: '500px',
+                width: '100%',
                 position: 'relative'
             }}
         >

@@ -9,7 +9,7 @@ const style = {
         flexDirection: 'row',
         justifyContent: 'center',
         color: '#ffffff',
-        marginTop: '150px'
+        marginTop: '250px'
     },
     bannerText: {
         texAlign: 'left',
@@ -90,7 +90,8 @@ const Banner = ({ }) => {
                     >
                         SIGN UP FOR DROP
                     </p>
-                    <Input 
+                    <Input
+                        className="banner"
                         placeholder="Email"
                         onChange={handleChangeSubscriptionInput}
                         style={{

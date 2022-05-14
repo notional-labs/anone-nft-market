@@ -1,112 +1,130 @@
-import { Image } from 'antd'
+import { Image, Drawer } from 'antd'
 import { useEffect, useState } from 'react'
 import Button from '../../../components/buttons/Button'
-import ConnectButton from '../connect_button/ConnectButton'
 import walletButton from '../../../assets/img/wallet_button.png'
-import profileButton from '../../../assets/img/profile_button.png'
-import logoutButton from '../../../assets/img/logout_button.png'
+import { getBalance } from '../../../utils/user/getBalance'
+import './MenuButton.css'
 
 const style = {
     button: {
         backgroundColor: 'transparent',
         cursor: 'pointer',
         border: 'none',
-        marginRight: '3em'
     },
     buttonImg: {
         position: 'relative',
         zIndex: 2,
-        top: '10px'
     }
 }
 
-const MenuButton = ({account, wrapSetAccount}) => {
+const MenuButton = ({ account, wrapSetAccount, pathname }) => {
+    const [showProfile, setShowProfile] = useState(false)
 
     const logout = () => {
         localStorage.removeItem('account')
         wrapSetAccount(null)
     }
 
+    const handleMouseOver = () => {
+        setShowProfile(true)
+    }
+
+    const handleMouseLeft = () => {
+        setShowProfile(false)
+    }
+
     return (
         <div
             style={{
-                border: 'solid 1px #00FFA3',
-                display: 'flex',
-                justifyContent: 'space-between',
-                margin: '1em 5em',
-                padding: '0.5em 0em 0.5em 2em',
+                borderBottom: pathname.includes('user/profile') ? 'solid 2px #00FFA3' : 'none',
             }}
+            onMouseEnter={handleMouseOver}
+            onMouseLeave={handleMouseLeft}
         >
             <div
                 style={{
-                    marginRight: '10em'
+                    position: 'relative',
+                    margin: 'auto 30px',
+                    height: '100%',
+                    top: '25%',
+                    zIndex: 2,
                 }}
             >
-                <p
-                    style={{
-                        fontSize: '24px',
-                        fontWeight: 'bold',
-                        color: '#ffffff',
-                        marginBottom: 0
-                    }}
-                >
-                    Name
-                </p>
-                <p
-                    style={{
-                        fontSize: '16px',
-                        fontWeight: 'bold',
-                        color: '#ffffff',
-                        marginBottom: 0
-                    }}
-                >
-                    {JSON.parse(account).user.userName}
-                </p>
-            </div>
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                }}
-            >
-                <Button
-                    type={'href'}
-                    url={''}
-                    style={style.button}
-                    text={
-                        <Image
-                            src={walletButton}
-                            preview={false}
-                            width={35}
-                            style={style.buttonImg}
-                        />
-                    }
-                />
                 <Button
                     type={'href'}
                     style={style.button}
                     url={`${process.env.REACT_APP_HOST}/user/profile`}
                     text={
                         <Image
-                            src={profileButton}
+                            src={JSON.parse(account).user.avt}
                             preview={false}
-                            width={35}
-                            style={style.buttonImg}
+                            width={40}
+                            style={{
+                                ...style.buttonImg,
+                                borderRadius: '50%',
+                                border: pathname.includes('user/profile') ? 'solid 2px #00FFA3' : 'solid 2px #ffffff'
+                            }}
                         />
                     }
                 />
-                <Button
-                    type={'function'}
-                    style={style.button}
-                    clickFunction={logout}
-                    text={
-                        <Image
-                            src={logoutButton}
-                            preview={false}
-                            width={35}
-                            style={{...style.buttonImg, marginRight: 0}}
-                        />}
-                />
+                {
+                    showProfile && (
+                        <div
+                            style={{
+                                backgroundColor: '#626262',
+                                position: 'absolute',
+                                textAlign: 'center',
+                                left: '-100%',
+                                width: '300%',
+                                top: '76%',
+                                borderRadius: '10px',
+                                overflow: 'hidden'
+                            }}
+                        >
+                            <div
+                                className="upper-button"
+                            >
+                                <Button
+                                    style={{
+                                        border: 0,
+                                        backgroundColor: 'transparent',
+                                        color: '#ffffff',
+                                        fontSize: '16px',
+                                        fontWeight: 'bold',
+                                        cursor: 'pointer',
+                                        width: '100%',
+                                        padding: '2em'
+
+                                    }}
+                                    text={'Profile'}
+                                    type={'href'}
+                                    url={`${process.env.REACT_APP_HOST}/user/profile`}
+                                />
+                            </div>
+                            <div
+                                className="lower-button"
+                            >
+                                <Button
+                                    type={'function'}
+                                    style={{
+                                        border: 0,
+                                        backgroundColor: 'transparent',
+                                        color: '#ffffff',
+                                        fontSize: '16px',
+                                        fontWeight: 'bold',
+                                        cursor: 'pointer',
+                                        width: '100%',
+                                        padding: '2em'
+                                    }}
+                                    clickFunction={logout}
+                                    text={
+                                        'Logout'
+                                    }
+                                />
+                            </div>
+                        </div>
+                    )
+                }
             </div>
         </div>
     )

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { dummyGetUserById } from "../../../utils/api/user"
 
-const CollectionBanner = ({ user, type }) => {
+const CollectionBanner = ({ collection, type, id, account }) => {
     const [author, setAuthor] = useState(null)
     const [loading, setLoading] = useState(false)
 
@@ -13,8 +13,6 @@ const CollectionBanner = ({ user, type }) => {
         const res = dummyGetUserById(2)
         setAuthor(`${JSON.stringify(res)}`)
     }, [])
-
-    console.log(author)
 
     return (
         <div>
@@ -25,11 +23,12 @@ const CollectionBanner = ({ user, type }) => {
             >
                 <div
                     style={{
-                        backgroundImage: `url(${JSON.parse(user).banner_img})`,
+                        backgroundImage: `url(${JSON.parse(collection).banner_img})`,
                         backgroundSize: 'cover',
                         backgroundRepeat: 'no-repeat',
                         backgroundPosition: 'center',
-                        height: '20vh'
+                        height: '20vh',
+                        backgroundColor: '#c9c9c9'
                     }}
                 />
                 <div
@@ -40,16 +39,16 @@ const CollectionBanner = ({ user, type }) => {
                     }}
                 >
                     <Image
-                        src={
-                            JSON.parse(user).avt
-                        }
+                        src={`https://ipfs.io/ipfs/${JSON.parse(collection).image.split('ipfs://')[1]}`}
                         preview={false}
                         width={'200px'}
                         style={{
                             borderRadius: '50%',
                             position: 'relative',
                             top: '-100px',
-                            left: '10px'
+                            left: '10px',
+                            border: 'solid 2px white',
+                            aspectRatio: '1/1'
                         }}
                     />
                     <p
@@ -63,7 +62,7 @@ const CollectionBanner = ({ user, type }) => {
                         }}
                     >
                         {
-                            JSON.parse(user).title
+                            JSON.parse(collection).name
                         }
                         <Image
                             src={verifiedImg}
@@ -112,7 +111,7 @@ const CollectionBanner = ({ user, type }) => {
                             margin: 0
                         }}
                     >
-                        {JSON.parse(user).description}
+                        {JSON.parse(collection).description}
                     </p>
                 </div>
                 <div
@@ -190,6 +189,9 @@ const CollectionBanner = ({ user, type }) => {
                 </div>
                 <Contact
                     type={type}
+                    info={collection}
+                    id={id}
+                    account={account}
                 />
             </div>
         </div >

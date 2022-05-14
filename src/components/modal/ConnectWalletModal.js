@@ -70,7 +70,7 @@ const ConnectWalletModal = ({ show, wrapSetShow, wrapSetAccount }) => {
                         marginBottom: '40px'
                     }}
                 >
-                    You'll need a wallet on Anther-1 to continue
+                    You'll need a wallet on Another-1 to continue
                 </p>
                 <hr
                     style={{
