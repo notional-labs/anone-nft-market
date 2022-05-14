@@ -87,7 +87,9 @@ const filterButtonText = (hasOpen) => {
                 style={{
                     color: '#00FFA3',
                     fontSize: '24px',
-                    margin: '0 0 0 10px'
+                    margin: '0 0 0 10px',
+                    position: 'relative',
+                    top: '5px'
                 }}
             >
                 Filter
@@ -149,7 +151,7 @@ const NftList = ({ }) => {
             <div
                 className="filter-tab-content"
                 style={{
-                    padding: '90px 2em 2em 2em',
+                    padding: '90px 0 2em',
                     backgroundColor: '#000000',
                     position: 'fixed',
                     width: showFilter ? '350px' : '100px',
@@ -162,10 +164,12 @@ const NftList = ({ }) => {
                     clickFunction={handleFilterClick}
                     style={{
                         backgroundColor: '#000000',
-                        padding: '2em 1em 1em 0',
-                        borderRadius: showFilter ? '10px 10px 0 0' : '10px',
-                        border: 0
+                        padding: '2em 2em',
+                        border: 0,
+                        width: '100%',
+                        textAlign: 'left'
                     }}
+                    className={'filter-button'}
                 />
                 {
                     showFilter && <Filter />

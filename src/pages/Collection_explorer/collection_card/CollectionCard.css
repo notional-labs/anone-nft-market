@@ -1,0 +1,8 @@
+.hover-card {
+    border: solid 1px transparent
+}
+
+.hover-card:hover {
+    border: solid 1px #00FFA3;
+    border-radius: 10px;
+}

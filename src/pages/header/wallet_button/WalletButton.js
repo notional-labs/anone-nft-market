@@ -60,7 +60,7 @@ const WalletButton = ({ account, wrapSetAccount }) => {
                     position: 'relative',
                     margin: 'auto 20px',
                     height: '100%',
-                    top: '20%',
+                    top: '25%',
                     zIndex: 2,
                 }}
                 className="menu-hover-button"

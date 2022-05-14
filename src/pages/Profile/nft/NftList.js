@@ -4,6 +4,7 @@ import Grid from "../../../components/grids/Grid"
 import Button from "../../../components/buttons/Button"
 import { fetchDummyTopNft } from "../../../utils/fetch"
 import { Link } from "react-router-dom"
+import { queryAllDataOfAllNfts } from "../../../anonejs/queryInfo"
 import './NftList.css'
 
 const style = {
@@ -44,12 +45,13 @@ const zeroPad = (num) => {
     return num.toString().padStart(3, "0");
 }
 
-const NftList = ({ }) => {
+const NftList = ({ info, id }) => {
     const [nfts, setNfts] = useState([])
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         const res = fetchDummyTopNft()
+        queryAllDataOfAllNfts('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq').then(result => console.log(result)).catch(e => console.log(e.message))
         if (Array.isArray(res) && res.length > 0) {
             setNfts([...res])
         }

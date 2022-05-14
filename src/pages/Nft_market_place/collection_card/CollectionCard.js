@@ -1,21 +1,21 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, } from "react"
 import { queryCollectionInfo } from "../../../anonejs/queryInfo"
 import { Image, Skeleton } from "antd"
-import { getDataFromUri } from "../../../anonejs/getDataFromUri"
 import tick from '../../../assets/img/verified.png'
+import noImg from '../../../assets/img/no_image.png'
 
-const CollectionCard = ({ addr, selected }) => {
+const CollectionCard = ({ addr, selected,}) => {
     const [collection, setCollection] = useState('')
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         (async () => {
-            setLoading(true)
-            const res = await queryCollectionInfo(addr)
-            setCollection(JSON.stringify(res))
-            setLoading(false)
+                setLoading(true)
+                const res = await queryCollectionInfo(addr)
+                setCollection(JSON.stringify(res))
+                setLoading(false)
         })()
-    }, [])
+    }, [addr, ])
 
     return (
         <div
@@ -59,6 +59,7 @@ const CollectionCard = ({ addr, selected }) => {
                                     width={'30px'}
                                     style={{
                                         borderRadius: '50%',
+                                        width: '30px',
                                     }}
                                 />
                             ) : (
@@ -68,13 +69,19 @@ const CollectionCard = ({ addr, selected }) => {
                                     width={'30px'}
                                     style={{
                                         borderRadius: '50%',
+                                        width: '30px',
+                                        aspectRatio: '1/1'
                                     }}
+                                    fallback={noImg}
                                 />
                             )
                         }
                         <p
                             style={{
-                                marginLeft: '20px'
+                                marginLeft: '20px',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap',
                             }}
                         >
                             {JSON.parse(collection).name}

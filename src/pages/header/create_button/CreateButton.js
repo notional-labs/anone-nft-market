@@ -8,6 +8,7 @@ const style = {
         border: 0,
         fontSize: '20px',
         cursor: 'pointer',
+        fontWeight: 'bold'
     },
 }
 
@@ -30,8 +31,8 @@ const CreateButton = ({ pathname }) => {
                 <Button
                     style={style.button}
                     text={'Create'}
-                    type={'href'}
-                    url={`${process.env.REACT_APP_HOST}/create`}
+                    type={'link'}
+                    url={`/create`}
                     className="menu-hover-button"
                 />
             </div>

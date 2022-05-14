@@ -46,7 +46,7 @@ const MenuButton = ({ account, wrapSetAccount, pathname }) => {
                     position: 'relative',
                     margin: 'auto 30px',
                     height: '100%',
-                    top: '20%',
+                    top: '25%',
                     zIndex: 2,
                 }}
             >
@@ -58,11 +58,11 @@ const MenuButton = ({ account, wrapSetAccount, pathname }) => {
                         <Image
                             src={JSON.parse(account).user.avt}
                             preview={false}
-                            width={50}
+                            width={40}
                             style={{
                                 ...style.buttonImg,
                                 borderRadius: '50%',
-                                boxShadow: showProfile && ' 0 0 20px .5px #00FFA3'
+                                border: pathname.includes('user/profile') ? 'solid 2px #00FFA3' : 'solid 2px #ffffff'
                             }}
                         />
                     }
@@ -74,9 +74,9 @@ const MenuButton = ({ account, wrapSetAccount, pathname }) => {
                                 backgroundColor: '#626262',
                                 position: 'absolute',
                                 textAlign: 'center',
-                                left: '-90%',
+                                left: '-100%',
                                 width: '300%',
-                                top: '79%',
+                                top: '76%',
                                 borderRadius: '10px',
                                 overflow: 'hidden'
                             }}

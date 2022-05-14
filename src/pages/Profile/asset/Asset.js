@@ -27,7 +27,7 @@ const style = {
     }
 }
 
-const Asset = ({ account, type }) => {
+const Asset = ({ info, type, id }) => {
     const [tabSelect, setTabSelect] = useState(1)
 
     useEffect(() => {
@@ -79,7 +79,10 @@ const Asset = ({ account, type }) => {
             >
                 {
                     tabSelect === 1 ? (
-                        <NftList />
+                        <NftList 
+                            info={info}
+                            id={id}
+                        />
                     ) : (
                         <Collection />
                     )

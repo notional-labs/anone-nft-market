@@ -9,19 +9,17 @@
         width: 0%;  
     }
     to {
-        width: 100%;
+        width: 99.5%;
     }
   }
-
-.input >  .ant-input-number {
-    border-radius: 10px !important;
-}
-
-.input > .ant-input {
-    border-radius: 10px !important;
-}
 
 .input >  .ant-input-number-input {
     position: relative !important;
     top: 10% !important;
+}
+
+.collection-filter-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 0px 5px #ffffff;
+    background-color: rgb(255, 255, 255, 0.2) !important;
 }

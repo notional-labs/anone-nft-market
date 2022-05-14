@@ -1,7 +1,8 @@
 import { Image, Skeleton } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Button from "../../../components/buttons/Button";
 import { getInfo } from "../../../utils/nft/queryNft";
+import useOnScreen from "../../../utils/customsObserver";
 
 const zeroPad = (num) => {
     return num.toString().padStart(3, "0");
@@ -72,6 +73,8 @@ const style = {
 const NftCard = ({ offerObject }) => {
     const [nft, setNft] = useState('')
     const [loading, setLoading] = useState(false)
+    const ref = useRef()
+    const isVisible = useOnScreen(ref)
 
     useEffect(() => {
         (async () => {

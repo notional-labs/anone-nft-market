@@ -29,12 +29,7 @@ const style = {
 }
 
 const Header = ({ account, wrapSetAccount }) => {
-    const [search, setSearch] = useState('')
     const { pathname } = useLocation()
-
-    const handleInputChange = (e) => {
-        setSearch(e.target.value)
-    }
 
     return (
         <div

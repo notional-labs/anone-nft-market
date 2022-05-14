@@ -1,14 +1,14 @@
-import { Slider, Input, Select, Form, AutoComplete, InputNumber, Image } from "antd"
+import { Input, Select, Form, InputNumber } from "antd"
 import Button from "../../../components/buttons/Button"
 import { openNotification } from "../../../components/notifications/notification";
-import { fetchDummyBestCollections } from "../../../utils/fetch";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import './Filter.css'
 import Grid from "../../../components/grids/Grid";
 import { IoSearch } from "react-icons/io5";
 import { queryAllContracts } from "../../../anonejs/queryInfo";
 import CollectionCard from "../collection_card/CollectionCard";
+import VisibilitySensor from 'react-visibility-sensor';
 
 const { Option } = Select;
 
@@ -34,7 +34,7 @@ const style = {
         border: 0,
         borderBottom: 'solid 1px #00FFA3',
         width: '100%',
-        padding: '1.5em 0'
+        padding: '1.5em 2em'
     },
     buttonText: {
         display: 'flex',
@@ -46,7 +46,8 @@ const style = {
         margin: 0
     },
     dropBox: {
-        padding: '2em 0'
+        padding: '2em 2em',
+        backgroundColor: '#000000'
     }
 }
 
@@ -54,8 +55,11 @@ const statusList = [
     'Buy Now', 'Has Offers'
 ]
 
+const NUMBER_COLLECTIONS_PER_SCREEN = 4
+
 const Filter = ({ }) => {
     const [form] = Form.useForm()
+    const [root, setRoot] = useState(null)
     const [collections, setCollections] = useState([])
     const [filterCollection, setFilterCollection] = useState([])
     const [showTab, setShowTab] = useState({
@@ -67,18 +71,42 @@ const Filter = ({ }) => {
     const [filterValue, setFilterValue] = useState({
         status: '',
         collections: [],
-        priceMin: 0,
-        priceMax: 0,
+        priceMin: null,
+        priceMax: null,
         traits: ''
     })
+    const [valid, setValid] = useState(true)
+    const [stamp, setStamp] = useState(0)
 
     useEffect(() => {
         (async () => {
             const res = await queryAllContracts(42)
+            setRoot(document.getElementById('containment'))
+            setStamp(0)
+            let sortedRes = res.sort((collectionAddr) => {
+                if (filterValue.collections.filter(col => col === collectionAddr).length > 0) {
+                    return -1
+                }
+                return 1
+            })
             setCollections([...res])
-            setFilterCollection([...res])
+            setFilterCollection([...sortedRes])
         })()
     }, [showTab.collections, filterValue.collections])
+
+    // useEffect(() => {
+    //     let sortedRes = collections.sort((collectionAddr) => {
+    //         if (filterValue.collections.filter(col => col === collectionAddr).length > 0) {
+    //             return -1
+    //         }
+    //         return 1
+    //     })
+    //     setFilterCollection([...sortedRes])
+    // }, [filterValue.collections, showTab.collections])
+
+    const wrapSetStamp = useCallback((val) => {
+        setStamp(val)
+    }, [])
 
     const apply = (value) => {
         console.log(value)
@@ -100,7 +128,12 @@ const Filter = ({ }) => {
     }
 
     const handleClickStatus = (value) => {
-        setFilterValue({ ...filterValue, status: value })
+        if( filterValue.status === value) {
+            setFilterValue({ ...filterValue, status: '' })
+        }
+        else {
+            setFilterValue({ ...filterValue, status: value })
+        }
     }
 
     const getButtonText = (title, condition) => {
@@ -174,7 +207,7 @@ const Filter = ({ }) => {
         }
     }
 
-    const getCollectionButtonText = (collection, index) => {
+    const getCollectionButtonText = (collection, index, isVisible) => {
         return (
             <div
                 key={index}
@@ -184,11 +217,19 @@ const Filter = ({ }) => {
                         <CollectionCard
                             addr={collection}
                             selected={true}
+                            visible={isVisible}
+                            index={index}
+                            stamp={stamp}
+                            wrapSetStamp={wrapSetStamp}
                         />
                     ) : (
                         <CollectionCard
                             addr={collection}
                             selected={false}
+                            visible={isVisible}
+                            index={index}
+                            stamp={stamp}
+                            wrapSetStamp={wrapSetStamp}
                         />
                     )
                 }
@@ -208,8 +249,53 @@ const Filter = ({ }) => {
     }
 
     const handleCollectionInput = (e) => {
-        const filter = collections.filter(col => col.includes(e.target.value))
+        const filter = collections.filter(col => {
+            if (col.includes(e.target.value) || filterValue.collections.filter(collection => collection === col).length > 0) {
+                return true
+            }
+            return false
+        })
         setFilterCollection([...filter])
+    }
+
+    const isValidMinPrice = (val) => {
+        if (filterValue.priceMax === null || val === null) {
+            return true
+        }
+        if (val > filterValue.priceMax) {
+            return false
+        }
+        return true
+    }
+
+    const isValidMaxPrice = (val) => {
+        if (filterValue.priceMin === null || val === null) {
+            return true
+        }
+        if (filterValue.priceMin > val) {
+            return false
+        }
+        return true
+    }
+
+    const handleChangePriceMin = (val) => {
+        setFilterValue({ ...filterValue, priceMin: val })
+        if (!isValidMinPrice(val)) {
+            setValid(false)
+        }
+        else {
+            setValid(true)
+        }
+    }
+
+    const handleChangePriceMax = (val) => {
+        setFilterValue({ ...filterValue, priceMax: val })
+        if (!isValidMaxPrice(val)) {
+            setValid(false)
+        }
+        else {
+            setValid(true)
+        }
     }
 
     return (
@@ -226,7 +312,10 @@ const Filter = ({ }) => {
                 }}
             >
                 <Button
-                    style={style.button}
+                    style={{
+                        ...style.button,
+                        borderTop: 'solid 1px #00FFA3'
+                    }}
                     clickFunction={() => (handleClick('status'))}
                     text={getButtonText('Status', showTab.status)}
                     type={'function'}
@@ -249,38 +338,70 @@ const Filter = ({ }) => {
                 />
                 {showTab.price && (
                     <div
-                        className="input"
                         style={{
-                            ...style.dropBox,
-                            display: 'flex',
-                            justifyContent: 'space-between'
+                            backgroundColor: '#000000'
                         }}
                     >
-                        <InputNumber
-                            placeholder="Min"
-                            min={0}
-                            controls={false}
+                        <div
                             style={{
-                                width: '100%'
-                            }}
-                        />
-                        <p
-                            style={{
-                                fontSize: '24px',
-                                color: '#ffffff',
-                                margin: '0 1em 0 1em'
+                                ...style.dropBox,
+                                display: 'flex',
+                                justifyContent: 'space-between'
                             }}
                         >
-                            to
-                        </p>
-                        <InputNumber
-                            placeholder="Max"
-                            min={0}
-                            controls={false}
-                            style={{
-                                width: '100%'
-                            }}
-                        />
+                            <div>
+                                <InputNumber
+                                    placeholder="Min"
+                                    min={0}
+                                    controls={false}
+                                    style={{
+                                        width: '100%',
+                                        padding: '.5em 0',
+                                        borderRadius: '10px',
+                                        fontSize: '20px'
+                                    }}
+                                    onChange={handleChangePriceMin}
+                                    defaultValue={filterValue.priceMin}
+                                />
+                            </div>
+                            <p
+                                style={{
+                                    fontSize: '24px',
+                                    color: '#ffffff',
+                                    margin: '.5em 1em 0 1em'
+                                }}
+                            >
+                                to
+                            </p>
+                            <div>
+                                <InputNumber
+                                    placeholder="Max"
+                                    min={0}
+                                    controls={false}
+                                    style={{
+                                        width: '100%',
+                                        padding: '.5em 0',
+                                        borderRadius: '10px',
+                                        fontSize: '20px'
+                                    }}
+                                    onChange={handleChangePriceMax}
+                                    defaultValue={filterValue.priceMax}
+                                />
+                            </div>
+                        </div>
+                        {
+                            !valid && (
+                                <p
+                                    style={{
+                                        fontSize: '16px',
+                                        color: 'red',
+                                        padding: '0 2em'
+                                    }}
+                                >
+                                    Minimum must be less than maximum
+                                </p>
+                            )
+                        }
                     </div>
                 )}
                 <Button
@@ -291,9 +412,9 @@ const Filter = ({ }) => {
                 />
                 {showTab.collections && (
                     <div
-                        className="input"
                         style={{
                             ...style.dropBox,
+                            backgroundColor: '#000000'
                         }}
                     >
                         <Input
@@ -301,31 +422,51 @@ const Filter = ({ }) => {
                             prefix={<IoSearch />}
                             onChange={handleCollectionInput}
                             onPressEnter={handleCollectionInput}
-                            style={{ borderRadius: '10px' }}
+                            style={{
+                                width: '100%',
+                                padding: '.5em',
+                                borderRadius: '10px',
+                                fontSize: '20px'
+                            }}
                         />
                         <div
+                            id='containment'
                             style={{
-                                marginTop: '2em',
+                                marinTop: '1em',
                                 height: '250px',
-                                overflow: 'auto'
+                                maxHeight: '250px',
+                                overflowY: "scroll",
+                                paddingTop: '1em'
                             }}
                         >
                             {
                                 filterCollection.map((collection, index) => {
                                     return (
-                                        <Button
-                                            type={'function'}
-                                            clickFunction={() => handleSelectCollection(collection)}
-                                            text={getCollectionButtonText(collection, index)}
-                                            style={{
-                                                color: '#ffffff',
-                                                backgroundColor: 'transparent',
-                                                fontSize: '1.5rem',
-                                                margin: 0,
-                                                border: 0
+                                        <VisibilitySensor
+                                            containment={root}
+                                            key={index}
+                                        >
+                                            {({ isVisible }) => {
+                                                return (
+                                                    <Button
+                                                        type={'function'}
+                                                        clickFunction={() => handleSelectCollection(collection)}
+                                                        text={getCollectionButtonText(collection, index, isVisible)}
+                                                        style={{
+                                                            color: '#ffffff',
+                                                            backgroundColor: 'transparent',
+                                                            fontSize: '1.5rem',
+                                                            margin: 0,
+                                                            border: 0,
+                                                            width: '100%',
+                                                            height: '50px'
+                                                        }}
+                                                        className={'collection-filter-button'}
+                                                    />
+                                                )
                                             }}
-                                        />
-                                    )
+                                        </VisibilitySensor>
+                                    ) 
                                 })
                             }
                         </div>
@@ -357,7 +498,8 @@ const Filter = ({ }) => {
                         borderRadius: '10px',
                         width: '40%',
                         marginTop: '20px',
-                        position: 'relative'
+                        position: 'relative',
+                        marginLeft: '2em'
                     }}
                     clickFunction={() => { console.log('click') }}
                 />

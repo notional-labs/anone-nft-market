@@ -8,6 +8,7 @@ const style = {
         border: 0,
         fontSize: '20px',
         cursor: 'pointer',
+        fontWeight: 'bold'
     },
     subButton: {
         backgroundColor: 'transparent',
@@ -73,8 +74,8 @@ const MarketplaceButton = ({ pathname }) => {
                                 <Button
                                     style={style.subButton}
                                     text={'NFT'}
-                                    type={'href'}
-                                    url={`${process.env.REACT_APP_HOST}/nft/marketplace`}
+                                    type={'link'}
+                                    url={`/nft/marketplace`}
                                 />
                             </div>
                             <div
@@ -83,8 +84,8 @@ const MarketplaceButton = ({ pathname }) => {
                                 <Button
                                     style={style.subButton}
                                     text={'Collection'}
-                                    type={'href'}
-                                    url={`${process.env.REACT_APP_HOST}/collection/explorer`}
+                                    type={'link'}
+                                    url={`/collection/explorer`}
                                 />
                             </div>
                         </div>

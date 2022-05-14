@@ -170,6 +170,10 @@ const Forms = ({ account }) => {
                                 src={imgUrlBanner || noImg}
                                 preview={false}
                                 width={'100%'}
+                                style={{
+                                    position: 'relative',
+                                    top: '-30px'
+                                }}
                             />
                         </label>
                     </div>

@@ -243,6 +243,10 @@ const Forms = ({ account }) => {
                                 src={imgUrlBanner || noImg}
                                 preview={false}
                                 width={'100%'}
+                                style={{
+                                    position: 'relative',
+                                    top: '-70px'
+                                }}
                             />
                         </label>
                     </div>
@@ -481,7 +485,7 @@ const Forms = ({ account }) => {
                 </Form.Item>
                 <div>
                     <button
-                        htmlType="submit"
+                        htmltype="submit"
                         style={{
                             border: 0,
                             backgroundColor: '#00FFA3',

@@ -3,7 +3,9 @@ import Footer from "../footer/Footer"
 import ImgAndSpec from "./img_and_specs/ImgAndSpec"
 import Description from "./description/Description"
 import { getNftById } from "../../utils/api/nft"
+import { queryNftInfoById, queryAllDataOfAllModels } from "../../anonejs/queryInfo"
 import { useEffect, useState } from "react"
+import { getDataFromUri } from "../../anonejs/getDataFromUri"
 
 const style = {
     container: {
@@ -16,8 +18,20 @@ const NftProfile = ({ account, wrapSetAccount }) => {
     const [nft, setNft] = useState(null)
 
     useEffect(() => {
-        const res = getNftById()
-        setNft(JSON.stringify(res))
+        (async () => {
+            const res = await queryNftInfoById({
+                cw721ContractAddr:
+                    "one1tj748034gl3zvujn2tz4p4m8rf9j9uarsj5j3c5a5z2neqel77cslz2lp0",
+                tokenId: '2'
+            })
+            const res2 = await queryAllDataOfAllModels({
+                cw721ContractAddr:
+                    "one1tj748034gl3zvujn2tz4p4m8rf9j9uarsj5j3c5a5z2neqel77cslz2lp0",
+                modelId: '1'
+            })
+            console.log(res2)
+        })()
+        // setNft(JSON.stringify(res))
     }, [])
 
     return (
@@ -32,7 +46,7 @@ const NftProfile = ({ account, wrapSetAccount }) => {
                 nft !== null && (
                     <div
                         style={{
-                            marginTop: '90px' 
+                            marginTop: '90px'
                         }}
                     >
                         <ImgAndSpec

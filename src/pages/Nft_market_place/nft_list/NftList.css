@@ -17,3 +17,8 @@
     top: 20% !important;
 }
 
+.filter-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 10px -2px #363636;
+}
+

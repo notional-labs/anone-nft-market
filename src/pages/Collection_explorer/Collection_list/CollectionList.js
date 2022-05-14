@@ -8,7 +8,7 @@ import CollectionCard from "../collection_card/CollectionCard"
 const style = {
     container: {
         padding: '5em',
-        marginTop: '150px',
+        marginTop: '100px',
     },
     text: {
         fontSize: '48px',
@@ -19,7 +19,7 @@ const style = {
     }
 }
 
-const CollectionList = ({ }) => {
+const CollectionList = ({}) => {
     const [collections, setCollections] = useState([])
     const [loading, setLoading] = useState(false)
 
@@ -78,8 +78,8 @@ const CollectionList = ({ }) => {
                         <Grid
                             lists={getCollectionList()}
                             numberOfColumn={4}
-                            rowGap={35}
-                            colGap={50}
+                            rowGap={20}
+                            colGap={20}
                         />
                     </div>
                 ) : (

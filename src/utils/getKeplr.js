@@ -11,8 +11,8 @@ export const getKeplr = async () => {
     } else {
         await window.keplr.experimentalSuggestChain(anoneTestnetChain)
         await window.keplr.enable(process.env.REACT_APP_CHAIN_ID)
-        let offlineSigner = await window.getOfflineSigner(process.env.REACT_APP_CHAIN_ID);
-        let accounts = await offlineSigner.getAccounts()
+        const offlineSigner = window.keplr.getOfflineSigner(process.env.REACT_APP_CHAIN_ID);
+        const accounts = await offlineSigner.getAccounts();
         accounts.chain = process.env.REACT_APP_CHAIN_ID
         return {
             accounts,
