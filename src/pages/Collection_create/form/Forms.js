@@ -21,6 +21,7 @@ import { queryOfferingListOfCollection } from "../../../anonejs/queryInfo";
 import { queryOfferingListOfSeller } from "../../../anonejs/queryInfo";
 import { queryCollectionInfo } from "../../../anonejs/queryInfo";
 import { queryConfigOfLaunchpad } from "../../../anonejs/queryInfo";
+import { queryCollectionAddressOfLaunchpad } from "../../../anonejs/queryInfo";
 // import { getDataFromUri } from "../../../anonejs/getDataFromUri";
 // import { getBase64, beforeUpload } from "../../../utils/imageProcessing";
 import { modifyCollectionInfo } from "../../../anonejs/modifyCollectionInfo";
@@ -238,9 +239,12 @@ const Forms = ({}) => {
     // const result = await transferNft(Config14)
     // const result = await modifyCollectionInfo(Config15);
 
-    const result = await queryConfigOfLaunchpad(
+    // const result = await queryConfigOfLaunchpad("one14x9fr055x5hvr48hzy2t4q7kvjvfttsvxusa4xsdcy702mnzsvuqc8fxqz");
+
+    const result = await queryCollectionAddressOfLaunchpad(
       "one14x9fr055x5hvr48hzy2t4q7kvjvfttsvxusa4xsdcy702mnzsvuqc8fxqz"
     );
+    
     console.log(result);
   };
 

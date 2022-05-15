@@ -131,7 +131,7 @@ export const queryCollectionAddressOfLaunchpad = async (launchpadContract) => {
     config: {},
   });
 
-  return config; // return collection address of a minter contract
+  return config.an721_address; // return collection address of a minter contract
 };
 
 // 4. Functions for query information on Marketplace
