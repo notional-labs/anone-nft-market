@@ -104,15 +104,15 @@ const Forms = ({}) => {
     royaltyShare: "0.1",
     baseTokenUri:
       "ipfs://bafybeidfe5acjamg7kax65mvspt637ksr3wcdvvaiutmzhjgi74kddxf5q/galaxyiOigcK",
-    numTokens: 5,
-    an721CodeId: 42,
+    numTokens: 50,
+    an721CodeId: 74, // don't change
     name: "Test Collection 2",
     symbol: "TESTTWO",
     description: "An awesome NFT series",
     image:
       "ipfs://bafybeigi3bwpvyvsmnbj46ra4hyffcxdeaj6ntfk5jpic5mx27x6ih2qvq/images/1.png",
     externalLink: "https://www.youtube.com/watch?v=1YML6_zRssg",
-    perAddressLimit: 1,
+    perAddressLimit: 3,
   };
 
   const Config2 = {
@@ -215,7 +215,7 @@ const Forms = ({}) => {
   };
 
   const handleClick = async () => {
-    // const result = await createCollection(Config);
+    const result = await createCollection(Config);
     // const result = await createSale(Config2);
     // const result = await makeOrder(Config3);
     // const result = await updatePrice(Config4);
@@ -239,11 +239,9 @@ const Forms = ({}) => {
     // const result = await transferNft(Config14)
     // const result = await modifyCollectionInfo(Config15);
 
-    // const result = await queryConfigOfLaunchpad("one14x9fr055x5hvr48hzy2t4q7kvjvfttsvxusa4xsdcy702mnzsvuqc8fxqz");
+    // const result = await queryConfigOfLaunchpad("one1lahsc7ef0manp3czjx806l8v2erqzzlxhr7z9z7090h5k99vdd2qdzemxt");
 
-    const result = await queryCollectionAddressOfLaunchpad(
-      "one14x9fr055x5hvr48hzy2t4q7kvjvfttsvxusa4xsdcy702mnzsvuqc8fxqz"
-    );
+    // const result = await queryCollectionAddressOfLaunchpad("one1lahsc7ef0manp3czjx806l8v2erqzzlxhr7z9z7090h5k99vdd2qdzemxt");
     
     console.log(result);
   };
