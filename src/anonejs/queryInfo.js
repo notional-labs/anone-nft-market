@@ -195,7 +195,7 @@ export const queryOfferingListOfSeller = async (Config) => {
   return offeringList.offerings; // return an array contains all of offerings have the same seller on markerplace
 };
 
-// 4. Functions for query all collection contract have the same code_id
+// 5. Functions for query all collection contract have the same code_id
 export const queryAllContracts = async (code_id) => {
   const wasmClient = await getWasmClient();
   const contracts = await wasmClient.getContracts(code_id);
