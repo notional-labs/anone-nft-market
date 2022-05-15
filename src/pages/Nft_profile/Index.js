@@ -15,7 +15,7 @@ const style = {
 }
 
 const NftProfile = ({ account, wrapSetAccount }) => {
-    const [nft, setNft] = useState(null)
+    const [nft, setNft] = useState('')
 
     useEffect(() => {
         (async () => {
@@ -24,15 +24,18 @@ const NftProfile = ({ account, wrapSetAccount }) => {
                     "one1tj748034gl3zvujn2tz4p4m8rf9j9uarsj5j3c5a5z2neqel77cslz2lp0",
                 tokenId: '2'
             })
-            const res2 = await queryAllDataOfAllModels({
-                cw721ContractAddr:
-                    "one1tj748034gl3zvujn2tz4p4m8rf9j9uarsj5j3c5a5z2neqel77cslz2lp0",
-                modelId: '1'
-            })
-            console.log(res2)
+            console.log(res)
+            const res2 = await getDataFromUri('https://ipfs.io/ipfs/bafybeiaivv62j7jxlkahxobfr5io7h2j56obw5mojljho2ybg7zhah2eue/galaxyfcnCU3/1');
+            const data = {
+                ...res,
+                metaData: res2
+            }
+            setNft(JSON.stringify(data))
         })()
         // setNft(JSON.stringify(res))
     }, [])
+
+    console.log(nft)
 
     return (
         <div
@@ -43,14 +46,14 @@ const NftProfile = ({ account, wrapSetAccount }) => {
                 wrapSetAccount={wrapSetAccount}
             />
             {
-                nft !== null && (
+                nft !== '' && (
                     <div
                         style={{
                             marginTop: '90px'
                         }}
                     >
                         <ImgAndSpec
-                            nft={nft}
+                            nft={JSON.parse(nft)}
                         />
                         <Description
                             nft={JSON.parse(nft)}

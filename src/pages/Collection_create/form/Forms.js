@@ -46,7 +46,6 @@ const style = {
         fontSize: '24px',
         marginBottom: 0,
         fontWeight: 'bold',
-        marginTop: '50px'
     }
 }
 
@@ -56,6 +55,7 @@ const Forms = ({ account }) => {
     const [imgUrlLogo, setImgUrlLogo] = useState('')
     const [imgUrlBanner, setImgUrlBanner] = useState('')
     const [paymentAddr, setPaymentAddr] = useState(JSON.parse(account).account.address)
+    const [share, setShare] = useState(0)
 
     const create = async (values) => {
         setLoading(true)
@@ -245,6 +245,9 @@ const Forms = ({ account }) => {
     minterContract:
       "one10hpwj2n4mdsnzmpzqn3ek0nclv245vscjzwx6zufyahckvlyaudqz89ljn",
   };
+    const handleSlider = (val) => {
+        setShare(val)
+    }
 
   const handleClick = async () => {
     // const result = await createCollection(Config);
@@ -290,7 +293,10 @@ const Forms = ({ account }) => {
                 layout="vertical"
             >
                 <p
-                    style={style.label}
+                    style={{
+                        ...style.label,
+                        marginTop: '50px'
+                    }}
                 >
                     Logo collection
                 </p>
@@ -319,8 +325,7 @@ const Forms = ({ account }) => {
                     />
                     <div
                         style={{
-                            width: '40%',
-                            backgroundColor: '#626262'
+                            width: '20%',
                         }}
                     >
                         <label
@@ -331,6 +336,10 @@ const Forms = ({ account }) => {
                                 src={imgUrlLogo || noImg}
                                 preview={false}
                                 width={'100%'}
+                                style={{
+                                    aspectRatio: '1/1',
+                                    borderRadius: '50%',
+                                }}
                             />
                         </label>
                     </div>
@@ -357,10 +366,11 @@ const Forms = ({ account }) => {
                     />
                     <div
                         style={{
-                            width: '65%',
+                            width: '35%',
                             backgroundColor: '#626262',
-                            height: '250px',
-                            overflow: "hidden"
+                            aspectRatio: '2/1',
+                            overflow: "hidden",
+                            borderRadius: '10px'
                         }}
                     >
                         <label
@@ -373,7 +383,7 @@ const Forms = ({ account }) => {
                                 width={'100%'}
                                 style={{
                                     position: 'relative',
-                                    top: '-70px'
+                                    top: '-30px'
                                 }}
                             />
                         </label>
@@ -525,6 +535,7 @@ const Forms = ({ account }) => {
                 <p
                     style={{
                         ...style.label,
+                        marginTop: '50px'
                     }}
                 >
                     Limit per address
@@ -550,7 +561,7 @@ const Forms = ({ account }) => {
                         step={1}
                         style={{
                             padding: '.25em',
-                            width: '100%',
+                            width: '20%',
                             fontSize: '20px'
                         }}
                     />
@@ -600,7 +611,9 @@ const Forms = ({ account }) => {
                         marginTop: '50px'
                     }}
                 >
-                    Commission rate (%)
+                    {
+                        `Commission rate (${share.toFixed(2) / 10} %)`
+                    }
                 </p>
                 <Form.Item
                     name={'commission'}
@@ -609,6 +622,7 @@ const Forms = ({ account }) => {
                         min={0.1}
                         max={10}
                         step={0.1}
+                        onChange={handleSlider}
                     />
                 </Form.Item>
                 <div>

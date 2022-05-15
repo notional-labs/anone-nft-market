@@ -2,29 +2,32 @@ import Button from "../../../components/buttons/Button"
 import Grid from "../../../components/grids/Grid"
 import { useState, useEffect } from "react"
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
+import './DropBox.css'
 
 const style = {
     button: {
-        border: 'solid 1px #00FFA3',
-        backgroundColor: 'transparent',
+        backgroundColor: '#000000',
         width: '100%',
         cursor: 'pointer',
-        padding: '0.5em 1em'
+        padding: '0.5em 1em',
     },
     buttonText: {
         display: 'flex',
         justifyContent: 'space-between',
     },
     dropBox: {
-        padding: '2em',
+        padding: '1em',
         backgroundColor: '#000000',
         color: '#ffffff',
         position: 'absolute',
         width: '100%',
+        borderRadius: '0 0 10px 10px',
+        border: 'solid 1px #00FFA3',
+        borderTop: 'none'
     },
     text: {
         color: '#ffffff',
-        fontSize: '16px',
+        fontSize: '24px',
         margin: 0
     },
     sizeButton: {
@@ -43,41 +46,39 @@ const DropBox = ({ nft }) => {
         setShowDropBox(!showDropBox)
     }
 
-    const handleSizeButtonClick = (value) => {
-        setShowDropBox(false)
-    }
-
-    const getSizeList = () => {
+    const getTraitsList = () => {
         let list = []
-        JSON.parse(nft).sizes.forEach(size => {
+        nft.metaData.attributes.forEach(trait => {
             const jsx = (
-                <Button
-                    type={'function'}
-                    clickFunction={() => handleSizeButtonClick(size.size)}
-                    style={style.sizeButton}
-                    text={(
-                        <div>
-                            <p
-                                style={{
-                                    color: '#000000',
-                                    fontSize: '12px',
-                                    margin: 0
-                                }}
-                            >
-                                {size.size}
-                            </p>
-                            <p
-                                style={{
-                                    color: '#20956B',
-                                    fontSize: '12px',
-                                    margin: 0
-                                }}
-                            >
-                                {size.price} AN1
-                            </p>
-                        </div>
-                    )}
-                />
+                <div
+                    style={{
+                        backgroundColor: '#7B61FF',
+                        color: '#ffffff',
+                        fontSize: '16px',
+                        textAlign: 'center',
+                        padding: '5px',
+                        borderRadius: '10px'
+                    }}
+                >
+                    <p
+                        style={{
+                            margin: 0,
+                            fontSize: '16px',
+                        }}
+                    >
+                        {trait.trait_type}
+                    </p>
+                    <p
+                        style={{
+                            margin: 0,
+                            fontSize: '20px',
+                            fontWeight: 'bold',
+                            color: '#000000'
+                        }}
+                    >
+                        {trait.value}
+                    </p>
+                </div>
             )
             list.push(jsx)
         })
@@ -89,14 +90,13 @@ const DropBox = ({ nft }) => {
             style={style.buttonText}
         >
             <p
-                style={{ ...style.text, transform: 'translateY(20%)' }}
+                style={{ ...style.text, }}
             >
-                Size:
+                Properties
             </p>
             <p
                 style={style.text}
             >
-                All
                 <span
                     style={{
                         position: 'relative',
@@ -120,13 +120,18 @@ const DropBox = ({ nft }) => {
     return (
         <div
             style={{
-                marginTop: '5em',
+                marginTop: '50px',
                 width: '100%',
                 position: 'relative'
             }}
         >
             <Button
-                style={style.button}
+                style={{
+                    ...style.button,
+                    border: 'solid 1px #00FFA3',
+                    borderBottom: showDropBox ? 'solid 1px transparent' : 'solid 1px #00FFA3',
+                    borderRadius: showDropBox ? '10px 10px 0 0' : '10px',
+                }}
                 clickFunction={(handleClick)}
                 text={buttonText}
                 type={'function'}
@@ -134,48 +139,15 @@ const DropBox = ({ nft }) => {
             {showDropBox && (
                 <div
                     style={style.dropBox}
+                    className='drop-down'
                 >
-                    <p>
-                        Select Size
-                    </p>
-                    <div>
-                        <Button
-                            style={style.sizeButton}
-                            type={'function'}
-                            clickFunction={() => handleSizeButtonClick('all')}
-                            text={
-                                (
-                                    <div>
-                                        <p
-                                            style={{
-                                                color: '#000000',
-                                                fontSize: '12px',
-                                                margin: 0
-                                            }}
-                                        >
-                                            All
-                                        </p>
-                                        <p
-                                            style={{
-                                                color: '#20956B',
-                                                fontSize: '12px',
-                                                margin: 0
-                                            }}
-                                        >
-                                            999 AN1
-                                        </p>
-                                    </div>
-                                )
-                            }
-                        />
-                    </div>
                     <div
                         style={{
                             marginTop: '10px'
                         }}
                     >
                         <Grid
-                            lists={getSizeList()}
+                            lists={getTraitsList()}
                             numberOfColumn={3}
                             rowGap={10}
                             colGap={10}

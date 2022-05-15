@@ -4,6 +4,7 @@ import { Image } from "antd"
 import noItem from '../../../assets/img/no_item.png'
 import Grid from "../../../components/grids/Grid"
 import CollectionCard from "../collection_card/CollectionCard"
+import loadingGif from '../../../assets/img/another.gif'
 
 const style = {
     container: {
@@ -19,7 +20,7 @@ const style = {
     }
 }
 
-const CollectionList = ({}) => {
+const CollectionList = ({ }) => {
     const [collections, setCollections] = useState([])
     const [loading, setLoading] = useState(false)
 
@@ -73,7 +74,25 @@ const CollectionList = ({}) => {
                 </span>
             </div>
             {
-                collections.length > 0 ? (
+                loading ? (
+                    <div
+                        style={{
+                            color: '#ffffff',
+                            fontSize: '3rem',
+                            textAlign: 'center',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            padding: '1em'
+                        }}
+                    >
+                        <Image
+                            src={loadingGif}
+                            preview={false}
+                            width={'20%'}
+                        />
+                    </div>
+                ) : collections.length > 0 ? (
                     <div>
                         <Grid
                             lists={getCollectionList()}
