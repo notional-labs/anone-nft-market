@@ -17,6 +17,7 @@ import { mintCallFromUser } from "../../../anonejs/mintNft";
 
 import noImg from "../../../assets/img/no_image.png";
 import "./Forms.css";
+import { updateCollectionInfo } from "../../../anonejs/updateCollectionInfo";
 
 const { TextArea } = Input;
 
@@ -249,6 +250,17 @@ const Forms = ({ account }) => {
         setShare(val)
     }
 
+  const Config17 = {
+    minterContract:
+      "one10hpwj2n4mdsnzmpzqn3ek0nclv245vscjzwx6zufyahckvlyaudqz89ljn",
+    description: "Chinh yeu Linh",
+    image:
+      "ipfs://bafybeigi3bwpvyvsmnbj46ra4hyffcxdeaj6ntfk5jpic5mx27x6ih2qvq/images/1.png",
+    externalLink: "123",
+    royaltyPaymentAddress: "one1k2x29vppqrhgsdxtkmkpspnawm229lcpec7mm3",
+    royaltyShare: "0.04",
+  };
+
   const handleClick = async () => {
     // const result = await createCollection(Config);
     // const result = await createSale(Config2);
@@ -261,7 +273,7 @@ const Forms = ({ account }) => {
     // const result = await queryModelInfoById(Config8);
     // const result = await queryNumberOfNfts('one1tj748034gl3zvujn2tz4p4m8rf9j9uarsj5j3c5a5z2neqel77cslz2lp0');
     // const result = await queryNumberOfModels('one1tj748034gl3zvujn2tz4p4m8rf9j9uarsj5j3c5a5z2neqel77cslz2lp0');
-    // const result = await queryCollectionInfo('one1xmacmeqhdcr5w6qn2jpx8vs6kg3zaql944t4365jdsr8d8m67vns5mamhw');
+    // const result = await queryCollectionInfo('one1cl3zpu4gth7q3xrru5vccedtqewfj97w7gq6kjgqxknu0k7e93yqyxtdj6');
     // const result = await getDataFromUri('https://ipfs.io/ipfs/bafybeiaivv62j7jxlkahxobfr5io7h2j56obw5mojljho2ybg7zhah2eue/galaxyfcnCU3/1');
     // const result = await queryAllDataOfAllModels('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq');
     // const result = await queryAllDataOfAllNfts('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq');
@@ -269,10 +281,12 @@ const Forms = ({ account }) => {
     // const result = await queryOfferingListByPriceRange(Config9);
     // const result = await queryOfferingListOfCollection(Config10);
     // const result = await queryOfferingListOfSeller(Config11);
-    const result = await mintCallFromUser(Config12);
+    // const result = await mintCallFromUser(Config12);
     // const result = await burnNft(Config13);
     // const result = await transferNft(Config14)
     // const result = await modifyCollectionInfo(Config15);
+
+    const result = await updateCollectionInfo(Config17);
 
     // const result = await queryConfigOfLaunchpad("one10hpwj2n4mdsnzmpzqn3ek0nclv245vscjzwx6zufyahckvlyaudqz89ljn");
 
