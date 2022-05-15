@@ -115,7 +115,26 @@ export const queryCollectionInfo = async (cw721ContractAddr) => {
   return result; // return all infomation about this collection
 };
 
-// 3. Functions for query information on Marketplace
+// 3. Functions for query info from anone minter
+export const queryConfigOfLaunchpad = async (launchpadContract) => {
+  const wasmClient = await getWasmClient();
+  const config = await wasmClient.queryContractSmart(launchpadContract, {
+    config: {},
+  });
+
+  return config; // return all info in config of a minter contract
+};
+
+export const queryCollectionAddressOfLaunchpad = async (launchpadContract) => {
+  const wasmClient = await getWasmClient();
+  const config = await wasmClient.queryContractSmart(launchpadContract, {
+    config: {},
+  });
+
+  return config.an721_address; // return collection address of a minter contract
+};
+
+// 4. Functions for query information on Marketplace
 export const queryOfferingList = async (Config) => {
   const wasmClient = await getWasmClient();
   const offeringList = await wasmClient.queryContractSmart(
@@ -138,7 +157,7 @@ export const queryOfferingListByPriceRange = async (Config) => {
       get_offerings_by_price_range: {
         sort_listing: Config.sortListing,
         min: Config.min,
-        max: Config.max
+        max: Config.max,
       },
     }
   );
@@ -153,12 +172,12 @@ export const queryOfferingListOfCollection = async (Config) => {
     {
       get_offerings_of_collection: {
         sort_listing: Config.sortListing,
-        contract_addr: Config.collectionAddr
+        contract_addr: Config.collectionAddr,
       },
     }
   );
 
-  return offeringList.offerings; // return an array contains all of offerings have the same collection addr on markerplace 
+  return offeringList.offerings; // return an array contains all of offerings have the same collection addr on markerplace
 };
 
 export const queryOfferingListOfSeller = async (Config) => {
@@ -168,17 +187,17 @@ export const queryOfferingListOfSeller = async (Config) => {
     {
       get_offerings_of_seller: {
         sort_listing: Config.sortListing,
-        seller: Config.seller
+        seller: Config.seller,
       },
     }
   );
 
-  return offeringList.offerings; // return an array contains all of offerings have the same seller on markerplace 
+  return offeringList.offerings; // return an array contains all of offerings have the same seller on markerplace
 };
 
-// 4. Functions for query all collection contract have the same code_id
+// 5. Functions for query all collection contract have the same code_id
 export const queryAllContracts = async (code_id) => {
   const wasmClient = await getWasmClient();
   const contracts = await wasmClient.getContracts(code_id);
   return contracts;
-}
+};
