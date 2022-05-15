@@ -1,4 +1,4 @@
-import { Input, Select, Form, InputNumber } from "antd"
+import { Input, Select, Form, InputNumber, Empty } from "antd"
 import Button from "../../../components/buttons/Button"
 import { openNotification } from "../../../components/notifications/notification";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
@@ -80,7 +80,7 @@ const Filter = ({ }) => {
 
     useEffect(() => {
         (async () => {
-            const res = await queryAllContracts(42)
+            const res = await queryAllContracts(process.env.REACT_APP_CODE_ID)
             setRoot(document.getElementById('containment'))
             setStamp(0)
             let sortedRes = res.sort((collectionAddr) => {
@@ -128,7 +128,7 @@ const Filter = ({ }) => {
     }
 
     const handleClickStatus = (value) => {
-        if( filterValue.status === value) {
+        if (filterValue.status === value) {
             setFilterValue({ ...filterValue, status: '' })
         }
         else {
@@ -440,34 +440,45 @@ const Filter = ({ }) => {
                             }}
                         >
                             {
-                                filterCollection.map((collection, index) => {
-                                    return (
-                                        <VisibilitySensor
-                                            containment={root}
-                                            key={index}
-                                        >
-                                            {({ isVisible }) => {
-                                                return (
-                                                    <Button
-                                                        type={'function'}
-                                                        clickFunction={() => handleSelectCollection(collection)}
-                                                        text={getCollectionButtonText(collection, index, isVisible)}
-                                                        style={{
-                                                            color: '#ffffff',
-                                                            backgroundColor: 'transparent',
-                                                            fontSize: '1.5rem',
-                                                            margin: 0,
-                                                            border: 0,
-                                                            width: '100%',
-                                                            height: '50px'
-                                                        }}
-                                                        className={'collection-filter-button'}
-                                                    />
-                                                )
-                                            }}
-                                        </VisibilitySensor>
-                                    ) 
-                                })
+                                filterCollection.length > 0 ? (
+                                    filterCollection.map((collection, index) => {
+                                        return (
+                                            <VisibilitySensor
+                                                containment={root}
+                                                key={index}
+                                            >
+                                                {({ isVisible }) => {
+                                                    return (
+                                                        <Button
+                                                            type={'function'}
+                                                            clickFunction={() => handleSelectCollection(collection)}
+                                                            text={getCollectionButtonText(collection, index, isVisible)}
+                                                            style={{
+                                                                color: '#ffffff',
+                                                                backgroundColor: 'transparent',
+                                                                fontSize: '1.5rem',
+                                                                margin: 0,
+                                                                border: 0,
+                                                                width: '100%',
+                                                                height: '50px'
+                                                            }}
+                                                            className={'collection-filter-button'}
+                                                        />
+                                                    )
+                                                }}
+                                            </VisibilitySensor>
+                                        )
+                                    })) : (
+                                    <div
+                                        style={{
+                                            position: 'relative',
+                                            top: '50px',
+                                            color: '#00FFA3'
+                                        }}
+                                    >
+                                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                                    </div>
+                                )
                             }
                         </div>
                     </div>

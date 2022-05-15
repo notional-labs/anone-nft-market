@@ -2,7 +2,7 @@ import Header from "../header/Header"
 import Footer from "../footer/Footer"
 import Forms from "./form/Forms"
 import { useEffect, useState } from "react"
-import { queryCollectionInfo } from "../../anonejs/queryInfo"
+import { queryCollectionInfo, queryCollectionAddressOfLaunchpad } from "../../anonejs/queryInfo"
 import { useParams } from "react-router-dom"
 
 const style = {
@@ -21,8 +21,13 @@ const CollectionEdit = ({ account, wrapSetAccount }) => {
     useEffect(() => {
         (async () => {
             setLoading(true)
-            const res = await queryCollectionInfo(id)
-            setCollection(JSON.stringify(res))
+            const contractAddr = await queryCollectionAddressOfLaunchpad(id)
+            const res = await queryCollectionInfo(contractAddr)
+            const collectionObj = {
+                ...res,
+                contractAddr
+            }
+            setCollection(JSON.stringify(collectionObj))
             setLoading(false)
         })()
     }, [])
@@ -40,7 +45,6 @@ const CollectionEdit = ({ account, wrapSetAccount }) => {
                     <Forms
                         account={account}
                         collection={JSON.parse(collection)}
-                        contractAddr={id}
                     />
                 )
             }

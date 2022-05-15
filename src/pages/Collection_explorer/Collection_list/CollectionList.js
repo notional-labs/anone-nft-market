@@ -28,7 +28,7 @@ const CollectionList = ({ }) => {
         (async () => {
             setLoading(true)
             try {
-                const res = await queryAllContracts(42)
+                const res = await queryAllContracts(process.env.REACT_APP_CODE_ID)
                 setCollections([...res])
                 setLoading(false)
             }

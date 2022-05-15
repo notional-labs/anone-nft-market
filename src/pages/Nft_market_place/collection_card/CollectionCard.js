@@ -1,21 +1,26 @@
 import { useState, useEffect, } from "react"
-import { queryCollectionInfo } from "../../../anonejs/queryInfo"
+import { queryCollectionInfo, queryCollectionAddressOfLaunchpad } from "../../../anonejs/queryInfo"
 import { Image, Skeleton } from "antd"
 import tick from '../../../assets/img/verified.png'
 import noImg from '../../../assets/img/no_image.png'
 
-const CollectionCard = ({ addr, selected,}) => {
+const CollectionCard = ({ addr, selected, }) => {
     const [collection, setCollection] = useState('')
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         (async () => {
-                setLoading(true)
-                const res = await queryCollectionInfo(addr)
-                setCollection(JSON.stringify(res))
-                setLoading(false)
+            setLoading(true)
+            const contractAddr = await queryCollectionAddressOfLaunchpad(addr)
+            const res = await queryCollectionInfo(contractAddr)
+            let collectionObj = {
+                ...res,
+                contractAddr: contractAddr
+            }
+            setCollection(JSON.stringify(collectionObj))
+            setLoading(false)
         })()
-    }, [addr, ])
+    }, [addr,])
 
     return (
         <div
