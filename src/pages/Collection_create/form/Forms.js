@@ -30,6 +30,7 @@ import { transferNft } from "../../../anonejs/transferNft";
 import noImg from "../../../assets/img/no_image.png";
 import "./Forms.css";
 import { mintCallFromUser } from "../../../anonejs/mintNft";
+import { createModel } from "../../../anonejs/createModel";
 
 const { TextArea } = Input;
 
@@ -105,7 +106,7 @@ const Forms = ({}) => {
     baseTokenUri:
       "ipfs://bafybeidfe5acjamg7kax65mvspt637ksr3wcdvvaiutmzhjgi74kddxf5q/galaxyiOigcK",
     numTokens: 50,
-    an721CodeId: 74, // don't change
+    an721CodeId: 73, // don't change
     name: "Test Collection 2",
     symbol: "TESTTWO",
     description: "An awesome NFT series",
@@ -214,8 +215,14 @@ const Forms = ({}) => {
     royaltyShare: "0.04",
   };
 
+  const Config16 = {
+    modelId: "1",
+    modelUri: "ipfs://bafybeiaivv62j7jxlkahxobfr5io7h2j56obw5mojljho2ybg7zhah2eue/galaxyfcnCU3/1",
+    minterContract: "one10hpwj2n4mdsnzmpzqn3ek0nclv245vscjzwx6zufyahckvlyaudqz89ljn"
+  }
+
   const handleClick = async () => {
-    const result = await createCollection(Config);
+    // const result = await createCollection(Config);
     // const result = await createSale(Config2);
     // const result = await makeOrder(Config3);
     // const result = await updatePrice(Config4);
@@ -230,7 +237,7 @@ const Forms = ({}) => {
     // const result = await getDataFromUri('https://ipfs.io/ipfs/bafybeiaivv62j7jxlkahxobfr5io7h2j56obw5mojljho2ybg7zhah2eue/galaxyfcnCU3/1');
     // const result = await queryAllDataOfAllModels('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq');
     // const result = await queryAllDataOfAllNfts('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq');
-    // const result = await queryAllContracts(75);
+    // const result = await queryAllContracts(80);
     // const result = await queryOfferingListByPriceRange(Config9);
     // const result = await queryOfferingListOfCollection(Config10);
     // const result = await queryOfferingListOfSeller(Config11);
@@ -239,9 +246,11 @@ const Forms = ({}) => {
     // const result = await transferNft(Config14)
     // const result = await modifyCollectionInfo(Config15);
 
-    // const result = await queryConfigOfLaunchpad("one1lahsc7ef0manp3czjx806l8v2erqzzlxhr7z9z7090h5k99vdd2qdzemxt");
+    // const result = await queryConfigOfLaunchpad("one10hpwj2n4mdsnzmpzqn3ek0nclv245vscjzwx6zufyahckvlyaudqz89ljn");
 
-    // const result = await queryCollectionAddressOfLaunchpad("one1lahsc7ef0manp3czjx806l8v2erqzzlxhr7z9z7090h5k99vdd2qdzemxt");
+    // const result = await queryCollectionAddressOfLaunchpad("one10hpwj2n4mdsnzmpzqn3ek0nclv245vscjzwx6zufyahckvlyaudqz89ljn");
+
+    const result = createModel(Config16)
     
     console.log(result);
   };
