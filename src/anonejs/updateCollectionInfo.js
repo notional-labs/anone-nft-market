@@ -1,7 +1,7 @@
 import { calculateFee, GasPrice } from "@cosmjs/stargate";
 import { getWasmClient } from "../utils/getKeplr";
 
-export const modifyCollectionInfo = async (Config) => {
+export const updateCollectionInfo = async (Config) => {
   const account = JSON.parse(localStorage.getItem("account")).account.address;
   const wasmClient = await getWasmClient();
   console.log(wasmClient);
@@ -13,7 +13,7 @@ export const modifyCollectionInfo = async (Config) => {
   };
 
   let entrypoint = {
-    modify_collection_info: {
+    update_collection_info: {
         description: Config.description,
         image: Config.image,
         external_link: Config.externalLink,
@@ -25,7 +25,7 @@ export const modifyCollectionInfo = async (Config) => {
 
   const result = await wasmClient.execute(
     account,
-    Config.cw721ContractAddr,
+    Config.minterContract,
     entrypoint,
     txFee,
     "modify collection info"
