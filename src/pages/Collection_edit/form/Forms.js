@@ -29,7 +29,7 @@ const style = {
     }
 }
 
-const Forms = ({ account, collection, contractAddr }) => {
+const Forms = ({ account, collection, }) => {
     const [form] = Form.useForm()
     const [loading, setLoading] = useState(false)
     const [imgUrlLogo, setImgUrlLogo] = useState('')
@@ -52,13 +52,15 @@ const Forms = ({ account, collection, contractAddr }) => {
         }
 
         const contractConfig = {
-            cw721ContractAddr: contractAddr,
-            description: config.description ? config.description : collection.description,
-            image: config.logo !== '' ? config.logo : collection.image,
-            externalLink: config.externalLink ? config.externalLink : collection.externalLink,
-            royaltyPaymentAddress: config.royaltyPaymentAddress ? config.royaltyPaymentAddress : collection.royaltyInfo.paymentAddr,
-            royaltyShare: config.commission ? `${config.commission / 10}` : `${collection.royaltyInfo.share / 10}`
-        }
+            cw721ContractAddr:
+              collection.contractAddr,
+            description: "Chinh yeu Linh",
+            image:
+              "ipfs://bafybeigi3bwpvyvsmnbj46ra4hyffcxdeaj6ntfk5jpic5mx27x6ih2qvq/images/1.png",
+            externalLink: "123",
+            royaltyPaymentAddress: "one1k2x29vppqrhgsdxtkmkpspnawm229lcpec7mm3",
+            royaltyShare: "0.04",
+          }
         console.log(contractConfig)
         modifyCollectionInfo(contractConfig).then(result => {
             console.log(result)

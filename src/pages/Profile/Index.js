@@ -8,7 +8,7 @@ import { getCollectionById } from "../../utils/api/collections";
 import ConnectWalletPage from "../Connect_wallet_error_page/Index";
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { queryCollectionInfo } from "../../anonejs/queryInfo";
+import { queryCollectionInfo, queryCollectionAddressOfLaunchpad } from "../../anonejs/queryInfo";
 
 const style = {
     container: {
@@ -31,7 +31,8 @@ const Profile = ({ type, account, wrapSetAccount }) => {
                 user && setInfo(JSON.stringify(user))
             }
             else if (type === 'collection') {
-                const res = await queryCollectionInfo(id)
+                const contractAddr = await queryCollectionAddressOfLaunchpad(id)
+                const res = await queryCollectionInfo(contractAddr)
                 setInfo(JSON.stringify(res))
             }
         })()

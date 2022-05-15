@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { queryCollectionInfo } from "../../../anonejs/queryInfo"
+import { queryCollectionInfo, queryCollectionAddressOfLaunchpad } from "../../../anonejs/queryInfo"
 import { Image, Skeleton } from "antd"
 import { getDataFromUri } from "../../../anonejs/getDataFromUri"
 
@@ -10,7 +10,8 @@ const CollectionCard = ({ addr }) => {
     useEffect(() => {
         (async () => {
             setLoading(true)
-            const res = await queryCollectionInfo(addr)
+            const contractAddr = await queryCollectionAddressOfLaunchpad(addr)
+            const res = await queryCollectionInfo(contractAddr)
             setCollection(JSON.stringify(res))
             setLoading(false)
         })()
