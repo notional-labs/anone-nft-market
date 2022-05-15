@@ -57,7 +57,6 @@ const style = {
         fontSize: '24px',
         marginBottom: 0,
         fontWeight: 'bold',
-        marginTop: '50px'
     }
 }
 
@@ -67,6 +66,7 @@ const Forms = ({ account }) => {
     const [imgUrlLogo, setImgUrlLogo] = useState('')
     const [imgUrlBanner, setImgUrlBanner] = useState('')
     const [paymentAddr, setPaymentAddr] = useState(JSON.parse(account).account.address)
+    const [share, setShare] = useState(0)
 
     const create = async (values) => {
         setLoading(true)
@@ -128,33 +128,9 @@ const Forms = ({ account }) => {
         setPaymentAddr(e.target.value)
     }
 
-    const handleChangeText = () => { };
-
-    const handleChangeCheckbox = (e) => { };
-
-<<<<<<< HEAD
-  const Config13 = {
-    cw721ContractAddr:
-      "one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq",
-    tokenId: '1'
-  }
-
-  const Config14 = {
-    cw721ContractAddr:
-      "one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq",
-    tokenId: '3',
-    recipient: 'one1k2x29vppqrhgsdxtkmkpspnawm229lcpec7mm3'
-  }
-
-  const Config15 = {
-    cw721ContractAddr:
-      "one1xmacmeqhdcr5w6qn2jpx8vs6kg3zaql944t4365jdsr8d8m67vns5mamhw",
-    description: "Chinh yeu Linh",
-    image: "ipfs://bafybeigi3bwpvyvsmnbj46ra4hyffcxdeaj6ntfk5jpic5mx27x6ih2qvq/images/1.png",
-    externalLink: "123",
-    royaltyPaymentAddress: "one1k2x29vppqrhgsdxtkmkpspnawm229lcpec7mm3",
-    royaltyShare: "0.04"
-  }
+    const handleSlider = (val) => {
+        setShare(val)
+    }
 
   const handleClick = async () => {
     // const result = await createCollection(Config);
@@ -179,33 +155,9 @@ const Forms = ({ account }) => {
     // const result = await mintCallFromUser(Config12);
     // const result = await burnNft(Config13);
     // const result = await transferNft(Config14)
-    const result = await modifyCollectionInfo(Config15);
-    console.log(result);
+    // const result = await modifyCollectionInfo(Config15);
+    // console.log(result);
   };
-=======
-    const handleClick = async () => {
-        // const result = await createCollection(Config);
-        // const result = await createSale(Config2);
-        // const result = await makeOrder(Config3);
-        // const result = await updatePrice(Config4);
-        // const result = await cancelSale(Config5);
-        // const result = await queryAccountInfo();
-        // const result = await queryOfferingList(Config6);
-        // const result = await queryNftInfoById(Config7);
-        // const result = await queryModelInfoById(Config8);
-        // const result = await queryNumberOfNfts('one1tj748034gl3zvujn2tz4p4m8rf9j9uarsj5j3c5a5z2neqel77cslz2lp0');
-        // const result = await queryNumberOfModels('one1tj748034gl3zvujn2tz4p4m8rf9j9uarsj5j3c5a5z2neqel77cslz2lp0');
-        // const result = await queryCollectionInfo('one1mych7nr7fk86y2ezekkqfwsqpl8ax659ez4r4lm87x6clhz65q9sn4ngte');
-        // const result = await getDataFromUri('https://ipfs.io/ipfs/bafybeiaivv62j7jxlkahxobfr5io7h2j56obw5mojljho2ybg7zhah2eue/galaxyfcnCU3/1');
-        // const result = await queryAllDataOfAllModels('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq');
-        // const result = await queryAllContracts(69);
-        // const result = await queryOfferingListByPriceRange(Config9);
-        // const result = await queryOfferingListOfCollection(Config10);
-        // const result = await queryOfferingListOfSeller(Config11);
-        // const result = await mintCallFromUser(Config12);
-        // console.log(result);
-    };
->>>>>>> son-branch
 
     return (
         <div style={style.container}>
@@ -217,7 +169,10 @@ const Forms = ({ account }) => {
                 layout="vertical"
             >
                 <p
-                    style={style.label}
+                    style={{
+                        ...style.label,
+                        marginTop: '50px'
+                    }}
                 >
                     Logo collection
                 </p>
@@ -246,8 +201,7 @@ const Forms = ({ account }) => {
                     />
                     <div
                         style={{
-                            width: '40%',
-                            backgroundColor: '#626262'
+                            width: '20%',
                         }}
                     >
                         <label
@@ -258,6 +212,10 @@ const Forms = ({ account }) => {
                                 src={imgUrlLogo || noImg}
                                 preview={false}
                                 width={'100%'}
+                                style={{
+                                    aspectRatio: '1/1',
+                                    borderRadius: '50%',
+                                }}
                             />
                         </label>
                     </div>
@@ -284,10 +242,11 @@ const Forms = ({ account }) => {
                     />
                     <div
                         style={{
-                            width: '65%',
+                            width: '35%',
                             backgroundColor: '#626262',
-                            height: '250px',
-                            overflow: "hidden"
+                            aspectRatio: '2/1',
+                            overflow: "hidden",
+                            borderRadius: '10px'
                         }}
                     >
                         <label
@@ -300,7 +259,7 @@ const Forms = ({ account }) => {
                                 width={'100%'}
                                 style={{
                                     position: 'relative',
-                                    top: '-70px'
+                                    top: '-30px'
                                 }}
                             />
                         </label>
@@ -452,6 +411,7 @@ const Forms = ({ account }) => {
                 <p
                     style={{
                         ...style.label,
+                        marginTop: '50px'
                     }}
                 >
                     Limit per address
@@ -477,7 +437,7 @@ const Forms = ({ account }) => {
                         step={1}
                         style={{
                             padding: '.25em',
-                            width: '100%',
+                            width: '20%',
                             fontSize: '20px'
                         }}
                     />
@@ -527,7 +487,9 @@ const Forms = ({ account }) => {
                         marginTop: '50px'
                     }}
                 >
-                    Commission rate (%)
+                    {
+                        `Commission rate (${share.toFixed(2) / 10} %)`
+                    }
                 </p>
                 <Form.Item
                     name={'commission'}
@@ -536,6 +498,7 @@ const Forms = ({ account }) => {
                         min={0.1}
                         max={10}
                         step={0.1}
+                        onChange={handleSlider}
                     />
                 </Form.Item>
                 <div>

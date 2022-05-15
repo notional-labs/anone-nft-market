@@ -46,28 +46,52 @@ const Config8 = {
 };
 
 const Config9 = {
-nftMarketplaceContractAddr:
-  "one1sh9n6msknq5w0psaczat0egrf692xkznmwt4wpnthfwdhryldrzstdqtsz",
-sortListing: "price_lowest",
-min: "10000",
-max: "1000000"
+    nftMarketplaceContractAddr:
+        "one1sh9n6msknq5w0psaczat0egrf692xkznmwt4wpnthfwdhryldrzstdqtsz",
+    sortListing: "price_lowest",
+    min: "10000",
+    max: "1000000"
 };
 
 const Config10 = {
-nftMarketplaceContractAddr:
-  "one1hkw0czu90estdr04pp4u76treyrkdm7mxuktk593qcs239wrwdnq2dgysh",
-sortListing: "price_lowest",
-collectionAddr: "one1mych7nr7fk86y2ezekkqfwsqpl8ax659ez4r4lm87x6clhz65q9sn4ngte"
+    nftMarketplaceContractAddr:
+        "one1hkw0czu90estdr04pp4u76treyrkdm7mxuktk593qcs239wrwdnq2dgysh",
+    sortListing: "price_lowest",
+    collectionAddr: "one1mych7nr7fk86y2ezekkqfwsqpl8ax659ez4r4lm87x6clhz65q9sn4ngte"
 };
 
 const Config11 = {
-nftMarketplaceContractAddr:
-  "one1hkw0czu90estdr04pp4u76treyrkdm7mxuktk593qcs239wrwdnq2dgysh",
-sortListing: "price_lowest",
-seller: "one1k2x29vppqrhgsdxtkmkpspnawm229lcpec7mm3"
+    nftMarketplaceContractAddr:
+        "one1hkw0czu90estdr04pp4u76treyrkdm7mxuktk593qcs239wrwdnq2dgysh",
+    sortListing: "price_lowest",
+    seller: "one1k2x29vppqrhgsdxtkmkpspnawm229lcpec7mm3"
 };
 
 const Config12 = {
-minterContract:
-  "one10jsmew5rqtk4kptymz75lncg0tguwleuj60mw5hn0wxuexkder0q4lvf42",
+    minterContract:
+        "one10jsmew5rqtk4kptymz75lncg0tguwleuj60mw5hn0wxuexkder0q4lvf42",
 }
+
+const Config13 = {
+    cw721ContractAddr:
+        "one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq",
+    tokenId: '1'
+}
+
+const Config14 = {
+    cw721ContractAddr:
+        "one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq",
+    tokenId: '3',
+    recipient: 'one1k2x29vppqrhgsdxtkmkpspnawm229lcpec7mm3'
+}
+
+const Config15 = {
+    cw721ContractAddr:
+        "one1xmacmeqhdcr5w6qn2jpx8vs6kg3zaql944t4365jdsr8d8m67vns5mamhw",
+    description: "Chinh yeu Linh",
+    image: "ipfs://bafybeigi3bwpvyvsmnbj46ra4hyffcxdeaj6ntfk5jpic5mx27x6ih2qvq/images/1.png",
+    externalLink: "123",
+    royaltyPaymentAddress: "one1k2x29vppqrhgsdxtkmkpspnawm229lcpec7mm3",
+    royaltyShare: "0.04"
+}
+

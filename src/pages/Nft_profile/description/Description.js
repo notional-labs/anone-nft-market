@@ -20,7 +20,7 @@ const Description = ({ nft }) => {
                     fontWeight: 'bold'
                 }}
             >
-                {nft.description}
+                {nft.metaData.description}
             </p>
         </div>
     )

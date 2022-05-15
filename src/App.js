@@ -12,6 +12,7 @@ import CollectionExplorer from './pages/Collection_explorer/Index'
 import CreatePage from './pages/Create/Index';
 import EditPage from './pages/Edit/Index';
 import { useState, useEffect, useCallback } from 'react';
+import CollectionEdit from './pages/Collection_edit/Index';
 
 function App() {
   const [account, setAccount] = useState(localStorage.getItem('account'))
@@ -73,6 +74,11 @@ function App() {
           wrapSetAccount={wrapSetAccount}
         />} />
         <Route exact path="/collection/:id" element={<Profile
+          type={'collection'}
+          account={account}
+          wrapSetAccount={wrapSetAccount}
+        />} />
+        <Route exact path="/collection/:id/edit" element={<CollectionEdit
           type={'collection'}
           account={account}
           wrapSetAccount={wrapSetAccount}
