@@ -8,8 +8,8 @@ import loadingGif from '../../../assets/img/another.gif'
 
 const style = {
     container: {
-        padding: '5em',
-        marginTop: '100px',
+        padding: '200px 5em',
+        
     },
     text: {
         fontSize: '48px',
@@ -83,14 +83,21 @@ const CollectionList = ({ }) => {
                             display: 'flex',
                             flexDirection: 'row',
                             justifyContent: 'center',
-                            padding: '1em'
+                            padding: '1em',
                         }}
                     >
-                        <Image
-                            src={loadingGif}
-                            preview={false}
-                            width={'20%'}
-                        />
+                         <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <Image
+                                    src={loadingGif}
+                                    preview={false}
+                                    width={'200px'}
+                                />
+                            </div>
                     </div>
                 ) : collections.length > 0 ? (
                     <div>

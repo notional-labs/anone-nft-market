@@ -24,7 +24,7 @@ const CreateButton = ({ pathname }) => {
                     position: 'relative',
                     margin: 'auto 30px',
                     height: '100%',
-                    top: '30%',
+                    top: '27px',
                     zIndex: 2,
                 }}
             >

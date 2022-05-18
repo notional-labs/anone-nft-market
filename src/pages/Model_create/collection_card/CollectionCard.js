@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { queryCollectionInfo, queryCollectionAddressOfLaunchpad } from "../../../anonejs/queryInfo"
 import { Image, Skeleton } from "antd"
 import { getDataFromUri } from "../../../anonejs/getDataFromUri"
+import noImg from '../../../assets/img/no_image.png'
 
 const CollectionCard = ({ addr }) => {
     const [collection, setCollection] = useState('')
@@ -56,7 +57,9 @@ const CollectionCard = ({ addr }) => {
                             width={'30px'}
                             style={{
                                 borderRadius: '50%',
+                                aspectRatio: '1/1'
                             }}
+                            fallback={noImg}
                         />
                         <p
                             style={{

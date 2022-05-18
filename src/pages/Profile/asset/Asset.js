@@ -82,6 +82,7 @@ const Asset = ({ info, type, id }) => {
                         <NftList 
                             info={info}
                             id={id}
+                            type={type}
                         />
                     ) : (
                         <Collection />

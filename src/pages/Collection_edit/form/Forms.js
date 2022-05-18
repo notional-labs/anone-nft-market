@@ -1,7 +1,8 @@
 import { Form, Input, Slider, Image } from "antd"
 import { useEffect, useState } from "react";
 import { modifyCollectionInfo } from "../../../anonejs/modifyCollectionInfo";
-import { openNotification } from "../../../components/notifications/notification";
+import { updateCollectionInfo } from "../../../anonejs/updateCollectionInfo";
+import { openNotification, openLoadingNotification } from "../../../components/notifications/notification";
 import { ipfsUpload } from "../../../anonejs/ipfsUpload";
 import noImg from "../../../assets/img/no_image.png";
 import "./Forms.css";
@@ -29,9 +30,8 @@ const style = {
     }
 }
 
-const Forms = ({ account, collection, }) => {
+const Forms = ({ account, collection, minterContract}) => {
     const [form] = Form.useForm()
-    const [loading, setLoading] = useState(false)
     const [imgUrlLogo, setImgUrlLogo] = useState('')
     const [imgUrlBanner, setImgUrlBanner] = useState('')
     const [paymentAddr, setPaymentAddr] = useState(JSON.parse(account).account.address)
@@ -43,7 +43,7 @@ const Forms = ({ account, collection, }) => {
     }, [])
 
     const update = async (values) => {
-        setLoading(true)
+        openLoadingNotification('open')
         const logo = imgUrlLogo !== '' ? await ipfsUpload(imgUrlLogo) : ''
         let config = {
             ...values,
@@ -52,24 +52,21 @@ const Forms = ({ account, collection, }) => {
         }
 
         const contractConfig = {
-            cw721ContractAddr:
-              collection.contractAddr,
-            description: "Chinh yeu Linh",
-            image:
-              "ipfs://bafybeigi3bwpvyvsmnbj46ra4hyffcxdeaj6ntfk5jpic5mx27x6ih2qvq/images/1.png",
-            externalLink: "123",
-            royaltyPaymentAddress: "one1k2x29vppqrhgsdxtkmkpspnawm229lcpec7mm3",
-            royaltyShare: "0.04",
-          }
-        console.log(contractConfig)
-        modifyCollectionInfo(contractConfig).then(result => {
-            console.log(result)
+            minterContract: minterContract,
+            description: config.description ? config.description : collection.description,
+            image: config.logo !== '' ? config.logo : collection.image,
+            externalLink: config.externalLink ? config.externalLink : collection.externalLink,
+            royaltyPaymentAddress: config.royaltyPaymentAddress ? config.royaltyPaymentAddress : collection.royaltyInfo.paymentAddr,
+            royaltyShare: config.commission ? `${config.commission / 10}` : `${collection.royaltyInfo.share / 10}`
+        }
+        updateCollectionInfo(contractConfig).then(() => {
+            openLoadingNotification('close')
             openNotification('success', 'Update successfully')
             reset()
-            navigate(`/collection/${collection.contract_addr}`)
+            navigate(`/collection/${minterContract}`)
         }).catch(e => {
+            openLoadingNotification('close')
             openNotification('error', e.message)
-            console.log(e.message)
         })
     }
 

@@ -6,8 +6,8 @@ import Size from "../size/Size";
 import { openNotification } from "../../../components/notifications/notification";
 import { fetchDummyBestCollections } from "../../../utils/fetch";
 import { mintCallFromUser } from '../../../anonejs/mintNft'
-import { queryAllContracts } from "../../../anonejs/queryInfo";
-import CollectionCard from "../collection_card/CollectionCard";
+import { queryAllContracts, queryAllDataOfAllModels, queryCollectionAddressOfLaunchpad } from "../../../anonejs/queryInfo";
+import Card from "../card/Card";
 import './Forms.css'
 
 const { TextArea } = Input;
@@ -37,25 +37,37 @@ const Forms = ({ account }) => {
     const [imgUrlLogo, setImgUrlLogo] = useState('')
     const [imgUrlBanner, setImgUrlBanner] = useState('')
     const [collections, setCollections] = useState([])
+    const [selectCollection, setSelectCollection] = useState('')
+    const [models, setModels] = useState([])
     const [sizes, setSizes] = useState([])
 
     useEffect(() => {
-        (async() => {
+        (async () => {
             const res = await queryAllContracts(process.env.REACT_APP_CODE_ID)
             setCollections([...res])
         })()
     }, [])
 
+    useEffect(() => {
+        (async () => {
+            const contractAddr = await queryCollectionAddressOfLaunchpad(selectCollection)
+            const res = await queryAllDataOfAllModels(contractAddr);
+            console.log(res)
+            setModels([...res.all_models_info])
+        })()
+    }, [selectCollection])
+
     const create = (values) => {
-        console.log(values)
         setLoading(true)
         let config = {
             ...values,
             address: JSON.parse(account).account.address
         }
         const mintConfig = {
-            address: config.address,
+            size: '38',
             minterContract: config.collection,
+            modelId: config.model,
+            address: config.address
         }
         mintCallFromUser(mintConfig).then(result => {
             console.log(result)
@@ -105,64 +117,6 @@ const Forms = ({ account }) => {
                         marginTop: '50px'
                     }}
                 >
-                    Name
-                </p>
-                <p
-                    style={{
-                        ...style.label,
-                        fontSize: '10px',
-                    }}
-                >
-                    Max 80 characters long.
-                </p>
-                <Form.Item
-                    name={'name'}
-                    rules={[
-                        { max: 80, message: 'Max 80 characters!' }
-                    ]}
-                >
-                    <Input
-                        placeholder="NFT name"
-                        style={{
-                            padding: '1em'
-                        }}
-                    />
-                </Form.Item>
-                <p
-                    style={{
-                        ...style.label,
-                        marginTop: '50px'
-                    }}
-                >
-                    Description
-                </p>
-                <p
-                    style={{
-                        ...style.label,
-                        fontSize: '10px',
-                    }}
-                >
-                    Add a description to your collection. This will appear on the collection page.
-                </p>
-                <Form.Item
-                    name={'description'}
-                    rules={[
-                        { max: 2000, message: 'Max 2000 characters!' }
-                    ]}
-                >
-                    <TextArea rows={6}
-                        placeholder="Description"
-                        style={{
-                            padding: '1em'
-                        }}
-                    />
-                </Form.Item>
-                <p
-                    style={{
-                        ...style.label,
-                        marginTop: '50px'
-                    }}
-                >
                     Collection
                 </p>
                 <p
@@ -179,21 +133,71 @@ const Forms = ({ account }) => {
                         { required: true, message: 'Please select a collection!' },
                     ]}
                 >
-                    <Select 
+                    <Select
                         placeholder='Select Collection'
                         allowClear={true}
-                        style={{ 
+                        style={{
                             width: '100%',
+                        }}
+                        onSelect={(val) => {
+                            setSelectCollection(val)
                         }}
                     >
                         {
                             collections.map(collection => {
                                 return (
-                                    <Option 
+                                    <Option
                                         value={`${collection}`}
                                     >
-                                        <CollectionCard
+                                        <Card
                                             addr={collection}
+                                            type={'collection'}
+                                        />
+                                    </Option>
+                                )
+                            })
+                        }
+                    </Select>
+                </Form.Item>
+                <p
+                    style={{
+                        ...style.label,
+                        marginTop: '50px'
+                    }}
+                >
+                    Model
+                </p>
+                <p
+                    style={{
+                        ...style.label,
+                        fontSize: '10px',
+                    }}
+                >
+                    This is the model which your item will base in.
+                </p>
+                <Form.Item
+                    name={'model'}
+                    rules={[
+                        { required: true, message: 'Please select a model!' },
+                    ]}
+                >
+                    <Select
+                        placeholder='Select model'
+                        allowClear={true}
+                        style={{
+                            width: '100%',
+                        }}
+                    >
+                        {
+                            models.map(model => {
+                                return (
+                                    <Option
+                                        value={`${model.model_id}`}
+                                    >
+                                        <Card
+                                            addr={model}
+                                            type={'model'}
+                                            model={model}
                                         />
                                     </Option>
                                 )

@@ -1,6 +1,9 @@
 import { useState } from "react"
 import Button from "../../../components/buttons/Button"
 import './MarketplaceButton.css'
+import { BsFillCollectionFill, } from "react-icons/bs";
+import { GiTwoCoins } from "react-icons/gi";
+
 
 const style = {
     button: {
@@ -14,12 +17,22 @@ const style = {
         backgroundColor: 'transparent',
         border: 0,
         color: '#F2F1F1',
-        fontSize: '16px',
+        fontSize: '1rem',
         width: '100%',
-        padding: '2em',
-        cursor: 'pointer'
+        padding: '.5em 1em',
+        cursor: 'pointer',
     }
 }
+
+const buttonType = [
+    {
+        logo: <GiTwoCoins />,
+        text: 'NFTs'
+    }, {
+        logo: <BsFillCollectionFill />,
+        text: 'Collections'
+    }
+]
 
 const MarketplaceButton = ({ pathname }) => {
     const [show, setShow] = useState(false)
@@ -32,10 +45,46 @@ const MarketplaceButton = ({ pathname }) => {
         setShow(false)
     }
 
+    const getButtonText = (type) => {
+        const icon = buttonType[type]
+        return (
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'start',
+                    margin: 0
+                }}
+            >
+                <div
+                    style={{
+                        marginRight: '20px',
+                        marginBottom: 0,
+                        position: 'relative',
+                        fontSize: '2rem',
+                        top: '5px'
+                    }}
+                >
+                    {
+                        icon.logo
+                    }
+                </div>
+                <p
+                    style={{
+                        margin: 0,
+                        position: 'relative',
+                        top: '10px'
+                    }}
+                >
+                    {icon.text}
+                </p>
+            </div>
+        )
+    }
+
     return (
         <div
             style={{
-                borderBottom: pathname.includes('marketplace') ? 'solid 2px #00FFA3' : 'none'
+                borderBottom: pathname.includes('marketplace') || pathname.includes('explorer') ? 'solid 2px #00FFA3' : 'none'
             }}
             onMouseEnter={handleMouseOver}
             onMouseLeave={handleMouseLeft}
@@ -46,7 +95,7 @@ const MarketplaceButton = ({ pathname }) => {
                     position: 'relative',
                     margin: 'auto 30px',
                     height: '100%',
-                    top: '30%',
+                    top: '27px',
                     zIndex: 2,
                 }}
             >
@@ -61,10 +110,10 @@ const MarketplaceButton = ({ pathname }) => {
                                 backgroundColor: '#626262',
                                 position: 'absolute',
                                 textAlign: 'center',
-                                left: '-70%',
-                                width: '250%',
+                                left: '-100%',
+                                width: '300%',
                                 top: '70%',
-                                borderRadius: '10px',
+                                borderRadius: '0 0 10px 10px',
                                 overflow: 'hidden'
                             }}
                         >
@@ -73,7 +122,7 @@ const MarketplaceButton = ({ pathname }) => {
                             >
                                 <Button
                                     style={style.subButton}
-                                    text={'NFT'}
+                                    text={getButtonText(0)}
                                     type={'link'}
                                     url={`/nft/marketplace`}
                                 />
@@ -83,7 +132,7 @@ const MarketplaceButton = ({ pathname }) => {
                             >
                                 <Button
                                     style={style.subButton}
-                                    text={'Collection'}
+                                    text={getButtonText(1)}
                                     type={'link'}
                                     url={`/collection/explorer`}
                                 />

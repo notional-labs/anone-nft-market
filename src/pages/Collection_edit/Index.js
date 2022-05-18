@@ -45,6 +45,7 @@ const CollectionEdit = ({ account, wrapSetAccount }) => {
                     <Forms
                         account={account}
                         collection={JSON.parse(collection)}
+                        minterContract={id}
                     />
                 )
             }

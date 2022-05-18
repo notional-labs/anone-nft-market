@@ -8,6 +8,7 @@ export const getMarketplaceNft = async (sortListing = 'price_lowest') => {
         sortListing: sortListing
     };
     let list = await queryOfferingList(configMarketplace)
+    console.log(list)
     return list
 }
 

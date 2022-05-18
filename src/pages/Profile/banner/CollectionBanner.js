@@ -4,10 +4,21 @@ import verifiedImg from '../../../assets/img/verified.png'
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { dummyGetUserById } from "../../../utils/api/user"
+import { queryAllDataOfAllNfts } from "../../../anonejs/queryInfo"
 
 const CollectionBanner = ({ collection, type, id, account }) => {
     const [author, setAuthor] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [items, setItems] = useState(0)
+
+    useEffect(() => {
+        (async () => {
+            if (type === 'collection') {
+                const { all_tokens_info } = await queryAllDataOfAllNfts(JSON.parse(collection).contractAddr)
+                setItems(all_tokens_info.length)
+            }
+        })()
+    }, [])
 
     useEffect(() => {
         const res = dummyGetUserById(2)
@@ -134,7 +145,7 @@ const CollectionBanner = ({ collection, type, id, account }) => {
                                 margin: 0,
                             }}
                         >
-                            999
+                            {items}
                         </p>
                         <p
                             style={{

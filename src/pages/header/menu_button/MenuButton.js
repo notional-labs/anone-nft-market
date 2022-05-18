@@ -4,6 +4,8 @@ import Button from '../../../components/buttons/Button'
 import walletButton from '../../../assets/img/wallet_button.png'
 import { getBalance } from '../../../utils/user/getBalance'
 import './MenuButton.css'
+import { MdOutlineAccountCircle, MdLogout } from "react-icons/md";
+import { FiSettings } from "react-icons/fi";
 
 const style = {
     button: {
@@ -16,6 +18,21 @@ const style = {
         zIndex: 2,
     }
 }
+
+const buttonType = [
+    {
+        logo: <MdOutlineAccountCircle />,
+        text: 'Profile',
+    },
+    {
+        logo: <FiSettings />,
+        text: 'Settings'
+    }, 
+    {
+        logo: <MdLogout />,
+        text: 'Logout'
+    }
+]
 
 const MenuButton = ({ account, wrapSetAccount, pathname }) => {
     const [showProfile, setShowProfile] = useState(false)
@@ -33,6 +50,42 @@ const MenuButton = ({ account, wrapSetAccount, pathname }) => {
         setShowProfile(false)
     }
 
+    const getButtonText = (type) => {
+        const icon = buttonType[type]
+        return (
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'start',
+                    margin: 0
+                }}
+            >
+                <div
+                    style={{
+                        marginRight: '20px',
+                        marginBottom: 0,
+                        position: 'relative',
+                        fontSize: '2rem',
+                        top: '5px'
+                    }}
+                >
+                    {
+                        icon.logo
+                    }
+                </div>
+                <p
+                    style={{
+                        margin: 0,
+                        position: 'relative',
+                        top: '12px'
+                    }}
+                >
+                    {icon.text}
+                </p>
+            </div>
+        )
+    }
+
     return (
         <div
             style={{
@@ -46,7 +99,7 @@ const MenuButton = ({ account, wrapSetAccount, pathname }) => {
                     position: 'relative',
                     margin: 'auto 30px',
                     height: '100%',
-                    top: '25%',
+                    top: '23px',
                     zIndex: 2,
                 }}
             >
@@ -74,11 +127,11 @@ const MenuButton = ({ account, wrapSetAccount, pathname }) => {
                                 backgroundColor: '#626262',
                                 position: 'absolute',
                                 textAlign: 'center',
-                                left: '-100%',
-                                width: '300%',
+                                left: '-150%',
+                                width: '400%',
                                 top: '76%',
-                                borderRadius: '10px',
-                                overflow: 'hidden'
+                                borderRadius: '0 0 10px 10px',
+                                overflow: 'hidden',
                             }}
                         >
                             <div
@@ -89,16 +142,36 @@ const MenuButton = ({ account, wrapSetAccount, pathname }) => {
                                         border: 0,
                                         backgroundColor: 'transparent',
                                         color: '#ffffff',
-                                        fontSize: '16px',
                                         fontWeight: 'bold',
                                         cursor: 'pointer',
                                         width: '100%',
-                                        padding: '2em'
+                                        padding: '.5em 1em',
+                                        fontSize: '1rem'
 
                                     }}
-                                    text={'Profile'}
+                                    text={getButtonText(0)}
                                     type={'href'}
                                     url={`${process.env.REACT_APP_HOST}/user/profile`}
+                                />
+                            </div>
+                            <div
+                                className="upper-button"
+                            >
+                                <Button
+                                    style={{
+                                        border: 0,
+                                        backgroundColor: 'transparent',
+                                        color: '#ffffff',
+                                        fontWeight: 'bold',
+                                        cursor: 'pointer',
+                                        width: '100%',
+                                        padding: '.5em 1em',
+                                        fontSize: '1rem'
+
+                                    }}
+                                    text={getButtonText(1)}
+                                    type={'link'}
+                                    url={`/user/edit`}
                                 />
                             </div>
                             <div
@@ -110,15 +183,15 @@ const MenuButton = ({ account, wrapSetAccount, pathname }) => {
                                         border: 0,
                                         backgroundColor: 'transparent',
                                         color: '#ffffff',
-                                        fontSize: '16px',
+                                        fontSize: '1rem',
                                         fontWeight: 'bold',
                                         cursor: 'pointer',
                                         width: '100%',
-                                        padding: '2em'
+                                        padding: '.5em 1em'
                                     }}
                                     clickFunction={logout}
                                     text={
-                                        'Logout'
+                                        getButtonText(2)
                                     }
                                 />
                             </div>

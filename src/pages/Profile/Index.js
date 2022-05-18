@@ -33,7 +33,10 @@ const Profile = ({ type, account, wrapSetAccount }) => {
             else if (type === 'collection') {
                 const contractAddr = await queryCollectionAddressOfLaunchpad(id)
                 const res = await queryCollectionInfo(contractAddr)
-                setInfo(JSON.stringify(res))
+                setInfo(JSON.stringify({
+                    ...res,
+                    contractAddr
+                }))
             }
         })()
     }, [type, account])

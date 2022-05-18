@@ -4,8 +4,9 @@ import Grid from "../../../components/grids/Grid"
 import Button from "../../../components/buttons/Button"
 import { fetchDummyTopNft } from "../../../utils/fetch"
 import { Link } from "react-router-dom"
-import { queryAllDataOfAllNfts } from "../../../anonejs/queryInfo"
+import { queryAllDataOfAllNfts, } from "../../../anonejs/queryInfo"
 import './NftList.css'
+import NftCard from "../nft_card/NftCard"
 
 const style = {
     title: {
@@ -41,20 +42,19 @@ const style = {
     },
 }
 
-const zeroPad = (num) => {
-    return num.toString().padStart(3, "0");
-}
-
-const NftList = ({ info, id }) => {
+const NftList = ({ info, id, type }) => {
     const [nfts, setNfts] = useState([])
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        const res = fetchDummyTopNft()
-        queryAllDataOfAllNfts('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq').then(result => console.log(result)).catch(e => console.log(e.message))
-        if (Array.isArray(res) && res.length > 0) {
-            setNfts([...res])
-        }
+        (async () => {
+            setLoading(true)
+            if (type === 'collection') {
+                const { all_tokens_info } = await queryAllDataOfAllNfts(JSON.parse(info).contractAddr)
+                setNfts([...all_tokens_info])
+                setLoading(false)
+            }
+        })()
     }, [])
 
     const handleClickBuy = () => {
@@ -65,50 +65,10 @@ const NftList = ({ info, id }) => {
         let list = []
         nfts.forEach(nft => {
             const jsx = (
-                <div
-                    className="card"
-                    style={style.card}
-                >
-                    <a
-                        href={`${process.env.REACT_APP_HOST}/nft/${nft.id}`}
-                    >
-                        <div
-                            style={{
-                                padding: '2em',
-                                paddingBottom: '5em'
-                            }}
-                        >
-                            <Image
-                                src={nft.img}
-                                preview={false}
-                                width={'90%'}
-                                style={style.imge}
-                            />
-                        </div>
-                        <div
-                            style={style.cardText}
-                        >
-                            <p
-                                style={{
-                                    fontSize: '24px',
-                                    fontWeight: 'bold',
-                                    margin: 0
-                                }}
-                            >
-                                Sneaker #{zeroPad(nft.id)}
-                            </p>
-                            <p
-                                style={{
-                                    fontSize: '24px',
-                                    color: '#00FFA3',
-                                    marginBottom: 0
-                                }}
-                            >
-                                {nft.price} AN1
-                            </p>
-                        </div>
-                    </a>
-                </div>
+                <NftCard
+                    nft={nft}
+                    contractAddr={JSON.parse(info).contractAddr}
+                />
             )
             list.push(jsx)
         })

@@ -1,8 +1,6 @@
-import { Modal, Image } from "antd"
-import Button from "../buttons/Button"
-import { dummyConnectWallet } from "../../utils/getKeplr"
-import keplrLogo from '../../assets/img/keplr.png'
-import { openNotification } from '../notifications/notification'
+import { Input, Modal } from "antd"
+import { useState } from "react"
+import { transferNft } from "../../anonejs/transferNft"
 
 const style = {
     button: {
@@ -15,44 +13,31 @@ const style = {
     }
 }
 
-const text = (
-    <div>
-        <Image
-            src={keplrLogo}
-            preview={false}
-            width={'20%'}
-        />
-        <span
-            style={{
-                fontSize: '24px',
-                fontWeight: 'bold',
-                marginLeft: '20px',
-                position: 'relative',
-                top: '5px'
-            }}
-        >
-            Keplr
-        </span>
-    </div>
-)
 
-const ConnectWalletModal = ({ show, wrapSetShow, wrapSetAccount }) => {
-
+const TransferModal = ({ nft, show, wrapSetShow }) => {
+    const [address, setAddress] = useState('')
 
     const handleClick = () => {
-        dummyConnectWallet().then(() => {
-            wrapSetAccount(localStorage.getItem('account'))
-            wrapSetShow(false)
-            openNotification('success', 'Connect successfully')
-        }).catch(e => {
-            console.log(e)
-            openNotification('error', e.message)
+        const config = {
+            cw721ContractAddr: nft.contractAddr,
+            tokenId: nft.tokenId,
+            recipient: address
         }
-        )
+        transferNft(config).then(() => {
+            wrapSetShow(false)
+            openNotification('success', 'Transfer successfully')
+        }).catch(e => {
+            wrapSetShow(false)
+            openNotification('error', e.message)
+        })
     }
 
     const handelClose = () => {
         wrapSetShow(false)
+    }
+
+    const handleChange = (e) => {
+        setAddress(e.target.value)
     }
 
     return (
@@ -75,23 +60,25 @@ const ConnectWalletModal = ({ show, wrapSetShow, wrapSetAccount }) => {
                         marginBottom: '40px'
                     }}
                 >
-                    You'll need a wallet on Another-1 to continue
+                    Transfer NFT
                 </p>
-                <hr
-                    style={{
-                        width: '30%'
-                    }}
-                />
                 <p
                     style={{
                         fontSize: '16px',
-                        color: '#ffffff',
+                        fontWeight: 'bold',
+                        color: 'red',
                         textAlign: 'center',
-                        marginTop: '40px'
+                        marginBottom: '40px'
                     }}
                 >
-                    Safely connect to your existing blockchain wallet and directly stake tokens in them.
+                    Receiver address
                 </p>
+                <Input
+                    style={{
+
+                    }}
+                    onChange={handleChange}
+                />
                 <div
                     style={{
                         width: '80%',
@@ -102,7 +89,7 @@ const ConnectWalletModal = ({ show, wrapSetShow, wrapSetAccount }) => {
                     <Button
                         clickFunction={handleClick}
                         type={'function'}
-                        text={text}
+                        text={'Transfer'}
                         style={style.button}
                     />
                 </div>
@@ -111,4 +98,4 @@ const ConnectWalletModal = ({ show, wrapSetShow, wrapSetAccount }) => {
     )
 }
 
-export default ConnectWalletModal
+export default TransferModal

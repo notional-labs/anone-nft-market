@@ -5,6 +5,7 @@ import CollectionCreate from "../Collection_create/Index"
 import ConnectButton from "../header/connect_button/ConnectButton"
 import Header from "../header/Header"
 import ConnectWalletPage from "../Connect_wallet_error_page/Index"
+import ModelCreate from "../Model_create/Index"
 
 const style = {
     container: {
@@ -86,6 +87,18 @@ const CreatePage = ({ account, wrapSetAccount }) => {
                                     }}
                                     text={'COLLECTION'}
                                 />
+                                <Button
+                                    type={'function'}
+                                    style={{
+                                        ...style.button,
+                                        backgroundColor: tabSelect === 3 ? '#00FFA3' : 'transparent',
+                                        color: tabSelect === 3 ? '#000000' : '#ffffff'
+                                    }}
+                                    clickFunction={() => {
+                                        changeTab(3)
+                                    }}
+                                    text={'MODEL'}
+                                />
                             </div>
                             <div>
                                 {
@@ -94,8 +107,13 @@ const CreatePage = ({ account, wrapSetAccount }) => {
                                             account={account}
                                             wrapSetAccount={wrapSetAccount}
                                         />
-                                    ) : (
+                                    ) : tabSelect === 2 ? (
                                         <CollectionCreate
+                                            account={account}
+                                            wrapSetAccount={wrapSetAccount}
+                                        />
+                                    ) : (
+                                        <ModelCreate
                                             account={account}
                                             wrapSetAccount={wrapSetAccount}
                                         />

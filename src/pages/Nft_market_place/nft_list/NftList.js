@@ -236,19 +236,27 @@ const NftList = ({ }) => {
                         <div
                             style={{
                                 color: '#ffffff',
-                                fontSize: '3rem',
+                                fontSize: '2rem',
                                 textAlign: 'center',
                                 display: 'flex',
-                                flexDirection: 'row',
+                                flexDirection: 'column',
                                 justifyContent: 'center',
-                                padding: '1em'
+                                padding: '1em',
+                                height: '70vh'
                             }}
                         >
-                            <Image
-                                src={loadingGif}
-                                preview={false}
-                                width={'20%'}
-                            />
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <Image
+                                    src={loadingGif}
+                                    preview={false}
+                                    width={'200px'}
+                                />
+                            </div>
                         </div>
                     ) : nfts.length > 0 ? (
                         <div
@@ -270,16 +278,17 @@ const NftList = ({ }) => {
                                 display: 'flex',
                                 flexDirection: 'column',
                                 justifyContent: 'center',
-                                padding: '1em'
+                                padding: '1em',
+                                height: '70vh'
                             }}
                         >
                             <div>
                                 <Image
                                     src={noItem}
                                     preview={false}
-                                    width={'20%'}
+                                    width={'200px'}
                                     style={{
-                                        opacity: 0.6
+                                        opacity: 1
                                     }}
                                 />
                             </div>
