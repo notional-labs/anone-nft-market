@@ -54,7 +54,7 @@ const makeTextFile = (obj) => {
     return textFile;
 };
 
-const Forms = ({ account }) => {
+const Forms = ({ }) => {
     const [form] = Form.useForm()
     const [imgUrlLogo, setImgUrlLogo] = useState('')
     const [collections, setCollections] = useState([])
@@ -70,9 +70,9 @@ const Forms = ({ account }) => {
         })()
     }, [])
 
-    // useEffect(() => {
-    //     console.log(properties)
-    // }, [properties])
+    useEffect(() => {
+        console.log(properties)
+    }, [properties])
 
     const create = async (values) => {
         openLoadingNotification('open')
@@ -82,7 +82,7 @@ const Forms = ({ account }) => {
             logo: logo,
         }
         const metaData = {
-            attributes: [...properties],
+            attributes: [...properties.filter(x => x.trait_type !== '' || x.value !== '')],
             description: config.description,
             image: config.logo,
             name: config.name
@@ -98,7 +98,6 @@ const Forms = ({ account }) => {
             modelUri: ipfsPath
         }
 
-        console.log(contractConfig)
         createModel(contractConfig).then(() => {
             openLoadingNotification('close')
             openNotification('success', 'Submit successfully')
@@ -162,16 +161,16 @@ const Forms = ({ account }) => {
                 </p>
                 <Form.Item
                     name={'logo'}
-                rules={[
-                    () => ({
-                        validator() {
-                            if (imgUrlLogo && imgUrlLogo !== '') {
-                                return Promise.resolve()
+                    rules={[
+                        () => ({
+                            validator() {
+                                if (imgUrlLogo && imgUrlLogo !== '') {
+                                    return Promise.resolve()
+                                }
+                                return Promise.reject('Must upload an image')
                             }
-                            return Promise.reject('Must upload an image')
-                        }
-                    }),
-                ]}
+                        }),
+                    ]}
                 >
                     <input
                         type='file'
@@ -370,25 +369,28 @@ const Forms = ({ account }) => {
                                             />
                                         </div>
                                     </div>
-                                    <Button
-                                        type={'function'}
-                                        clickFunction={() => handleRemoveProperty(index)}
-                                        text={(
-                                            <div>
-                                                <TiDeleteOutline />
-                                            </div>
-                                        )}
-                                        style={{
-                                            border: 0,
-                                            backgroundColor: 'transparent',
-                                            cursor: 'pointer',
-                                            color: '#ffffff',
-                                            fontSize: '2rem',
-                                            position: 'relative',
-                                            top: '25%'
-                                        }}
-
-                                    />
+                                    {
+                                        properties.length > 1 && (
+                                            <Button
+                                                type={'function'}
+                                                clickFunction={() => handleRemoveProperty(index)}
+                                                text={(
+                                                    <div>
+                                                        <TiDeleteOutline />
+                                                    </div>
+                                                )}
+                                                style={{
+                                                    border: 0,
+                                                    backgroundColor: 'transparent',
+                                                    cursor: 'pointer',
+                                                    color: '#ffffff',
+                                                    fontSize: '2rem',
+                                                    position: 'relative',
+                                                    top: '15%',
+                                                }}
+                                            />
+                                        )
+                                    }
                                 </div>
                             )
                         })
@@ -481,7 +483,7 @@ const Forms = ({ account }) => {
                         Create
                     </button>
                 </div>
-            </Form>
+            </Form >
         </div >
     );
 }

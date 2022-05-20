@@ -61,7 +61,7 @@ const NftCard = ({ nft, contractAddr }) => {
             {
                 !loading && nftObj !== '' && (
                     <a
-                        href={`${process.env.REACT_APP_HOST}/nft/${nft.token_id}`}
+                        href={`${process.env.REACT_APP_HOST}/nft/${nft.token_id}/${contractAddr}`}
                     >
                         <div>
                             <Image

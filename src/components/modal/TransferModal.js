@@ -46,7 +46,7 @@ const TransferModal = ({ nft, show, wrapSetShow }) => {
                 visible={show}
                 footer={null}
                 closable={false}
-                handelClose={handelClose}
+                onCancel={handelClose}
                 style={{
                     padding: '3em',
                 }}

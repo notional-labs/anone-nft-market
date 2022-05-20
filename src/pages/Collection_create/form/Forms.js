@@ -58,10 +58,10 @@ const Forms = ({ account }) => {
         }
         const contractConfig = {
             royaltyPaymentAddress: config.royaltyPaymentAddress,
-            royaltyShare: `${config.commission / 10}`,
+            royaltyShare: `${config.commission / 100}`,
             baseTokenUri: 'ipfs://bafybeidfe5acjamg7kax65mvspt637ksr3wcdvvaiutmzhjgi74kddxf5q/galaxyiOigcK',
             numTokens: 5,
-            an721CodeId: process.env.REACT_APP_an721CodeId,
+            an721CodeId: parseInt(process.env.REACT_APP_an721CodeId),
             name: `${config.name}`,
             symbol: 'TESTTWO',
             description: `${config.description}`,
@@ -69,12 +69,14 @@ const Forms = ({ account }) => {
             externalLink: `${config.externalLink}`,
             perAddressLimit: config.limit,
         }
+
         createCollection(contractConfig).then(result => {
             openLoadingNotification('close')
             console.log(result)
             openNotification('success', 'Submit successfully')
             reset()
         }).catch(e => {
+            console.log(e.message)
             openLoadingNotification('close')
             openNotification('error', e.message)
         })
@@ -481,7 +483,7 @@ const Forms = ({ account }) => {
                     }}
                 >
                     {
-                        `Commission rate (${share.toFixed(2) / 10} %)`
+                        `Commission rate (${share.toFixed(2)} %)`
                     }
                 </p>
                 <Form.Item

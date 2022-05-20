@@ -1,7 +1,7 @@
 import { Image, Typography } from "antd"
 import { dummyGetUserById } from "../../../utils/api/user";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import likeButtonImg from '../../../assets/img/heart.png'
 import Button from "../../../components/buttons/Button";
 import DropBox from "../drop_box/DropBox";
@@ -9,6 +9,8 @@ import Grid from "../../../components/grids/Grid";
 import noImg from '../../../assets/img/no_image.png'
 import Description from "../description/Description";
 import an1Logo from '../../../assets/img/another1_logo.png'
+import MakeOfferModal from "../../../components/modal/MakeOfferModal";
+import { zeroPad } from "../../../utils/format";
 
 const { Paragraph } = Typography;
 
@@ -18,17 +20,18 @@ const style = {
         justifyContent: 'start',
     }
 }
-
-const zeroPad = (num) => {
-    return num.toString().padStart(3, "0");
-}
-
 const ImgAndSpec = ({ nft }) => {
     const [owner, setOwner] = useState('')
+    const [showMakeOfferModal, setShowMakeOfferModal] = useState(false)
+    const accountAddress = JSON.parse(localStorage.getItem('account')).account.address || ''
 
     useEffect(() => {
         const res = dummyGetUserById(2)
         setOwner(JSON.stringify(res))
+    }, [])
+
+    const wrapSetShowMakeOfferModal = useCallback((value) => {
+        setShowMakeOfferModal(value)
     }, [])
 
     console.log(nft)
@@ -38,7 +41,7 @@ const ImgAndSpec = ({ nft }) => {
     }
 
     const handleClickOffer = () => {
-
+        setShowMakeOfferModal(true)
     }
 
     const handleClickBuy = () => {
@@ -112,7 +115,8 @@ const ImgAndSpec = ({ nft }) => {
                             margin: 'auto',
                             border: 'solid 1px #00FFA3',
                             backgroundColor: '#ffffff',
-                            borderRadius: '10px'
+                            borderRadius: '10px',
+                            aspectRatio: '1/1',
                         }}
                         fallback={noImg}
                     />
@@ -135,7 +139,7 @@ const ImgAndSpec = ({ nft }) => {
                                     marginBottom: '20px'
                                 }}
                             >
-                                {nft.metaData.name}
+                                {nft.metaData.name} #{zeroPad(nft.token_id)}
                             </p>
                         </div>
                         <div
@@ -216,7 +220,7 @@ const ImgAndSpec = ({ nft }) => {
                                     margin: 0
                                 }}
                             >
-                               Properties
+                                Properties
                             </p>
                             <Grid
                                 lists={getTraitsList()}
@@ -229,7 +233,7 @@ const ImgAndSpec = ({ nft }) => {
                     <div
                         style={{
                             marginTop: '2em',
-                            padding: '1em'
+                            padding: '0 1em 0 0'
                         }}
                     >
                         <div
@@ -270,49 +274,42 @@ const ImgAndSpec = ({ nft }) => {
                                 999 AN1
                             </div>
                         </div>
-                        <div
-                            style={{
-                                display: 'grid',
-                                gridTemplateColumns: '1fr 1fr'
-                            }}
-                        >
-                            <Button
-                                style={{
-                                    backgroundColor: '#F2F1F1',
-                                    fontSize: '24px',
-                                    fontWeight: 'bold',
-                                    textAlign: 'center',
-                                    border: 0,
-                                    marginRight: '20px',
-                                    width: '90%',
-                                    padding: '5px 50px',
-                                    cursor: 'pointer',
-                                    borderRadius: '10px'
-                                }}
-                                text={'Offer'}
-                                type={'function'}
-                                clickFunction={handleClickOffer}
-                            />
-                            <Button
-                                style={{
-                                    backgroundColor: '#00FFA3',
-                                    fontSize: '24px',
-                                    fontWeight: 'bold',
-                                    textAlign: 'center',
-                                    border: 0,
-                                    width: '90%',
-                                    padding: '5px 50px',
-                                    cursor: 'pointer',
-                                    borderRadius: '10px'
-                                }}
-                                text={'Buy'}
-                                type={'function'}
-                                clickFunction={handleClickBuy}
-                            />
-                        </div>
+                        {
+                            accountAddress !== '' && nft.owner === accountAddress && (
+                                <div
+                                    style={{
+                                        display: 'grid',
+                                        gridTemplateColumns: '1fr 1fr'
+                                    }}
+                                >
+                                    <Button
+                                        style={{
+                                            backgroundColor: '#F2F1F1',
+                                            fontSize: '24px',
+                                            fontWeight: 'bold',
+                                            textAlign: 'center',
+                                            border: 0,
+                                            marginRight: '20px',
+                                            width: '90%',
+                                            padding: '5px 50px',
+                                            cursor: 'pointer',
+                                            borderRadius: '10px'
+                                        }}
+                                        text={'Offer'}
+                                        type={'function'}
+                                        clickFunction={handleClickOffer}
+                                    />
+                                </div>
+                            )
+                        }
                     </div>
                 </div>
             </div>
+            <MakeOfferModal
+                nft={nft}
+                show={showMakeOfferModal}
+                wrapSetShow={wrapSetShowMakeOfferModal}
+            />
         </div>
     )
 }
