@@ -132,6 +132,7 @@ const Forms = ({ account }) => {
                     rules={[
                         { required: true, message: 'Please select a collection!' },
                     ]}
+                    preserve={false}
                 >
                     <Select
                         placeholder='Select Collection'
@@ -142,6 +143,7 @@ const Forms = ({ account }) => {
                         onSelect={(val) => {
                             setSelectCollection(val)
                         }}
+                        autoClearSearchValue={true}
                     >
                         {
                             collections.map(collection => {

@@ -16,7 +16,7 @@ const CollectionCard = ({ addr }) => {
             setCollection(JSON.stringify(res))
             setLoading(false)
         })()
-    }, [])
+    }, [addr])
 
     return (
         <div

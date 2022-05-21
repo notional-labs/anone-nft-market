@@ -75,38 +75,40 @@ const Forms = ({ }) => {
     }, [properties])
 
     const create = async (values) => {
-        openLoadingNotification('open')
-        const logo = imgUrlLogo !== '' ? await ipfsUpload(imgUrlLogo) : ''
-        let config = {
-            ...values,
-            logo: logo,
-        }
-        const metaData = {
-            attributes: [...properties.filter(x => x.trait_type !== '' || x.value !== '')],
-            description: config.description,
-            image: config.logo,
-            name: config.name
-        }
-        const contractAddr = await queryCollectionAddressOfLaunchpad(config.collection)
-        const numOfModel = await queryNumberOfModels(contractAddr)
-        const filePath = makeTextFile(JSON.stringify(metaData))
-        const ipfsPath = await ipfsUpload(filePath)
+        try {
+            openLoadingNotification('open')
+            const logo = imgUrlLogo !== '' ? await ipfsUpload(imgUrlLogo) : ''
+            let config = {
+                ...values,
+                logo: logo,
+            }
+            const metaData = {
+                attributes: [...properties.filter(x => x.trait_type !== '' || x.value !== '')],
+                description: config.description,
+                image: config.logo,
+                name: config.name
+            }
+            const contractAddr = await queryCollectionAddressOfLaunchpad(config.collection)
+            const numOfModel = await queryNumberOfModels(contractAddr)
+            const filePath = makeTextFile(JSON.stringify(metaData))
+            const ipfsPath = await ipfsUpload(filePath)
 
-        const contractConfig = {
-            minterContract: config.collection,
-            modelId: `${numOfModel}`,
-            modelUri: ipfsPath
-        }
+            const contractConfig = {
+                minterContract: config.collection,
+                modelId: `${numOfModel}`,
+                modelUri: ipfsPath
+            }
 
-        createModel(contractConfig).then(() => {
+            await createModel(contractConfig)
             openLoadingNotification('close')
             openNotification('success', 'Submit successfully')
             reset()
-        }).catch(e => {
+        }
+        catch (e) {
             openLoadingNotification('close')
             openNotification('error', e.message)
             console.log(e.message)
-        })
+        }
     }
 
     const submitFail = () => {
