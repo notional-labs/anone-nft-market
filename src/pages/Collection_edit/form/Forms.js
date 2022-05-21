@@ -57,7 +57,7 @@ const Forms = ({ account, collection, minterContract}) => {
             image: config.logo !== '' ? config.logo : collection.image,
             externalLink: config.externalLink ? config.externalLink : collection.externalLink,
             royaltyPaymentAddress: config.royaltyPaymentAddress ? config.royaltyPaymentAddress : collection.royaltyInfo.paymentAddr,
-            royaltyShare: config.commission ? `${config.commission / 10}` : `${collection.royaltyInfo.share / 10}`
+            royaltyShare: config.commission ? `${config.commission / 100}` : `${collection.royaltyInfo.share / 100}`
         }
         updateCollectionInfo(contractConfig).then(() => {
             openLoadingNotification('close')
@@ -276,7 +276,7 @@ const Forms = ({ account, collection, minterContract}) => {
                     }}
                 >
                     {
-                        `Commission rate (${share.toFixed(2) / 10} %)`
+                        `Commission rate (${(share.toFixed(2))} %)`
                     }
                 </p>
                 <Form.Item

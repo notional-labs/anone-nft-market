@@ -54,7 +54,7 @@ const makeTextFile = (obj) => {
     return textFile;
 };
 
-const Forms = ({ account }) => {
+const Forms = ({ }) => {
     const [form] = Form.useForm()
     const [imgUrlLogo, setImgUrlLogo] = useState('')
     const [collections, setCollections] = useState([])
@@ -70,44 +70,45 @@ const Forms = ({ account }) => {
         })()
     }, [])
 
-    // useEffect(() => {
-    //     console.log(properties)
-    // }, [properties])
+    useEffect(() => {
+        console.log(properties)
+    }, [properties])
 
     const create = async (values) => {
-        openLoadingNotification('open')
-        const logo = imgUrlLogo !== '' ? await ipfsUpload(imgUrlLogo) : ''
-        let config = {
-            ...values,
-            logo: logo,
-        }
-        const metaData = {
-            attributes: [...properties],
-            description: config.description,
-            image: config.logo,
-            name: config.name
-        }
-        const contractAddr = await queryCollectionAddressOfLaunchpad(config.collection)
-        const numOfModel = await queryNumberOfModels(contractAddr)
-        const filePath = makeTextFile(JSON.stringify(metaData))
-        const ipfsPath = await ipfsUpload(filePath)
+        try {
+            openLoadingNotification('open')
+            const logo = imgUrlLogo !== '' ? await ipfsUpload(imgUrlLogo) : ''
+            let config = {
+                ...values,
+                logo: logo,
+            }
+            const metaData = {
+                attributes: [...properties.filter(x => x.trait_type !== '' || x.value !== '')],
+                description: config.description,
+                image: config.logo,
+                name: config.name
+            }
+            const contractAddr = await queryCollectionAddressOfLaunchpad(config.collection)
+            const numOfModel = await queryNumberOfModels(contractAddr)
+            const filePath = makeTextFile(JSON.stringify(metaData))
+            const ipfsPath = await ipfsUpload(filePath)
 
-        const contractConfig = {
-            minterContract: config.collection,
-            modelId: `${numOfModel}`,
-            modelUri: ipfsPath
-        }
+            const contractConfig = {
+                minterContract: config.collection,
+                modelId: `${numOfModel}`,
+                modelUri: ipfsPath
+            }
 
-        console.log(contractConfig)
-        createModel(contractConfig).then(() => {
+            await createModel(contractConfig)
             openLoadingNotification('close')
             openNotification('success', 'Submit successfully')
             reset()
-        }).catch(e => {
+        }
+        catch (e) {
             openLoadingNotification('close')
             openNotification('error', e.message)
             console.log(e.message)
-        })
+        }
     }
 
     const submitFail = () => {
@@ -162,16 +163,16 @@ const Forms = ({ account }) => {
                 </p>
                 <Form.Item
                     name={'logo'}
-                rules={[
-                    () => ({
-                        validator() {
-                            if (imgUrlLogo && imgUrlLogo !== '') {
-                                return Promise.resolve()
+                    rules={[
+                        () => ({
+                            validator() {
+                                if (imgUrlLogo && imgUrlLogo !== '') {
+                                    return Promise.resolve()
+                                }
+                                return Promise.reject('Must upload an image')
                             }
-                            return Promise.reject('Must upload an image')
-                        }
-                    }),
-                ]}
+                        }),
+                    ]}
                 >
                     <input
                         type='file'
@@ -370,25 +371,28 @@ const Forms = ({ account }) => {
                                             />
                                         </div>
                                     </div>
-                                    <Button
-                                        type={'function'}
-                                        clickFunction={() => handleRemoveProperty(index)}
-                                        text={(
-                                            <div>
-                                                <TiDeleteOutline />
-                                            </div>
-                                        )}
-                                        style={{
-                                            border: 0,
-                                            backgroundColor: 'transparent',
-                                            cursor: 'pointer',
-                                            color: '#ffffff',
-                                            fontSize: '2rem',
-                                            position: 'relative',
-                                            top: '25%'
-                                        }}
-
-                                    />
+                                    {
+                                        properties.length > 1 && (
+                                            <Button
+                                                type={'function'}
+                                                clickFunction={() => handleRemoveProperty(index)}
+                                                text={(
+                                                    <div>
+                                                        <TiDeleteOutline />
+                                                    </div>
+                                                )}
+                                                style={{
+                                                    border: 0,
+                                                    backgroundColor: 'transparent',
+                                                    cursor: 'pointer',
+                                                    color: '#ffffff',
+                                                    fontSize: '2rem',
+                                                    position: 'relative',
+                                                    top: '15%',
+                                                }}
+                                            />
+                                        )
+                                    }
                                 </div>
                             )
                         })
@@ -481,7 +485,7 @@ const Forms = ({ account }) => {
                         Create
                     </button>
                 </div>
-            </Form>
+            </Form >
         </div >
     );
 }

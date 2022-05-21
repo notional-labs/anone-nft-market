@@ -1,14 +1,11 @@
-import { Form, Switch, Input, Image, Select } from "antd"
-import { useCallback, useEffect, useState } from "react";
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import noImg from '../../../assets/img/no_image.png'
-import Size from "../size/Size";
+import { Form, Input, Select } from "antd"
+import { useEffect, useState } from "react";
 import { openNotification } from "../../../components/notifications/notification";
-import { fetchDummyBestCollections } from "../../../utils/fetch";
 import { mintCallFromUser } from '../../../anonejs/mintNft'
 import { queryAllContracts, queryAllDataOfAllModels, queryCollectionAddressOfLaunchpad } from "../../../anonejs/queryInfo";
 import Card from "../card/Card";
 import './Forms.css'
+import { openLoadingNotification } from "../../../components/notifications/notification";
 
 const { TextArea } = Input;
 
@@ -59,6 +56,7 @@ const Forms = ({ account }) => {
 
     const create = (values) => {
         setLoading(true)
+        openLoadingNotification('open')
         let config = {
             ...values,
             address: JSON.parse(account).account.address
@@ -70,10 +68,12 @@ const Forms = ({ account }) => {
             address: config.address
         }
         mintCallFromUser(mintConfig).then(result => {
+            openLoadingNotification('close')
             console.log(result)
             openNotification('success', 'Submit successfully')
             reset()
         }).catch(e => {
+            openLoadingNotification('close')
             console.log(e.message)
             openNotification('error', e.message)
             reset()
@@ -132,6 +132,7 @@ const Forms = ({ account }) => {
                     rules={[
                         { required: true, message: 'Please select a collection!' },
                     ]}
+                    preserve={false}
                 >
                     <Select
                         placeholder='Select Collection'
@@ -142,6 +143,7 @@ const Forms = ({ account }) => {
                         onSelect={(val) => {
                             setSelectCollection(val)
                         }}
+                        autoClearSearchValue={true}
                     >
                         {
                             collections.map(collection => {

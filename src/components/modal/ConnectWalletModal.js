@@ -61,7 +61,7 @@ const ConnectWalletModal = ({ show, wrapSetShow, wrapSetAccount }) => {
                 visible={show}
                 footer={null}
                 closable={false}
-                handelClose={handelClose}
+                onCancel={handelClose}
                 style={{
                     padding: '3em',
                 }}

@@ -1,7 +1,7 @@
+import axios from "axios";
 import { queryNftInfoById, queryOfferingList } from "../../anonejs/queryInfo";
-import { getDataFromUri } from "../../anonejs/getDataFromUri";
 
-export const getMarketplaceNft = async (sortListing = 'price_lowest') => {
+export const getMarketplaceNft = async (sortListing = 'newest_listed') => {
     const configMarketplace = {
         nftMarketplaceContractAddr:
             "one1mcy2qkuphhz4h4mncdzrxf3fh57fk98l6m30zfp7lggk4zh407rqq2carw",
@@ -18,10 +18,10 @@ export const getInfo = async (nft) => {
         tokenId: nft.token_id
     };
     const info = await queryNftInfoById(configNft)
-    const data = await getDataFromUri(info.token_uri)
+    const { data } = await axios.get(`https://ipfs.io/ipfs/${info.token_uri.split('ipfs://')[1]}`);
     return {
         ...info,
         ...nft,
-        data
+        metaData: data
     }
 }

@@ -111,7 +111,7 @@ const filterButtonText = (hasOpen) => {
 const NftList = ({ }) => {
     const [nfts, setNfts] = useState([])
     const [loading, setLoading] = useState(false)
-    const [select, setSelect] = useState('')
+    const [select, setSelect] = useState('newest_listed')
     const [showFilter, setShowFilter] = useState(true)
 
     useEffect(() => {
@@ -208,24 +208,25 @@ const NftList = ({ }) => {
                             width: '20%'
                         }}
                         onChange={handleSelect}
+                        defaultValue={'newest_listed'}
                     >
                         <Option
-                            value={'newest'}
+                            value={'newest_listed'}
                         >
                             Most Recently
                         </Option>
                         <Option
-                            value={'oldest'}
+                            value={'oldest_listed'}
                         >
                             Oldest
                         </Option>
                         <Option
-                            value={'highest'}
+                            value={'price_highest'}
                         >
                             Price: Hight to Low
                         </Option>
                         <Option
-                            value={'lowest'}
+                            value={'price_lowest'}
                         >
                             Price: Low to High
                         </Option>

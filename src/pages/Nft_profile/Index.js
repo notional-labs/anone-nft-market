@@ -3,9 +3,11 @@ import Footer from "../footer/Footer"
 import ImgAndSpec from "./img_and_specs/ImgAndSpec"
 import Description from "./description/Description"
 import { getNftById } from "../../utils/api/nft"
-import { queryNftInfoById, queryAllDataOfAllModels } from "../../anonejs/queryInfo"
+import { queryNftInfoById, queryAllDataOfAllModels, queryCollectionAddressOfLaunchpad } from "../../anonejs/queryInfo"
 import { useEffect, useState } from "react"
 import { getDataFromUri } from "../../anonejs/getDataFromUri"
+import { useParams } from "react-router-dom";
+import axios from "axios"
 
 const style = {
     container: {
@@ -16,26 +18,27 @@ const style = {
 
 const NftProfile = ({ account, wrapSetAccount }) => {
     const [nft, setNft] = useState('')
+    let { id, contract } = useParams()
 
     useEffect(() => {
         (async () => {
             const res = await queryNftInfoById({
-                cw721ContractAddr:
-                    "one1tj748034gl3zvujn2tz4p4m8rf9j9uarsj5j3c5a5z2neqel77cslz2lp0",
-                tokenId: '2'
+                cw721ContractAddr: contract,
+                tokenId: id
             })
-            console.log(res)
-            const res2 = await getDataFromUri('https://ipfs.io/ipfs/bafybeiaivv62j7jxlkahxobfr5io7h2j56obw5mojljho2ybg7zhah2eue/galaxyfcnCU3/1');
-            const data = {
+            const { data } = await axios.get(`https://ipfs.io/ipfs/${res.token_uri.split('ipfs://')[1]}`);
+            console.log(
+                {
+                    ...res,
+                    metaData: data
+                }
+            )
+            setNft(JSON.stringify( {
                 ...res,
-                metaData: res2
-            }
-            setNft(JSON.stringify(data))
+                metaData: data
+            }))
         })()
-        // setNft(JSON.stringify(res))
     }, [])
-
-    console.log(nft)
 
     return (
         <div

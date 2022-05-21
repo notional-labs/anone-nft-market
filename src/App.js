@@ -83,7 +83,7 @@ function App() {
           account={account}
           wrapSetAccount={wrapSetAccount}
         />} />
-        <Route exact path="/nft/:id" element={<NftProfile
+        <Route exact path="/nft/:id/:contract" element={<NftProfile
           account={account}
           wrapSetAccount={wrapSetAccount}
         />} />

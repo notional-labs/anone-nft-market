@@ -24,7 +24,7 @@ const Card = ({ addr, type, model = null }) => {
                 setLoading(false)
             }
         })()
-    }, [type])
+    }, [addr, type])
 
     return (
         <div
