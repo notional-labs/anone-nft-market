@@ -8,7 +8,8 @@ const style = {
     container: {
         padding: '0 20em',
         position: 'relative',
-        top: '-100px'
+        top: '-100px',
+        width: '100%'
     },
     button: {
         border: 'solid 1px #00FFA3',

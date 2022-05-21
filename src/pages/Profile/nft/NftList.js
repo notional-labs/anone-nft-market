@@ -2,11 +2,13 @@ import { useEffect, useState } from "react"
 import { Image } from "antd"
 import Grid from "../../../components/grids/Grid"
 import Button from "../../../components/buttons/Button"
-import { fetchDummyTopNft } from "../../../utils/fetch"
 import { Link } from "react-router-dom"
 import { queryAllDataOfAllNfts, } from "../../../anonejs/queryInfo"
+import noItem from '../../../assets/img/no_item.png'
 import './NftList.css'
 import NftCard from "../nft_card/NftCard"
+import loadingGif from '../../../assets/img/another.gif'
+
 
 const style = {
     title: {
@@ -77,12 +79,72 @@ const NftList = ({ info, id, type }) => {
 
     return (
         <div>
-            <Grid
-                lists={getNftList()}
-                numberOfColumn={3}
-                rowGap={30}
-                colGap={50}
-            />
+            {
+                loading ? (
+                    <div
+                        style={{
+                            color: '#ffffff',
+                            fontSize: '3rem',
+                            textAlign: 'center',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            padding: '1em',
+                        }}
+                    >
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <Image
+                                src={loadingGif}
+                                preview={false}
+                                width={'200px'}
+                            />
+                        </div>
+                    </div>
+                ) : nfts.length > 0 ? (
+                    <Grid
+                        lists={getNftList()}
+                        numberOfColumn={3}
+                        rowGap={30}
+                        colGap={50}
+                    />
+                ) : (
+                    <div
+                        style={{
+                            color: '#ffffff',
+                            fontSize: '3rem',
+                            textAlign: 'center',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            padding: '2em'
+                        }}
+                    >
+                        <div>
+                            <Image
+                                src={noItem}
+                                preview={false}
+                                width={'20%'}
+                                style={{
+                                    opacity: 0.6
+                                }}
+                            />
+                        </div>
+                        <p
+                            style={{
+                                marginBottom: 0,
+                                marginTop: '1em'
+                            }}
+                        >
+                            NO ITEMS FOUND
+                        </p>
+                    </div>
+                )
+            }
         </div>
     )
 }
