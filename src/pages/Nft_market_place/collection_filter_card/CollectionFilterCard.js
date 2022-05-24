@@ -32,7 +32,7 @@ const CollectionFilterCard = ({ addr }) => {
             setCollection(JSON.stringify(collectionObj))
             setLoading(false)
         })()
-    }, [addr,])
+    }, [addr])
 
     return (
         <div

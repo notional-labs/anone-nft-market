@@ -1,5 +1,8 @@
 import axios from "axios";
-import { queryNftInfoById, queryOfferingList, queryOfferingListOfCollection } from "../../anonejs/queryInfo";
+import { queryNftInfoById, queryOfferingList, queryOfferingListOfCollection, queryOfferingListByPriceRange } from "../../anonejs/queryInfo";
+
+
+const MAX_PRICE = 1000000000
 
 export const getMarketplaceNft = async (sortListing = 'newest_listed') => {
     try {
@@ -42,6 +45,25 @@ export const getInfo = async (nft) => {
         ...info,
         ...nft,
         metaData: data
+    }
+}
+
+export const getPriceRangeNfts = async (min, max, sortListing) => {
+    const priceMax = max !== null ? max * 1000000 : MAX_PRICE * 10000000
+    const priceMin = min !== null ? min * 1000000 : 0
+    try {
+        const config = {
+            nftMarketplaceContractAddr: process.env.REACT_APP_MARKETPLACE_ADDRESS,
+            sortListing: sortListing,
+            min: `${priceMin}`,
+            max: `${priceMax}`
+        }
+        const list = await queryOfferingListByPriceRange(config)
+        return list
+    }
+    catch (e) {
+        console.log(e.message)
+        return []
     }
 }
 

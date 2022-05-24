@@ -5,7 +5,7 @@ import Button from "../../../components/buttons/Button"
 import './NftList.css'
 import Filter from "../filter/Filter"
 import filterButtonImg from '../../../assets/img/filter.png'
-import { getCollectionNfts, getMarketplaceNft } from "../../../utils/nft/queryNft"
+import { getCollectionNfts, getMarketplaceNft, getPriceRangeNfts } from "../../../utils/nft/queryNft"
 import NftCard from "../nft_card/NftCard"
 import noItem from '../../../assets/img/no_item.png'
 import loadingGif from '../../../assets/img/another.gif'
@@ -108,6 +108,7 @@ const filterButtonText = (hasOpen) => {
     )
 }
 
+const MAX_PRICE = 1000000000
 
 const NftList = ({ }) => {
     const [nfts, setNfts] = useState([])
@@ -121,6 +122,7 @@ const NftList = ({ }) => {
         priceMax: null,
         traits: ''
     })
+    const [initialRender, setInitialRender] = useState(true)
 
     useEffect(() => {
         (async () => {
@@ -128,30 +130,63 @@ const NftList = ({ }) => {
             const res = await getMarketplaceNft(select)
             setNfts([...res])
             setLoading(false)
+            setInitialRender(false)
         })()
+    }, [])
+
+    const sort = (list) => {
+        const res = list.sort((x, y) => {
+            if (select === 'price_lowest') {
+                return parseInt(x.list_price) - parseInt(y.list_price)
+            }
+            else if (select === 'oldest_listed') {
+                return parseInt(x.listing_time) - parseInt(y.listing_time)
+            }
+            else if (select === 'price_highest') {
+                return parseInt(y.list_price) - parseInt(x.list_price)
+            }
+            else {
+                return parseInt(y.listing_time) - parseInt(x.listing_time)
+            }
+        })
+        setNfts([...res])
+    }
+
+    useEffect(() => {
+        if (!initialRender) {
+            setLoading(true)
+            sort([...nfts])
+            setLoading(false)
+        }
     }, [select])
 
     useEffect(() => {
-        (async () => {
-            setLoading(true)
-            if (filterValue.collections.length > 0) {
+        if (!initialRender) {
+            (async () => {
+                setLoading(true)
                 let list = []
-                for( let collection of filterValue.collections ){
-                    const contractAddr = await queryCollectionAddressOfLaunchpad(collection)
-                    const res = await getCollectionNfts(contractAddr, select)
-                    list = [...list, ...res]
+                if (filterValue.collections.length > 0) {
+                    for (let collection of filterValue.collections) {
+                        const contractAddr = await queryCollectionAddressOfLaunchpad(collection)
+                        const res = await getCollectionNfts(contractAddr, select)
+                        list = [...list, ...res]
+                    }
                 }
-                setNfts([...list])
-            }
-            else {
-                const res = await getMarketplaceNft(select)
-                setNfts([...res])
-            }
-            setLoading(false)
-        })()
-    }, [filterValue.collections])
-
-    console.log(nfts)
+                if (filterValue.collections.length === 0) {
+                    const res = await getMarketplaceNft(select)
+                    list = [...res]
+                }
+                if (filterValue.priceMin !== null || filterValue.priceMax !== null) {
+                    const max = filterValue.priceMax !== null ? filterValue.priceMax * 1000000 : MAX_PRICE * 10000000
+                    const min = filterValue.priceMin !== null ? filterValue.priceMin * 1000000 : 0
+                    console.log(min, max)
+                    list = list.filter(x => parseInt(x.list_price) > min && parseInt(x.list_price) < max)
+                }
+                sort(list)
+                setLoading(false)
+            })()
+        }
+    }, [filterValue])
 
     const wrapSetList = useCallback((newList) => {
         setNfts([...newList])

@@ -81,7 +81,6 @@ const NftCard = ({ offerObject }) => {
         (async () => {
             setLoading(true)
             try {
-                console.log(offerObject)
                 const res = await getInfo(offerObject)
                 setNft(JSON.stringify(res))
                 setLoading(false)
@@ -90,7 +89,7 @@ const NftCard = ({ offerObject }) => {
                 console.log(e)
             }
         })()
-    }, [])
+    }, [offerObject])
 
     const wrapSetBuyModal = useCallback((value) => {
         setShowBuyModal(value)
