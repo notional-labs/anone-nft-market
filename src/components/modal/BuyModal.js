@@ -22,7 +22,7 @@ const BuyModal = ({ nft, show, wrapSetShow }) => {
     const handleClick = () => {
         openLoadingNotification('open')
         const config = {
-            nftMarketplaceContractAddr: "one1mcy2qkuphhz4h4mncdzrxf3fh57fk98l6m30zfp7lggk4zh407rqq2carw",
+            nftMarketplaceContractAddr: process.env.REACT_APP_MARKETPLACE_ADDRESS,
             offering_id: nft.id,
             funds: [{ denom: "uan1", amount: nft.list_price }],
         };

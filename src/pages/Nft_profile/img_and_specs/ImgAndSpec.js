@@ -11,6 +11,7 @@ import Description from "../description/Description";
 import an1Logo from '../../../assets/img/another1_logo.png'
 import MakeOfferModal from "../../../components/modal/MakeOfferModal";
 import { zeroPad } from "../../../utils/format";
+import { getListPrice } from "../../../utils/nft/queryNft";
 
 const { Paragraph } = Typography;
 
@@ -21,20 +22,20 @@ const style = {
     }
 }
 const ImgAndSpec = ({ nft }) => {
-    const [owner, setOwner] = useState('')
     const [showMakeOfferModal, setShowMakeOfferModal] = useState(false)
+    const [price, setPrice] = useState(0) 
     const accountAddress = JSON.parse(localStorage.getItem('account')).account.address || ''
 
     useEffect(() => {
-        const res = dummyGetUserById(2)
-        setOwner(JSON.stringify(res))
+        (async () => {
+            const price = await getListPrice(nft.contract_addr, nft.token_id)
+            setPrice(price)
+        })()
     }, [])
 
     const wrapSetShowMakeOfferModal = useCallback((value) => {
         setShowMakeOfferModal(value)
     }, [])
-
-    console.log(nft)
 
     const handleClickLike = () => {
 
@@ -48,42 +49,51 @@ const ImgAndSpec = ({ nft }) => {
 
     }
 
+    console.log(nft)
+
+    const getCard = (label, value) => {
+        return (
+            <div
+                style={{
+                    backgroundColor: '#7B61FF',
+                    color: '#ffffff',
+                    fontSize: '16px',
+                    textAlign: 'center',
+                    padding: '5px',
+                    borderRadius: '10px'
+                }}
+            >
+                <p
+                    style={{
+                        margin: 0,
+                        fontSize: '16px',
+                    }}
+                >
+                    {label}
+                </p>
+                <p
+                    style={{
+                        margin: 0,
+                        fontSize: '20px',
+                        fontWeight: 'bold',
+                        color: '#000000'
+                    }}
+                >
+                    {value}
+                </p>
+            </div>
+        )
+    }
+
     const getTraitsList = () => {
         let list = []
         nft.metaData.attributes.forEach(trait => {
-            const jsx = (
-                <div
-                    style={{
-                        backgroundColor: '#7B61FF',
-                        color: '#ffffff',
-                        fontSize: '16px',
-                        textAlign: 'center',
-                        padding: '5px',
-                        borderRadius: '10px'
-                    }}
-                >
-                    <p
-                        style={{
-                            margin: 0,
-                            fontSize: '16px',
-                        }}
-                    >
-                        {trait.trait_type}
-                    </p>
-                    <p
-                        style={{
-                            margin: 0,
-                            fontSize: '20px',
-                            fontWeight: 'bold',
-                            color: '#000000'
-                        }}
-                    >
-                        {trait.value}
-                    </p>
-                </div>
-            )
+            const jsx = getCard(trait.trait_type, trait.value)
             list.push(jsx)
         })
+        list.push(
+            getCard('Size', nft.size)
+        )
         return list
     }
 
@@ -271,7 +281,13 @@ const ImgAndSpec = ({ nft }) => {
                                     marginLeft: '10px'
                                 }}
                             >
-                                999 AN1
+                                {
+                                    nft.owner !== process.env.REACT_APP_MARKETPLACE_ADDRESS ? (
+                                        'Not list yet'
+                                    ) : (
+                                        `${price} AN1`
+                                    )
+                                }
                             </div>
                         </div>
                         {

@@ -4,6 +4,7 @@ import axios from "axios"
 import { Image, Skeleton } from "antd"
 import noImg from '../../../assets/img/no_image.png'
 import an1Logo from '../../../assets/img/another1_logo.png'
+import { getListPrice } from "../../../utils/nft/queryNft"
 
 const style = {
     card: {
@@ -43,11 +44,12 @@ const NftCard = ({ nft, contractAddr }) => {
                 tokenId: nft.token_id
             })
             const { data } = await axios.get(`https://ipfs.io/ipfs/${nft.token_uri.split('ipfs://')[1]}`);
+            const listPrice = await getListPrice(res.contract_addr, nft.token_id)
             const nftInfo = {
                 ...res,
-                metaData: data
+                metaData: data,
+                listPrice
             }
-            console.log(nftInfo)
             setNftObj(JSON.stringify(nftInfo))
             setLoading(false)
         })()
@@ -107,7 +109,7 @@ const NftCard = ({ nft, contractAddr }) => {
                                         marginLeft: '10px'
                                     }}
                                 >
-                                    99 AN1
+                                    {JSON.parse(nftObj).listPrice} AN1
                                 </p>
                             </div>
                         </div>

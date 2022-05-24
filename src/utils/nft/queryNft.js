@@ -1,15 +1,34 @@
 import axios from "axios";
-import { queryNftInfoById, queryOfferingList } from "../../anonejs/queryInfo";
+import { queryNftInfoById, queryOfferingList, queryOfferingListOfCollection } from "../../anonejs/queryInfo";
 
 export const getMarketplaceNft = async (sortListing = 'newest_listed') => {
-    const configMarketplace = {
-        nftMarketplaceContractAddr:
-            "one1mcy2qkuphhz4h4mncdzrxf3fh57fk98l6m30zfp7lggk4zh407rqq2carw",
-        sortListing: sortListing
-    };
-    let list = await queryOfferingList(configMarketplace)
-    console.log(list)
-    return list
+    try {
+        const configMarketplace = {
+            nftMarketplaceContractAddr: process.env.REACT_APP_MARKETPLACE_ADDRESS,
+            sortListing: sortListing
+        };
+        let list = await queryOfferingList(configMarketplace)
+        return list
+    }
+    catch {
+        return []
+    }
+}
+
+export const getCollectionNfts = async (addr, sortListing = 'newest_listed') => {
+    try {
+        const config = {
+            nftMarketplaceContractAddr: process.env.REACT_APP_MARKETPLACE_ADDRESS,
+            sortListing: sortListing,
+            collectionAddr: addr
+        }
+        const list = await queryOfferingListOfCollection(config)
+        return list
+    }
+    catch (e) {
+        console.log(e.message)
+        return []
+    }
 }
 
 export const getInfo = async (nft) => {
@@ -23,5 +42,21 @@ export const getInfo = async (nft) => {
         ...info,
         ...nft,
         metaData: data
+    }
+}
+
+export const getListPrice = async (contractAddr, tokenId) => {
+    try {
+        const configMarketplace = {
+            nftMarketplaceContractAddr: process.env.REACT_APP_MARKETPLACE_ADDRESS,
+            sortListing: 'newest_listed'
+        };
+        const list = await queryOfferingList(configMarketplace)
+        const filterList = list.filter(x => x.contract_addr === contractAddr && x.token_id === tokenId)
+        const searchNft = filterList.length > 0 && filterList[0]
+        return searchNft ? parseInt(searchNft.list_price) / 1000000 : 0
+    }
+    catch {
+        return 0
     }
 }

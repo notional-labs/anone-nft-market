@@ -81,6 +81,7 @@ const NftCard = ({ offerObject }) => {
         (async () => {
             setLoading(true)
             try {
+                console.log(offerObject)
                 const res = await getInfo(offerObject)
                 setNft(JSON.stringify(res))
                 setLoading(false)

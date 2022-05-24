@@ -46,40 +46,41 @@ const Forms = ({ account }) => {
     const [share, setShare] = useState(0)
 
     const create = async (values) => {
-        openLoadingNotification('open')
-        setLoading(true)
-        const logo = await ipfsUpload(imgUrlLogo)
-        const banner = await ipfsUpload(imgUrlBanner)
-        let config = {
-            ...values,
-            logo: logo,
-            banner: banner,
-            royaltyPaymentAddress: paymentAddr
-        }
-        const contractConfig = {
-            royaltyPaymentAddress: config.royaltyPaymentAddress,
-            royaltyShare: `${config.commission / 100}`,
-            baseTokenUri: 'ipfs://bafybeidfe5acjamg7kax65mvspt637ksr3wcdvvaiutmzhjgi74kddxf5q/galaxyiOigcK',
-            numTokens: 5,
-            an721CodeId: parseInt(process.env.REACT_APP_an721CodeId),
-            name: `${config.name}`,
-            symbol: 'TESTTWO',
-            description: `${config.description}`,
-            image: `${config.logo}`,
-            externalLink: `${config.externalLink}`,
-            perAddressLimit: config.limit,
-        }
+        try {
+            openLoadingNotification('open')
+            setLoading(true)
+            const logo = await ipfsUpload(imgUrlLogo)
+            const banner = await ipfsUpload(imgUrlBanner)
+            let config = {
+                ...values,
+                logo: logo,
+                banner: banner,
+                royaltyPaymentAddress: paymentAddr
+            }
+            const contractConfig = {
+                royaltyPaymentAddress: config.royaltyPaymentAddress,
+                royaltyShare: `${config.commission / 100}`,
+                baseTokenUri: 'ipfs://bafybeidfe5acjamg7kax65mvspt637ksr3wcdvvaiutmzhjgi74kddxf5q/galaxyiOigcK',
+                numTokens: 5,
+                an721CodeId: parseInt(process.env.REACT_APP_an721CodeId),
+                name: `${config.name}`,
+                symbol: 'TESTTWO',
+                description: `${config.description}`,
+                image: `${config.logo}`,
+                externalLink: `${config.externalLink}`,
+                perAddressLimit: config.limit,
+            }
 
-        createCollection(contractConfig).then(result => {
+            await createCollection(contractConfig)
             openLoadingNotification('close')
-            console.log(result)
             openNotification('success', 'Submit successfully')
             reset()
-        }).catch(e => {
+        }
+        catch (e) {
             console.log(e.message)
             openLoadingNotification('close')
             openNotification('error', e.message)
-        })
+        }
     }
 
     const submitFail = () => {
@@ -118,42 +119,42 @@ const Forms = ({ account }) => {
         setShare(val)
     }
 
-  const handleClick = async () => {
-    // const result = await createCollection(Config);
-    // const result = await createSale(Config2);
-    // const result = await makeOrder(Config3);
-    // const result = await updatePrice(Config4);
-    // const result = await cancelSale(Config5);
-    // const result = await queryAccountInfo();
-    // const result = await queryOfferingList(Config6);
-    // const result = await queryNftInfoById(Config7);
-    // const result = await queryModelInfoById(Config8);
-    // const result = await queryNumberOfNfts('one1tj748034gl3zvujn2tz4p4m8rf9j9uarsj5j3c5a5z2neqel77cslz2lp0');
-    // const result = await queryNumberOfModels('one1tj748034gl3zvujn2tz4p4m8rf9j9uarsj5j3c5a5z2neqel77cslz2lp0');
-    // const result = await queryCollectionInfo('one1cl3zpu4gth7q3xrru5vccedtqewfj97w7gq6kjgqxknu0k7e93yqyxtdj6');
-    // const result = await getDataFromUri('https://ipfs.io/ipfs/bafybeiaivv62j7jxlkahxobfr5io7h2j56obw5mojljho2ybg7zhah2eue/galaxyfcnCU3/1');
-    // const result = await queryAllDataOfAllModels('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq');
-    // const result = await queryAllDataOfAllNfts('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq');
-    // const result = await queryAllContracts(80);
-    // const result = await queryOfferingListByPriceRange(Config9);
-    // const result = await queryOfferingListOfCollection(Config10);
-    // const result = await queryOfferingListOfSeller(Config11);
-    // const result = await mintCallFromUser(Config12);
-    // const result = await burnNft(Config13);
-    // const result = await transferNft(Config14)
-    // const result = await modifyCollectionInfo(Config15);
+    const handleClick = async () => {
+        // const result = await createCollection(Config);
+        // const result = await createSale(Config2);
+        // const result = await makeOrder(Config3);
+        // const result = await updatePrice(Config4);
+        // const result = await cancelSale(Config5);
+        // const result = await queryAccountInfo();
+        // const result = await queryOfferingList(Config6);
+        // const result = await queryNftInfoById(Config7);
+        // const result = await queryModelInfoById(Config8);
+        // const result = await queryNumberOfNfts('one1tj748034gl3zvujn2tz4p4m8rf9j9uarsj5j3c5a5z2neqel77cslz2lp0');
+        // const result = await queryNumberOfModels('one1tj748034gl3zvujn2tz4p4m8rf9j9uarsj5j3c5a5z2neqel77cslz2lp0');
+        // const result = await queryCollectionInfo('one1cl3zpu4gth7q3xrru5vccedtqewfj97w7gq6kjgqxknu0k7e93yqyxtdj6');
+        // const result = await getDataFromUri('https://ipfs.io/ipfs/bafybeiaivv62j7jxlkahxobfr5io7h2j56obw5mojljho2ybg7zhah2eue/galaxyfcnCU3/1');
+        // const result = await queryAllDataOfAllModels('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq');
+        // const result = await queryAllDataOfAllNfts('one1jgee6ue6sp844g7wm46gdc0zkpgllt6yu5huspln23cnzhmslwkqk3qwgq');
+        // const result = await queryAllContracts(80);
+        // const result = await queryOfferingListByPriceRange(Config9);
+        // const result = await queryOfferingListOfCollection(Config10);
+        // const result = await queryOfferingListOfSeller(Config11);
+        // const result = await mintCallFromUser(Config12);
+        // const result = await burnNft(Config13);
+        // const result = await transferNft(Config14)
+        // const result = await modifyCollectionInfo(Config15);
 
-    // const result = await updateCollectionInfo(Config17);
+        // const result = await updateCollectionInfo(Config17);
 
-    // const result = await queryConfigOfLaunchpad("one10hpwj2n4mdsnzmpzqn3ek0nclv245vscjzwx6zufyahckvlyaudqz89ljn");
+        // const result = await queryConfigOfLaunchpad("one10hpwj2n4mdsnzmpzqn3ek0nclv245vscjzwx6zufyahckvlyaudqz89ljn");
 
-    // const result = await queryCollectionAddressOfLaunchpad("one10hpwj2n4mdsnzmpzqn3ek0nclv245vscjzwx6zufyahckvlyaudqz89ljn");
+        // const result = await queryCollectionAddressOfLaunchpad("one10hpwj2n4mdsnzmpzqn3ek0nclv245vscjzwx6zufyahckvlyaudqz89ljn");
 
-    // const result = createModel(Config16)
+        // const result = createModel(Config16)
 
-    // console.log(result);
-  };
-    
+        // console.log(result);
+    };
+
     return (
         <div style={style.container}>
             <Form

@@ -35,7 +35,7 @@ const MakeOfferModal = ({ nft, show, wrapSetShow }) => {
             cw721ContractAddr: nft.contract_addr,
             token_id: nft.token_id,
             nftMarketplaceContractAddr:
-                "one1mcy2qkuphhz4h4mncdzrxf3fh57fk98l6m30zfp7lggk4zh407rqq2carw",
+                process.env.REACT_APP_MARKETPLACE_ADDRESS,
             msgListingPrice: {
                 list_price: `${price * 1000000}`
             },
@@ -98,12 +98,6 @@ const MakeOfferModal = ({ nft, show, wrapSetShow }) => {
                         }}
                     />
                     <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            width: '80%',
-                            margin: 'auto',
-                        }}
                     >
                         <p
                             style={{

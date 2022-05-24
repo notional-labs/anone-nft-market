@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-const Button = ({ clickFunction, style, text, type, url, className, index }) => {
+const Button = ({ clickFunction, style, text, type, url, className, index, disabled }) => {
 
     const handleClick = ({ }) => {
         clickFunction()
@@ -17,6 +17,7 @@ const Button = ({ clickFunction, style, text, type, url, className, index }) => 
                         style={style}
                         onClick={handleClick}
                         className={`${className || ''}`}
+                        disabled={disabled}
                     >
                         {text}
                     </button>

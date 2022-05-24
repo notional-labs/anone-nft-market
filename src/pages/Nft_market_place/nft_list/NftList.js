@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Image, Select, Tooltip } from "antd"
 import Grid from "../../../components/grids/Grid"
-import { fetchDummyTopNft } from "../../../utils/fetch"
 import Button from "../../../components/buttons/Button"
 import './NftList.css'
 import Filter from "../filter/Filter"
 import filterButtonImg from '../../../assets/img/filter.png'
-import { getMarketplaceNft } from "../../../utils/nft/queryNft"
+import { getCollectionNfts, getMarketplaceNft } from "../../../utils/nft/queryNft"
 import NftCard from "../nft_card/NftCard"
 import noItem from '../../../assets/img/no_item.png'
 import loadingGif from '../../../assets/img/another.gif'
+import FilterDisplay from "../filterDisplay/FIlterDisplay"
+import { queryCollectionAddressOfLaunchpad } from "../../../anonejs/queryInfo"
 
 const { Option } = Select;
 
@@ -113,6 +114,13 @@ const NftList = ({ }) => {
     const [loading, setLoading] = useState(false)
     const [select, setSelect] = useState('newest_listed')
     const [showFilter, setShowFilter] = useState(true)
+    const [filterValue, setFilterValue] = useState({
+        status: '',
+        collections: [],
+        priceMin: null,
+        priceMax: null,
+        traits: ''
+    })
 
     useEffect(() => {
         (async () => {
@@ -122,6 +130,36 @@ const NftList = ({ }) => {
             setLoading(false)
         })()
     }, [select])
+
+    useEffect(() => {
+        (async () => {
+            setLoading(true)
+            if (filterValue.collections.length > 0) {
+                let list = []
+                for( let collection of filterValue.collections ){
+                    const contractAddr = await queryCollectionAddressOfLaunchpad(collection)
+                    const res = await getCollectionNfts(contractAddr, select)
+                    list = [...list, ...res]
+                }
+                setNfts([...list])
+            }
+            else {
+                const res = await getMarketplaceNft(select)
+                setNfts([...res])
+            }
+            setLoading(false)
+        })()
+    }, [filterValue.collections])
+
+    console.log(nfts)
+
+    const wrapSetList = useCallback((newList) => {
+        setNfts([...newList])
+    })
+
+    const wrapSetFilter = useCallback((value) => {
+        setFilterValue({ ...value })
+    })
 
     const handleSelect = (value) => {
         setSelect(value)
@@ -172,7 +210,11 @@ const NftList = ({ }) => {
                     className={'filter-button'}
                 />
                 {
-                    showFilter && <Filter />
+                    showFilter && <Filter
+                        wrapSetter={wrapSetList}
+                        wrapSetFilter={wrapSetFilter}
+                        filterValue={filterValue}
+                    />
                 }
             </div>
             <div
@@ -188,7 +230,7 @@ const NftList = ({ }) => {
                     style={{
                         display: 'flex',
                         justifyContent: 'space-between',
-                        marginBottom: '5em',
+                        marginBottom: '2em',
                     }}
                 >
                     <p
@@ -232,6 +274,10 @@ const NftList = ({ }) => {
                         </Option>
                     </Select>
                 </div>
+                <FilterDisplay
+                    filterValue={filterValue}
+                    wrapSetFilter={wrapSetFilter}
+                />
                 {
                     loading ? (
                         <div

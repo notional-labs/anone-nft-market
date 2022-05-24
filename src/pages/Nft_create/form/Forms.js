@@ -54,30 +54,31 @@ const Forms = ({ account }) => {
         })()
     }, [selectCollection])
 
-    const create = (values) => {
-        setLoading(true)
-        openLoadingNotification('open')
-        let config = {
-            ...values,
-            address: JSON.parse(account).account.address
-        }
-        const mintConfig = {
-            size: '38',
-            minterContract: config.collection,
-            modelId: config.model,
-            address: config.address
-        }
-        mintCallFromUser(mintConfig).then(result => {
+    const create = async (values) => {
+        try {
+            setLoading(true)
+            openLoadingNotification('open')
+            let config = {
+                ...values,
+                address: JSON.parse(account).account.address
+            }
+            const mintConfig = {
+                size: '38',
+                minterContract: config.collection,
+                modelId: config.model,
+                address: config.address
+            }
+            await mintCallFromUser(mintConfig)
             openLoadingNotification('close')
-            console.log(result)
             openNotification('success', 'Submit successfully')
             reset()
-        }).catch(e => {
+        }
+        catch (e) {
             openLoadingNotification('close')
             console.log(e.message)
             openNotification('error', e.message)
             reset()
-        })
+        }
     }
 
     const submitFail = () => {

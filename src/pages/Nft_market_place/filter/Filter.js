@@ -55,9 +55,7 @@ const statusList = [
     'Buy Now', 'Has Offers'
 ]
 
-const NUMBER_COLLECTIONS_PER_SCREEN = 4
-
-const Filter = ({ }) => {
+const Filter = ({ wrapSetList, wrapSetFilter, filterValue, }) => {
     const [form] = Form.useForm()
     const [root, setRoot] = useState(null)
     const [collections, setCollections] = useState([])
@@ -68,15 +66,10 @@ const Filter = ({ }) => {
         price: false,
         traits: false
     })
-    const [filterValue, setFilterValue] = useState({
-        status: '',
-        collections: [],
-        priceMin: null,
-        priceMax: null,
-        traits: ''
-    })
     const [valid, setValid] = useState(true)
     const [stamp, setStamp] = useState(0)
+    const [min, setMin] = useState(null)
+    const [max, setMax] = useState(null)
 
     useEffect(() => {
         (async () => {
@@ -108,16 +101,8 @@ const Filter = ({ }) => {
         setStamp(val)
     }, [])
 
-    const apply = (value) => {
-        console.log(value)
-    }
-
-    const reset = () => {
-        form.resetFields()
-    }
-
-    const finishFail = () => {
-        openNotification('error', 'Apply unsuccessfully')
+    const apply = () => {
+        wrapSetFilter({ ...filterValue, priceMin: min, priceMax: max })
     }
 
     const checkIfPicked = (id) => {
@@ -129,10 +114,10 @@ const Filter = ({ }) => {
 
     const handleClickStatus = (value) => {
         if (filterValue.status === value) {
-            setFilterValue({ ...filterValue, status: '' })
+            wrapSetFilter({ ...filterValue, status: '' })
         }
         else {
-            setFilterValue({ ...filterValue, status: value })
+            wrapSetFilter({ ...filterValue, status: value })
         }
     }
 
@@ -238,13 +223,12 @@ const Filter = ({ }) => {
     }
 
     const handleSelectCollection = (collection) => {
-
         if (!checkIfPicked(collection)) {
-            setFilterValue({ ...filterValue, collections: [...filterValue.collections, collection] })
+            wrapSetFilter({ ...filterValue, collections: [...filterValue.collections, collection] })
         }
         else {
             let filter = filterValue.collections.filter(id => id !== collection)
-            setFilterValue({ ...filterValue, collections: [...filter] })
+            wrapSetFilter({ ...filterValue, collections: [...filter] })
         }
     }
 
@@ -259,27 +243,27 @@ const Filter = ({ }) => {
     }
 
     const isValidMinPrice = (val) => {
-        if (filterValue.priceMax === null || val === null) {
+        if (max === null || val === null) {
             return true
         }
-        if (val > filterValue.priceMax) {
+        if (val > max) {
             return false
         }
         return true
     }
 
     const isValidMaxPrice = (val) => {
-        if (filterValue.priceMin === null || val === null) {
+        if (min === null || val === null) {
             return true
         }
-        if (filterValue.priceMin > val) {
+        if (min > val) {
             return false
         }
         return true
     }
 
     const handleChangePriceMin = (val) => {
-        setFilterValue({ ...filterValue, priceMin: val })
+        setMin(val)
         if (!isValidMinPrice(val)) {
             setValid(false)
         }
@@ -289,7 +273,7 @@ const Filter = ({ }) => {
     }
 
     const handleChangePriceMax = (val) => {
-        setFilterValue({ ...filterValue, priceMax: val })
+        setMax(val)
         if (!isValidMaxPrice(val)) {
             setValid(false)
         }
@@ -402,6 +386,24 @@ const Filter = ({ }) => {
                                 </p>
                             )
                         }
+                        <Button
+                            type={'function'}
+                            text={'Apply'}
+                            style={{
+                                border: 0,
+                                backgroundColor: valid ? '#00FFA3' : '#c9c9c9',
+                                padding: '1em',
+                                cursor: 'pointer',
+                                borderRadius: '10px',
+                                width: '40%',
+                                marginTop: '20px',
+                                position: 'relative',
+                                marginLeft: '2em',
+                                opacity: !valid && '0.4'
+                            }}
+                            clickFunction={apply}
+                            disabled={!valid}
+                        />
                     </div>
                 )}
                 <Button
@@ -498,22 +500,6 @@ const Filter = ({ }) => {
                         <Input />
                     </div>
                 )} */}
-                <Button
-                    type={'function'}
-                    text={'Apply'}
-                    style={{
-                        border: 0,
-                        backgroundColor: '#00FFA3',
-                        padding: '1em',
-                        cursor: 'pointer',
-                        borderRadius: '10px',
-                        width: '40%',
-                        marginTop: '20px',
-                        position: 'relative',
-                        marginLeft: '2em'
-                    }}
-                    clickFunction={() => { console.log('click') }}
-                />
             </div>
         </div>
     )
