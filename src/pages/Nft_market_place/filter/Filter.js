@@ -55,7 +55,7 @@ const statusList = [
     'Buy Now', 'Has Offers'
 ]
 
-const Filter = ({ wrapSetList, wrapSetFilter, filterValue, }) => {
+const Filter = ({ wrapSetFilter, filterValue, }) => {
     const [form] = Form.useForm()
     const [root, setRoot] = useState(null)
     const [collections, setCollections] = useState([])
@@ -197,27 +197,14 @@ const Filter = ({ wrapSetList, wrapSetFilter, filterValue, }) => {
             <div
                 key={index}
             >
-                {
-                    checkIfPicked(collection) ? (
-                        <CollectionCard
-                            addr={collection}
-                            selected={true}
-                            visible={isVisible}
-                            index={index}
-                            stamp={stamp}
-                            wrapSetStamp={wrapSetStamp}
-                        />
-                    ) : (
-                        <CollectionCard
-                            addr={collection}
-                            selected={false}
-                            visible={isVisible}
-                            index={index}
-                            stamp={stamp}
-                            wrapSetStamp={wrapSetStamp}
-                        />
-                    )
-                }
+                <CollectionCard
+                    addr={collection}
+                    selected={checkIfPicked(collection)}
+                    visible={isVisible}
+                    index={index}
+                    stamp={stamp}
+                    wrapSetStamp={wrapSetStamp}
+                />
             </div>
         )
     }
@@ -232,9 +219,9 @@ const Filter = ({ wrapSetList, wrapSetFilter, filterValue, }) => {
         }
     }
 
-    const handleCollectionInput = (e) => {
+    const handleCollectionInput = (value) => {
         const filter = collections.filter(col => {
-            if (col.includes(e.target.value) || filterValue.collections.filter(collection => collection === col).length > 0) {
+            if (col.includes(value) || filterValue.collections.filter(collection => collection === col).length > 0) {
                 return true
             }
             return false
@@ -419,17 +406,19 @@ const Filter = ({ wrapSetList, wrapSetFilter, filterValue, }) => {
                             backgroundColor: '#000000'
                         }}
                     >
-                        <Input
-                            placeholder="Filter press enter to search"
+                        <Input.Search
+                            placeholder='Search collection'
                             prefix={<IoSearch />}
-                            onChange={handleCollectionInput}
-                            onPressEnter={handleCollectionInput}
                             style={{
                                 width: '100%',
                                 padding: '.5em',
                                 borderRadius: '10px',
                                 fontSize: '20px'
                             }}
+                            size="large"
+                            allowClear={true}
+                            onSearch={handleCollectionInput}
+                            enterButton
                         />
                         <div
                             id='containment'

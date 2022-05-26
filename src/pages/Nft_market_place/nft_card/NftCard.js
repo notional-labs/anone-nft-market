@@ -56,7 +56,7 @@ const style = {
         justifyContent: 'center',
         padding: '2em'
     },
-    imge: {
+    image: {
         aspectRatio: '1/1'
     },
     viewMoreButton: {
@@ -116,7 +116,7 @@ const NftCard = ({ offerObject }) => {
                                         src={`https://ipfs.io/ipfs/${JSON.parse(nft).metaData.image.split('ipfs://')[1]}`}
                                         preview={false}
                                         width={'100%'}
-                                        style={style.imge}
+                                        style={style.image}
                                     />
                                 </div>
                                 <div
@@ -129,7 +129,7 @@ const NftCard = ({ offerObject }) => {
                                             margin: 0,
                                         }}
                                     >
-                                        Sneaker #{zeroPad(JSON.parse(nft).token_id)}
+                                        {JSON.parse(nft).metaData.name} #{zeroPad(JSON.parse(nft).token_id)}
                                     </p>
                                     <p>
                                         {parseInt(JSON.parse(nft).list_price) / 1000000} AN1

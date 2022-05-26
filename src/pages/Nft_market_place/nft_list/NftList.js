@@ -11,6 +11,7 @@ import noItem from '../../../assets/img/no_item.png'
 import loadingGif from '../../../assets/img/another.gif'
 import FilterDisplay from "../filterDisplay/FIlterDisplay"
 import { queryCollectionAddressOfLaunchpad } from "../../../anonejs/queryInfo"
+import ButtonList from "../../../components/buttons/ButtonList"
 
 const { Option } = Select;
 
@@ -123,19 +124,32 @@ const NftList = ({ }) => {
         traits: ''
     })
     const [initialRender, setInitialRender] = useState(true)
+    const [params, setParams] = useState({
+        page: 1,
+        limit: 4,
+    })
+    const [total, setTotal] = useState(0)
 
     useEffect(() => {
         (async () => {
             setLoading(true)
             const res = await getMarketplaceNft(select)
-            setNfts([...res])
+            setNfts([...res.slice(params.limit * (params.page - 1) , params.limit * (params.page - 1) + params.limit)])
+            setTotal(res.length)
             setLoading(false)
             setInitialRender(false)
         })()
-    }, [])
+    }, [select])
+
+    const wrapSetParams = useCallback((val) => {
+        setParams({
+            ...params,
+            page: val
+        })
+    }, [setParams])
 
     const sort = (list) => {
-        const res = list.sort((x, y) => {
+        let res = list.sort((x, y) => {
             if (select === 'price_lowest') {
                 return parseInt(x.list_price) - parseInt(y.list_price)
             }
@@ -145,11 +159,16 @@ const NftList = ({ }) => {
             else if (select === 'price_highest') {
                 return parseInt(y.list_price) - parseInt(x.list_price)
             }
-            else {
+            else if (select === 'newest_listed' || select === null) {
                 return parseInt(y.listing_time) - parseInt(x.listing_time)
             }
         })
+        res = res.slice(params.limit * (params.page - 1) , params.page - 1 + params.limit)
         setNfts([...res])
+    }
+
+    const paging = (list) => {
+        setNfts([...list.slice(params.limit * (params.page - 1) , params.page - 1 + params.limit)])
     }
 
     useEffect(() => {
@@ -159,6 +178,10 @@ const NftList = ({ }) => {
             setLoading(false)
         }
     }, [select])
+
+    useEffect(() => {
+
+    })
 
     useEffect(() => {
         if (!initialRender) {
@@ -182,11 +205,13 @@ const NftList = ({ }) => {
                     console.log(min, max)
                     list = list.filter(x => parseInt(x.list_price) > min && parseInt(x.list_price) < max)
                 }
+                setTotal(list.length)
                 sort(list)
+                paging([...list])
                 setLoading(false)
             })()
         }
-    }, [filterValue])
+    }, [filterValue, params])
 
     const wrapSetList = useCallback((newList) => {
         setNfts([...newList])
@@ -275,7 +300,7 @@ const NftList = ({ }) => {
                             marginBottom: 0,
                         }}
                     >
-                        {nfts.length} items
+                        {total} items
                     </p>
                     <Select
                         placeholder='Sort by'
@@ -348,8 +373,15 @@ const NftList = ({ }) => {
                                 lists={getNftList()}
                                 numberOfColumn={4}
                                 rowGap={35}
-                                colGap={50}
+                                colGap={35}
                             />
+                            <div style={{ margin: 'auto', marginTop: '5em' }} >
+                                <ButtonList 
+                                    total={Math.floor(total / 12) + 1} 
+                                    wrapSetParams={wrapSetParams} 
+                                    currentPage={params.page} 
+                                />
+                            </div>
                         </div>
                     ) : (
                         <div

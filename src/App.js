@@ -1,7 +1,7 @@
 import './App.css';
 import HomePage from './pages/HomePage/Index';
 import Image from 'rc-image';
-import background from './assets/img/background.png'
+import background from './assets/img/background.svg'
 import {
   Routes,
   Route} from "react-router-dom";
@@ -34,6 +34,7 @@ function App() {
       <Image
         src={background}
         preview={false}
+        width={'100%'}
         style={{
           position: 'fixed',
           minWidth: '100%',
