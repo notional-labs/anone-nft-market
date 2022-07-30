@@ -113,6 +113,7 @@ const MAX_PRICE = 1000000000
 
 const NftList = ({ }) => {
     const [nfts, setNfts] = useState([])
+    const [pagingNft, setPagingNft] = useState([])
     const [loading, setLoading] = useState(false)
     const [select, setSelect] = useState('newest_listed')
     const [showFilter, setShowFilter] = useState(true)
@@ -134,12 +135,13 @@ const NftList = ({ }) => {
         (async () => {
             setLoading(true)
             const res = await getMarketplaceNft(select)
-            setNfts([...res.slice(params.limit * (params.page - 1) , params.limit * (params.page - 1) + params.limit)])
+            setNfts([...res])
+            setPagingNft([...res.slice(params.limit * (params.page - 1) , params.limit * (params.page - 1) + params.limit)])
             setTotal(res.length)
             setLoading(false)
             setInitialRender(false)
         })()
-    }, [select])
+    }, [])
 
     const wrapSetParams = useCallback((val) => {
         setParams({
@@ -154,22 +156,38 @@ const NftList = ({ }) => {
                 return parseInt(x.list_price) - parseInt(y.list_price)
             }
             else if (select === 'oldest_listed') {
-                return parseInt(x.listing_time) - parseInt(y.listing_time)
+                return parseInt(y.listing_time) - parseInt(x.listing_time)
             }
             else if (select === 'price_highest') {
                 return parseInt(y.list_price) - parseInt(x.list_price)
             }
             else if (select === 'newest_listed' || select === null) {
-                return parseInt(y.listing_time) - parseInt(x.listing_time)
+                return parseInt(x.listing_time) - parseInt(y.listing_time)
             }
         })
-        res = res.slice(params.limit * (params.page - 1) , params.page - 1 + params.limit)
         setNfts([...res])
+        paging([...res])
     }
 
     const paging = (list) => {
-        setNfts([...list.slice(params.limit * (params.page - 1) , params.page - 1 + params.limit)])
+        setPagingNft([...list.slice(params.limit * (params.page - 1) , params.page - 1 + params.limit)])
     }
+
+    useEffect(() => {
+        if (!initialRender) {
+            setLoading(true)
+            paging([...nfts])
+            setLoading(false)
+        }
+    }, [params])
+
+    useEffect(() => {
+        if (!initialRender) {
+            setLoading(true)
+            setPagingNft([...nfts.slice(params.limit * (params.page - 1) , params.page - 1 + params.limit)])
+            setLoading(false)
+        }
+    }, [nfts])
 
     useEffect(() => {
         if (!initialRender) {
@@ -178,10 +196,6 @@ const NftList = ({ }) => {
             setLoading(false)
         }
     }, [select])
-
-    useEffect(() => {
-
-    })
 
     useEffect(() => {
         if (!initialRender) {
@@ -202,16 +216,14 @@ const NftList = ({ }) => {
                 if (filterValue.priceMin !== null || filterValue.priceMax !== null) {
                     const max = filterValue.priceMax !== null ? filterValue.priceMax * 1000000 : MAX_PRICE * 10000000
                     const min = filterValue.priceMin !== null ? filterValue.priceMin * 1000000 : 0
-                    console.log(min, max)
                     list = list.filter(x => parseInt(x.list_price) > min && parseInt(x.list_price) < max)
                 }
                 setTotal(list.length)
                 sort(list)
-                paging([...list])
                 setLoading(false)
             })()
         }
-    }, [filterValue, params])
+    }, [filterValue])
 
     const wrapSetList = useCallback((newList) => {
         setNfts([...newList])
@@ -365,7 +377,7 @@ const NftList = ({ }) => {
                                 />
                             </div>
                         </div>
-                    ) : nfts.length > 0 ? (
+                    ) : pagingNft.length > 0 ? (
                         <div
                             style={style.grid}
                         >
@@ -375,13 +387,6 @@ const NftList = ({ }) => {
                                 rowGap={35}
                                 colGap={35}
                             />
-                            <div style={{ margin: 'auto', marginTop: '5em' }} >
-                                <ButtonList 
-                                    total={Math.floor(total / 12) + 1} 
-                                    wrapSetParams={wrapSetParams} 
-                                    currentPage={params.page} 
-                                />
-                            </div>
                         </div>
                     ) : (
                         <div
