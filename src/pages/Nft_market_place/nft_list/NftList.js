@@ -377,7 +377,7 @@ const NftList = ({ }) => {
                                 />
                             </div>
                         </div>
-                    ) : pagingNft.length > 0 ? (
+                    ) : nfts.length > 0 ? (
                         <div
                             style={style.grid}
                         >
